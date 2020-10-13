@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <style>
+html,a,button {
+cursor: url('data:image/x-icon;base64,AAACAAEAICAQAAAAAADoAgAAFgAAACgAAAAgAAAAQAAAAAEABAAAAAAAAAIAAAAAAAAAAAAAEAAAAAAAAAAAAAAA+vr6AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiAAAAAAAAAAAAAAAAAAAAIgAAAAAAAAAAAAAiAAAAIhEAAAAAAAAAAAAAIgAAACIRAAAAAAAAAAAAACIAACIRAAAAAAAAAAAAAAAiAAAiEQAAAAAAAAAAAAAiIgAiEQAAAAAAAAAAAAAAIiIAIhEAAAAAAAAAAAAAACIiIhEAAAAAAAAAAAAAAAAiIiIRAAAAAAAAAAAAAAAiIiIiIiIiAAAAAAAAAAAAIiIiIiIiIgAAAAAAAAAAACIiIiIiEREAAAAAAAAAAAAiIiIiIhERAAAAAAAAAAAiIiIiEREAAAAAAAAAAAAAIiIiIhERAAAAAAAAAAAAACIiEREAAAAAAAAAAAAAAAAiIhERAAAAAAAAAAAAAAAiEREAAAAAAAAAAAAAAAAAIhERAAAAAAAAAAAAAAAAIhEAAAAAAAAAAAAAAAAAACIRAAAAAAAAAAAAAAAAAAD////////////////////////////////////////////////////////D////w///DwP//w8D//8MD///DA///AA///wAP//8AP///AD///AAD//wAA//8AAP//AAD//AAP//wAD//8AP///AD///AP///wD///8P////D////w=='), default
+   }
+
+ body {
+ background: linear-gradient(135deg, 
+rgba(253,50,254,1) 0%, rgba(115,115,255,1) 50%,  rgba(12,249,255,1) 100%);
+ margin: 0;
+ overflow: visible;
+ background-attachment: fixed;
+}
+#radio {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+}
+
+details {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  display: block;
+  border: 1px solid silver;
+  border-radius: 5px;
+  padding: .5em;
+}
+details summary {
+  background: white;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  display: list-item;
+  margin: -.5em;
+  padding: .5em;
+}
+details[open] > summary {
+  margin-bottom: .5em;
+  border-bottom: 1px solid silver;
+}
+
+@keyframes open {
+  0% {opacity: 0; margin-top: -20px}
+  100% {opacity: 1; margin-left: 0px}
+}
+details[open] summary ~ * {
+  animation: open .3s ease-in-out;
+}
+
+.luckyGif {
+  position: absolute;
+  margin: 0px;
+  padding: 0px;
+  display: block;
+  pointer-events: none;
+ }
+
+ div#lucky{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  margin: 0px;
+  padding: 0px;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+  pointer-events: none;
+   z-index: 50;
+ }
+ </style>
+
+<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+
+    <script src="https://adrianotiger.github.io/web-esheep/dist/esheep.min.js"></script>
+ </head>
+ <body>
+<p><b>Zemtzov7's</b></p>
+<script>
+var sheep = new eSheep({allowPets:"all", allowPopup:"yes"}); 
+sheep.Start(); 
+</script>
+ <script>
+      // Add sheep
+    function addSheep()
+    {
+      var esheep2 = new eSheep({allowPets:"all", allowPopup:"yes"});
+      esheep2.Start(); 
+    }
+    </script>
+<div style="background-color:whitesmoke;position:fixed;top:0;right:0;border-radius: 0 0 15px 0;">
+<a href="http://ic7.101.ru:8000/stream/air/aac/64/202">Comedy radio</a>
+
+<audio id="comedy" src="http://ic7.101.ru:8000/stream/air/aac/64/202" type="audio/aac"></audio>
+<button id="radio">&#9654;</button>
+<script type="text/javascript">
+document.getElementById("radio").addEventListener("click", function(){
+    var audio = document.getElementById('comedy');
+  if(this.className == 'is-playing'){
+    this.className = "";
+    this.innerHTML = "&#9654;"
+    audio.pause();
+  }else{
+    this.className = "is-playing";
+    this.innerHTML = "&#9632;";
+    audio.play();
+  }
+});
+</script></div>
+
+
+
+<details><summary>MY PAGES</summary>
+
+<a href="https://zmv7.blogspot.com/p/flooder.html">Flooder</a><br />
+
+<a href="https://zmv7.blogspot.com/p/msdos.html">MS-DOS 6.22</a><br />
+
+<a href="https://zmv7.blogspot.com/p/shell.html" target="_blank">SHELL</a><br />
+
+<a href="https://zmv7.blogspot.com/p/js-dos-6_3.html">MS Quick Pascal</a><br />
+
+<a href="https://zmv7.blogspot.com/p/qbasic-html-body-canvas.html">MS QBASIC</a><br />
+
+<a href="https://zmv7.blogspot.com/p/borland-pascal-html-body-canvas.html">Borland Pascal</a><br />
+
+<a href="https://zmv7.blogspot.com/p/turbopascal.html">TurboPascal on PCJS</a><br />
+
+<a href="https://zmv7.blogspot.com/p/blog-page.html">Win1.01</a><br />
+
+<a href="https://zmv7.blogspot.com/p/win30.html">Win3.0</a><br />
+
+<a href="https://zmv7.blogspot.com/p/win3.html">Win3.1 rus + SkiFree</a><br />
+
+<a href="https://zmv7.blogspot.com/p/skifree.html">SkiFree</a><br />
+
+<a href="https://zmv7.blogspot.com/p/fulltilt.html">FULLTILT</a><br />
+
+<a href="https://zmv7.blogspot.com/p/win3fulltilt.html">FULLTILT hires+skifree</a><br />
+
+<a href="https://zmv7.blogspot.com/p/chicago73.html">Windows Chicago73</a><br />
+
+<a href="https://zmv7.blogspot.com/p/win95-html-body-canvas_3.html">Win95 Z7's build</a><br />
+
+<a href="https://zmv7.blogspot.com/p/nashville.html">Windows Nashville</a><br />
+
+<a href="https://zmv7.blogspot.com/p/office95.html">MS OFFICE 95</a><br />
+
+<a href="https://zmv7.blogspot.com/p/1stpaint.html">First MS Paint</a><br />
+
+<a href="https://zmv7.blogspot.com/p/pbrush.html">PaintBrush</a><br />
+
+<a href="https://zmv7.blogspot.com/p/wipeout.html">WIPEOUT</a><br />
+
+<a href="https://zmv7.blogspot.com/p/megaball.html">Megaball Amiga</a><br />
+
+<a href="https://zmv7.blogspot.com/p/gta.html">GTA</a><br />
+
+<a href="https://zmv7.blogspot.com/p/prince-of-persia.html">Prince of Persia</a><br />
+
+<a href="https://zmv7.blogspot.com/p/doom0.html">Doom 0.4</a><br />
+
+<a href="https://zmv7.blogspot.com/p/doom-05.html">Doom 0.5</a><br />
+
+<a href="https://zmv7.blogspot.com/p/doom-bet.html">Doom Beta</a><br />
+
+<a href="https://zmv7.blogspot.com/p/heretic.html">Heretic</a><br />
+
+<a href="https://zmv7.blogspot.com/p/skymaybe.html">Doom SkyMayBe</a><br />
+
+<a href="https://zmv7.blogspot.com/p/keens-html-body-canvas.html">Commander Keen 1-6+dreams</a><br />
+
+<a href="https://zmv7.blogspot.com/p/ar.html">Arkanoid EGA</a><br />
+
+<a href="https://zmv7.blogspot.com/p/blog-page_16.html">Arkanoid Hardcore</a><br />
+
+<a href="https://zmv7.blogspot.com/p/f1.html">F1</a><br />
+
+<a href="https://zmv7.blogspot.com/p/fs84.html">MS Flight sim 84</a><br />
+
+<a href="https://zmv7.blogspot.com/p/fs2.html">MS Flight sim 2.14</a><br />
+
+<a href="https://zmv7.blogspot.com/p/fs4.html">MS Flight sim 4</a><br />
+
+<a href="https://zmv7.blogspot.com/p/fs5.html">MS Flight sim 5</a><br />
+
+<a href="https://zmv7.blogspot.com/p/blog-page_18.html">Monochrome PAC-MAN</a><br />
+
+<a href="https://zmv7.blogspot.com/p/pkr.html">Подземелья Кремля</a><br />
+
+<a href="https://zmv7.blogspot.com/p/old-gold.html">Старое золото</a><br />
+
+<a href="https://zmv7.blogspot.com/p/rssview.html">Просмотр RSS</a><br />
+
+<a href="https://zmv7.blogspot.com/p/redirect-to-data-base64-test.html">Redirect to data base64 test</a><br />
+
+</details>
+
+<details><summary>MrDoob</summary>
+
+  <a href="https://mrdoob.com/">Mr.doob</a><br />
+
+  <a href="https://multiuser-sketchpad.glitch.me/">Collab sketchpad</a><br />
+
+  <a href="https://mrdoob.neocities.org/">Three.js sketches</a><br />
+
+  <a href="https://threejs.org/">Three.js</a><br />
+
+  <a href="https://mrdoob.github.io/sporel">Sporel</a><br />
+
+  <a href="https://mrdoob.com/files/temp/xplsv_obsidian">Obsidian</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/spinpainter">Spin painter</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/beachballs">Beach balls</a><br />
+
+  <a href="https://mrdoob.com/projects/htmleditor">HTML editor</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/webcam/displace">WebCam displace</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/webgl/particles/magicdust.html">Magic dust</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/effects/solitaire">Winning Solitaire</a><br />
+
+  <a href="https://mrdoob.com/projects/glsl_sandbox">GLSL Sandbox</a><br />
+
+  <a href="https://threejs.org/examples/webgl_kinect.html">Kinect</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/webgl/voxels_liquid">Voxels liquid</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/webgl/sphere">Sphere</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/webgl/clouds">Clouds</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/effects/disturb">Disturb</a><br />
+
+  <a href="https://mrdoob.com/projects/voxels">Voxels</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/effects/ie6">Internet explorer 6</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/effects/plane_deformations">Plane deformations</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/effects/water/02">Water type</a><br />
+
+  <a href="https://mrdoob.com/projects/harmony">Harmony</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/effects/zoomblur/03">Zoom blur</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/effects/rotozoomer/00">Rotozoomer</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/effects/fire/01">Fire</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/effects/water/00">Water</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/effects/water/01">Water remix</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/effects/branching/00">Branching</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/effects/branching/01">Branching 2</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/effects/branching/01_spite_mrdoob">Branching 2 remix</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/webgl/waveform">3D Waveform</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/strangeattractor">Strange attractor</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/checkbox_painter">Checkbox painter</a><br />
+
+  <a href="https://mrdoob.com/lab/javascript/checkboxes">Checkboxes ball</a><br />
+
+  <a href="https://doc999tor.github.io/Checkbox-Painter">Another checkbox painter</a><br />
+
+  <a href="https://mrdoob.com/projects/chromeexperiments/depth_of_field">Depth of field</a><br />
+
+  <a href="https://mrdoob.com/projects/chromeexperiments/google-space">Google Space</a><br />
+
+  <a href="https://mrdoob.com/projects/chromeexperiments/google_gravity">Google Gravity</a><br />
+
+  <a href="https://mrdoob.com/projects/chromeexperiments/google_sphere">Google Sphere</a><br />
+
+  <a href="https://mrdoob.com/projects/chromeexperiments/ball_pool">Ball pool</a><br />
+
+</details>
+
+<details><summary>LittleWorkshop</summary>
+
+  <a href="https://www.littleworkshop.fr/">LittleWorkshop</a><br />
+
+  <a href="https://demos.littleworkshop.fr/infinitown">Infinitown</a><br />
+
+  <a href="https://demos.littleworkshop.fr/track">Track</a><br />
+
+</details>
+
+<details><summary>Other</summary>
+
+  <a href="https://lionel.me/experiments/roadtrip/">RoadTrip</a><br />
+
+  <a href="https://sandspiel.club/">Sandspiel</a><br />
+
+  <a href="http://chandlerprall.github.io/Physijs/examples/jenga.html">Jenga</a><br />
+
+  <a href="http://hexgl.bkcore.com/play/">HexGL</a><br />
+
+  <a href="https://phoboslab.org/wipeout/">WipeOut</a><br />
+
+  <a href="https://cdn.framesynthesis.com/html5/drivingsimulatorgm/2014091418/">Driving on GMaps</a><br />
+
+  <a href="http://cityofdrones.io/">City of drones</a><br />
+
+  <a href="http://libcanvas.github.com/">LibCanvas</a><br />
+
+  <a href="https://zmv7.blogspot.com/p/musboard.html">Musical keyboard</a><br />
+
+
+<a href="http://www.windows93.net/c/files/images/png/pizza_58000-342000.png">Glitched PNG LOL</a><br />
+
+<del><a href="http://ban.convex.ru/index.html">Click Me!</a></del><br />
+
+</details>
+
+<details><summary>Virtual machines</summary>
+
+<a href="http://copy.sh/">Copy.sh</a><br />
+
+<a href="http://copy.sh/v86">x86</a><br />
+
+<a href="https://www.pcjs.org/">PCJS</a><br />
+
+<a href="https://jamesfriend.com.au/pce-js/">MAC pce-js</a><br />
+
+<a href="https://bellard.org/jslinux/">JS Linux</a><br />
+
+<a href="http://therestartpage.com/">TheRestartPage</a><br />
+
+<a href="http://scriptedamigaemulator.net/">SAE</a><br />
+
+<a href="http://www.taws.ch/WB.html">Amiga Workbenches</a><br />
+
+<a href="http://www.chiptune.com/">Chiptune workbench</a><br />
+
+<a href="https://jamesfriend.com.au/pce-js/atari-st/">Atari ST pce-js</a><br />
+
+<a href="https://estyjs.azurewebsites.net/">Atari ST esty.js</a><br />
+
+<a href="http://virtualdesktop.org/">Virtual Desktops</a><br />
+
+<a href="https://demo.os-js.org/">OS.JS</a><br />
+
+<a href="http://altaica.altervista.org/">CloudDesk</a><br />
+
+<a href="https://aaronos.dev/AaronOS/aosBeta.php">AaronOS</a><br />
+
+<a href="https://whimsy.space/">ZineOS</a><br />
+
+<a href="https://charlie.bz/">Windows 95</a><br />
+
+<a href="http://windows96.net/">Windows 96</a><br />
+  
+<a href="https://franx1024.github.io/Windows97/">Windows 97</a><br />
+
+<a href="https://98.js.org/">Win98 - 98.js.org</a><br />
+
+<a href="https://rahul.io/">Win98 - Rahul.io</a><br />
+
+<a href="https://packard-belle.netlify.com/">Win98 - Packard Belle</a><br />
+
+<a href="https://emupedia.net/beta/emuos/">emuOS - Win9X Desktop</a><br />
+
+<a href="https://winxp.now.sh/">WinXP</a><br />
+
+<a href="https://webdesktop.net/">Win10 WebDesktop</a><br />
+
+<a href="http://www.jurassicsystems.com/">Jurassic systems</a><br />
+
+<a href="https://axmasoft.com/ispeccy/">ISpeccy</a><br />
+
+</details>
+
+<details><summary>Win98 JS apps</summary>
+
+<a href="https://jspaint.app/">JS-PAINT</a><br />
+
+<a href="https://98.js.org/programs/notepad/">JS-NOTEPAD</a><br />
+
+<a href="https://98.js.org/programs/explorer/">JS-EXPLORER</a><br />
+
+<a href="https://webamp.org/">WebAMP</a><br />
+
+<a href="https://98.js.org/programs/sound-recorder/index.html">Sound recorder</a><br />
+
+</details>
+
+<details><summary>Emupedia</summary>
+
+  <a href="https://emupedia.net/emupedia-game-flappy-bird/">Flappy bird</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-pac-man/">PAC-MAN</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-wings2/">Wings 2.0</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-biolab-disaster/">Biolab Disaster</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-super-blob-blaster/">Super blob blaster</a><br />
+
+  <a href="https://emupedia.net/emupedia-demo-asciicker/">ASCIICKER</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-ascii-patrol/">ASCII PATROL</a><br />
+
+  <a href="https://emupedia.net/emupedia-demo-voxel-space/">Voxel space</a><br />
+
+  <a href="https://emupedia.net/emupedia-app-dosbox/">DosBox</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-wolfenstein-3d-canvas/">Wolf3D</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-doom1/">Doom</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-doom2/">Doom 2</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-doom3/">Doom 3</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-quake1/async.html">Quake</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-quake2/">Quake 2</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-half-life1/">Half Life</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-diablo1/">Diablo</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-minecraft-classic/">Minecraft</a><br />
+
+  <a href="https://emupedia.net/emupedia-app-svg-editor/">SVG editor</a><br />
+
+  <a href="https://emupedia.net/emupedia-app-emuchat/">EmuChat</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-raptor/">Raptor</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-command-and-conquer1/">Commander and conquer</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-ra2/">Commander and conquer: Red alert 2</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-tomb-raider/">Tomb Raider</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-openttd/">Transport tycoon</a><br />
+
+  <a href="https://emupedia.net/emupedia-game-unreal-tournament/">Unreal Tournament</a><br />
+
+</details>
+
+<details><summary>Retro JS games</summary>
+
+<a href="https://98.js.org/programs/minesweeper/">Minesweeper</a><br />
+
+<a href="http://copy.sh/iw/">I wanna be the copy</a><br />
+
+<b><a href="https://doom.pdox.net/" style="color: red;">Doom native client</a></b><br />
+
+<a href="https://www.google.com/logos/2010/pacman10-i.html">Google PACMAN</a><br />
+
+<a href="http://web.archive.org/web/20130724181002/https://www.cubeslam.com/lmautc">CubeSlam</a><br />
+
+<a href="https://gba.ninja/?autorun=https://dl.dropbox.com/s/yg5f9gki2polcof/GTA_ADVANCE.gba&exclusive">GTA Advance</a><br />
+
+<button class="click">GTA CTW</button>
+<div class="div0" style="display: none;">
+</div>
+<script>
+  $(document).ready(function(){
+  $('.click').on('click', function(){
+   $('.div0').slideToggle(0);
+   if($('#ctw').length === 0){
+    $('<iframe />', {
+      id : 'ctw',
+      src : 'https://www.retrogames.cc/embed/38656-grand-theft-auto-chinatown-wars-usa-en-fr-de-es-it.html',
+      allowfullscreen : 'true',
+      scrolling : 'no',
+      style:'width:1024px;height:768px',
+    }).appendTo('.div0');
+   }
+  });
+});
+</script>
+
+<button class="click1">DX-BALL</button>
+<div class="div1" style="display: none;">
+</div>
+<script>
+  $(document).ready(function(){
+  $('.click1').on('click', function(){
+   $('.div1').slideToggle(0);
+   if($('#dx').length === 0){
+    $('<iframe />', {
+      id : 'dx',
+      src : 'https://dx-ball.ru/iframe.html',
+      style:'width:1024px;height:768px',
+    }).appendTo('.div1');
+   }
+  });
+});
+</script>
+
+</details>
+
+<details><summary>DosBox</summary>
+<details><summary>Programming</summary>
+
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=GWBASIC">GWBasic</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=LoveDOS">LoveDOS</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=QBasic">QBasic</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Turbo_C">Turbo C</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Turbo_C_PP">Turbo C++</a><br />
+
+</details>
+<details><summary>Game creation tools</summary>
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Adventure_Game_Studio">Adventure game studio</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Asciiquest">ASCII quest</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=MegaZeux">MegaZeux</a><br />
+
+</details>
+<details><summary>Music</summary>
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Adlib_Tracker_II">Adlib Tracker 2</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Impulse_Tracker">Impulse Tracker</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Fast_Tracker_2">Fast Tracker 2</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Scream_Tracker_3">Scream tracker 3</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Master_Player">Master player</a><br />
+
+</details>
+<details><summary>Games</summary>
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Alone_in_the_dark">Alone in ther dark</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Alone_in_the_dark_2">Alone in ther dark 2</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Alone_in_the_dark_3">Alone in ther dark 3</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Jack_in_the_dark">Jack in the dark</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Alley_Cat">Alley Cat</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Abuse">Abuse</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Alien_Rampage">Alien rampage</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Adventures_in_Math">Adventures in Math</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=BAT">BAT</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Battle_Chess">Battle Chess</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=BloodNet">BloodNet</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Keen1">Commander Keen</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Civilization">Civilization</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Colossal_Cave_Adventure">Colossal Cave Adventure</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Dave">Dave</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Destruction_Derby">Destruction Derby</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Disc">Disc</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Digger">Digger</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Doom">Doom</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Duke3d">Duke Nukem 3D</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Dune">Dune</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Dune2">Dune 2</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Dreamweb">Dreamweb</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Dungeon_Master">Dungeon Master</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Karateka">Karateka</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=KGB">KGB</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Lands_of_lore">Lands of lore</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Neuromancer">Neuromancer</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Prince_of_persia">Prince of persia</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Rogue">Rogue</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Sapiens">Sapiens</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Shuffle_Puck_Cafe">Shuffle Puck Cafe</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Theme_Hospital">Theme Hospital</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Tower_Assault">Tower Assault</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Winter_Challenge">Winter Challenge</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Worms">Worms</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=Xonix">Xonix</a><br />
+
+<a href="http://www.windows93.net/d/programs/dosbox/?soft=ZZT">ZZT</a><br />
+
+</details>
+
+<a href="http://js-dos.com/games">JS-DOS games</a><br />
+
+<a href="https://js-dos.com/index_v3.html">JS-DOS games #2</a><br />
+
+</details>
+
+<details><summary>
+<b><em><span style="color: red;">W</span><span style="color: #ff6000;">i</span><span style="color: #ffc000;">n</span><span style="color: yellow;">d</span><span style="color: #9fff00;">o</span><span style="color: #3fff00;">w</span><span style="color: lime;">s</span><span style="color: #00ff60;"> </span><span style="color: #00ffc0;">9</span><span style="color: cyan;">3</span><span style="color: #00c0ff;"> </span><span style="color: #0060ff;">l</span><span style="color: blue;">i</span><span style="color: #3f00ff;">n</span><span style="color: #9f00ff;">k</span><span style="color: magenta;">s</span></em></b></summary>
+
+<a href="http://www.windows93.net/">Original Windows 93</a><br />
+
+<a href="http://v0.windows93.net/">Prototype v.0</a><br />
+
+<a href="http://v1.windows93.net/">Version 1</a><br />
+
+<a href="http://local93.darkok.xyz/">Clone 2.2.2</a><br />
+
+<a href="http://electron93.darkok.xyz/">Electron 93</a><br />
+
+<a href="http://darkok.xyz:8719/">Collab93</a><br />
+
+<a href="http://www.windows93.net/d/programs/flash/">Adobe pizza flash</a><br />
+  
+<a href="http://www.windows93.net/c/programs/calculate/index.php">Calculator</a><br />
+
+<a href="http://myspace.windows93.net/">MySpace93</a><br />
+
+<a href="http://www.windows93.net/miner/">Necronomicoin</a><br />
+
+<a href="http://www.windows93.net:8083/">93 Realms</a><br />
+
+<a href="http://windows93.net/trollbox/">TrollBox</a><br />
+
+<a href="http://darkok.xyz:8084/">TrollBox++</a><br />
+
+<a href="http://www.windows93.net/c/programs/maze/index.html">ASCII maze</a><br />
+
+<a href="http://www.windows93.net:8084/">Arena 93</a><br />
+
+<a href="http://www.windows93.net/c/programs/castleGafa/index.html">GAFA 3D</a><br />
+
+<a href="http://windows93.net/c/programs/defrag/index.php">Defrag</a><br />
+
+<a href="http://windows93.net/c/programs/SkiFree/index.html">SkiFree</a><br />
+
+<a href="http://windows93.net/c/programs/kof93/index.html">kof93</a><br />
+
+<a href="http://zombect.ro/cheapbeat8/">CheapBeat8</a><br />
+
+<a href="http://www.windows93.net/c/programs/solitude/index.html">Solitude</a><br />
+
+<a href="http://www.windows93.net/c/programs/robby/index.php">Robby</a><br />
+
+<a href="http://www.windows93.net/c/programs/progressQuest/index.php">ProgressQuest</a><br />
+
+<a href="http://www.windows93.net/c/programs/hampsterDance/index.html">Hampsters!</a><br />
+
+<a href="http://www.windows93.net/c/programs/screensaver/pipes/index.html">Pipes</a><br />
+
+<a href="http://www.windows93.net/c/programs/starwars/index.html">StarWars</a><br />
+
+<a href="http://windows93.net/c/programs/hl3/stillalive/index.html">Still Alive</a><br />
+
+<a href="http://www.windows93.net/c/files/images/ascii/ascii.html">ASCII Gallery</a><br />
+
+<a href="http://www.windows93.net//c/programs/bytebeat/index.php">ByteBeat</a><br />
+
+<a href="http://www.windows93.net/c/programs/pukeData/index.php">PukeData</a><br />
+
+<a href="http://www.windows93.net/c/programs/modbox/index.php">Modded BeepBox</a><br />
+
+<a href="http://www.windows93.net/c/programs/midi/index.php">MIDI JukeBox</a><br />
+
+<a href="http://windows93.net/c/programs/piskel/index.php">Piskel</a><br />
+
+<a href="http://www.windows93.net/c/programs/visualNovel/index.html">Euro drunk simulator</a><br />
+
+<a href="http://www.windows93.net/c/programs/acidBox93/index.html"><span style="color: red;">A</span><span style="color: #ffaa00;">c</span><span style="color: yellow;">i</span><span style="color: #55ff00;">d</span><span style="color: lime;">B</span><span style="color: #00ffaa;">o</span><span style="color: cyan;">x</span><span style="color: #00aaff;">9</span><span style="color: blue;">3</span></a><br />
+
+<a href="http://www.windows93.net/c/programs/tunnel/index.html">Tunnel</a><br />
+
+<a href="http://www.windows93.net/c/programs/gameOfLife/index.html">GameOfLife</a><br />
+
+<a href="http://www.windows93.net/c/sys/boot/screenSaver.html">ScreenSaver</a><br />
+
+<a href="http://www.windows93.net/c/sys/boot/splash.html">Splash</a><br />
+
+<a href="http://windows93.net/backdoor.html">Backdoor(?)</a><br />
+
+
+<b><i><a href="https://pierrepapierciseaux.net/.skynet"><span style="color: blue;">S</span><span style="color: red;">k</span><span style="color: yellow;">y</span><span style="color: blue;">n</span><span style="color: green;">e</span><span style="color: red;">t</span></a></i></b><br />
+
+<a href="http://radio.windows93.net/">DERP.FM</a> / <a href="http://www.windows93.net:8085/">lorecast</a> / <a href="http://www.windows93.net:8085/mpd.ogg">direct</a><br />
+
+</details>
+
+<details><summary>IPTV</summary>
+<a href="http://85.12.197.234:8080/video/hs738silsk8.html">Ботаника webcam</a> / <a href="http://85.12.197.234:8080/hls/hs738silsk8.m3u8">m3u8</a><br />
+
+<a href="http://85.12.197.234:8080/video/d7j3s8dj2.html">ЖК Светлый webcam</a> / <a href="http://85.12.197.234:8080/hls/d7j3s8dj2.m3u8">m3u8</a><br />
+
+<a href="https://zmv7.blogspot.com/p/cam1.html">Готвальда–Халтурина webcam</a> / <a href="http://webcam.uralweb.ru/hls/cam5/stream.m3u8">m3u8</a><br />
+
+<a href="https://sirius-online.ru/embedded/khim11">Северный Химмаш webcam</a><br />
+
+<a href="https://sirius-online.ru/embedded/plos1905">Площадь 1905 webcam</a><br />
+
+<a href="https://sirius-online.ru/embedded/plot">Плотинка webcam</a><br />
+
+<a href="https://cam1.yuccastream.com/hls.html">Где-то в ЕКБ webcam</a> / <a href="https://cam1.yuccastream.com/hls/cam1.m3u8">m3u8</a><br />
+
+<a href="http://zabava-htlive.cdn.ngenix.net/hls/CH_STS/bw2000000/variant.m3u8">СТС</a><br />
+
+<a href="http://78.157.230.19/streaming/discovery/364/gpu_tvrecw/playlist.m3u8">Discovery</a><br />
+
+<a href="http://178.124.183.5/hls/CH_NATGEO/variant.m3u8">NetGeo</a><br />
+
+<a href="http://78.157.230.19/streaming/animalplanet/364/gpu_tvrecw/playlist.m3u8">Animal planet</a><br />
+
+<a href="http://zabava-htlive.cdn.ngenix.net/hls/CH_PYATNIZZA/bw2000000/variant.m3u8">Пятница!</a><br />
+
+<a href="http://serv30.vintera.tv:8081/kavkaz24/kavkaz24_stream/playlist.m3u8">Кавказ 24</a><br />
+
+<a href="http://app.live.112.events/hls-ua/112hd_hi/index.m3u8">Украина HD</a><br />
+
+</details>
+
+<details><summary>Supercell top secret</summary>
+
+<a href="https://inbox.haydaygame.com/">HayDay inbox news</a><br />
+
+<a href="https://inbox.boombeach.com/">BoomBeach inbox news</a><br />
+
+<a href="https://inbox.boombeach.com/community/index.html">Boombeach inbox video</a><br />
+
+<a href="https://inbox.clashofclans.com/">Clash of Clans inbox news</a><br />
+
+<a href="https://inbox.clashofclans.com/community/index.html">Clash of Clans inbox video</a><br />
+
+<a href="https://inbox.clashroyale.com/">Clash Royale inbox news</a><br />
+
+<a href="https://inbox.clashroyale.com/community/index.html">Clash Royale inbox video</a><br />
+
+<a href="https://inbox.brawlstars.com/">Brawl Stars inbox news</a><br />
+
+<a href="https://inbox.brawlstars.com/community/index.html">Brawl Stars inbox video</a><br />
+
+<a href="https://securemail.supercell.com/">Supercell secure mail</a><br />
+
+<a href="https://zmv7.blogspot.com/p/8-bit-laser-game.html">Supercell's project laser game PC version(ported by Z7)</a><br />
+
+</details>
+
+<details><summary>Google hacking WEBCAMS</summary>
+
+<a href="https://www.google.com/search?q=inurl:/view/view.shtml+AXIS">AXIS </a>/<a href="https://www.google.com/search?q=inurl:/view/index.shtml+AXIS"> var2 </a>/<a href="https://www.google.com/search?q=inurl:/view/viewer_index.shtml"> var3</a><br />
+
+<a href='https://www.google.com/search?q=inurl%3A%2FViewerFrame%3F+intitle%3A"Network+Camera+NetworkCamera"'>ViewerFrame</a><br />
+
+<a href='https://www.google.com/search?q=intitle%3A"webcamXP+5"+inurl%3A8080+%27Live%27'>webcamXP5</a><br />
+
+<a href='https://www.google.com/search?q=inurl%3A%2Flive.htm+intext%3A"M-JPEG"%7C"System+Log"%7C"Camera-1"%7C"View+Control"'>BOSCH</a><br />
+
+<a href='https://www.google.com/search?q=intitle%3A"IP+CAMERA+Viewer"+intext%3A"setting+%7C+Client+setting"'>IP CAMERA VIEWER</a><br />
+
+<a href='https://www.google.com/search?q=inurl%3Acontrol%2Fcamerainfo'>contol/camerainfo</a><br />
+
+<a href='https://www.google.com/search?q=inurl%3Acontrol%2Fuserimage'>control/userimage</a><br />
+
+<a href='https://www.google.com/search?q=%28intitle%3AMOBOTIX+intitle%3APDAS%29+%7C+%28intitle%3AMOBOTIX+intitle%3ASeiten%29+%7C+%28inurl%3A%2Fpda%2Findex.html+%2Bcamera%29'>MOBOTIX</a><br />
+
+<a href='https://www.google.com/search?q=Display+Cameras+intitle%3A"Express6+Live+Image"'>Express6</a><br />
+
+<a href='https://www.google.com/search?q=camera+linksys+inurl%3Amain.cgi'>linksys</a>
+</details>
+
+<script>
+function placeGif(){
+   gif = "https://pierrepapierciseaux.net/.skynet/img/gifs/derp"+Math.floor(Math.random()*590)+".gif";
+   l = Math.floor(Math.random()*( $( window ).width() +200)-100  )+"px";
+   t = Math.floor(Math.random()*( $( window ).height()+200)-100  )+"px";
+   el = "<img src='"+gif+"' class='luckyGif' style='top:"+t+"; left:"+l+";'>"
+   $( "#lucky" ).append( el );
+  }
+
+
+
+  var luckyTimer;
+  var howManyLuck=0;
+
+  function iFeelLucky(){
+
+   clearInterval(luckyTimer);
+
+    howManyLuck = 1;
+
+    placeGif();
+
+    //
+
+
+
+    luckyTimer = setInterval(function(){ 
+     //alert("Hello"); 
+
+     placeGif();
+     howManyLuck = howManyLuck +1;
+
+     if (howManyLuck>1000) {
+      if (luckyTimer) {
+       clearInterval(luckyTimer);
+      };
+      
+     };
+
+    }, 200);
+
+   
+  }
+
+
+
+
+  $('#select').on('change', function () {
+       console.log(this.selectedOptions[0].value);
+       lang = this.selectedOptions[0].value;
+
+
+
+   q = $('#isearch').val();
+
+   //console.log(q.replace(/\s/g,""));
+
+      if(q.replace(/\s/g,"") == ""){
+        tmp = "https://pierrepapierciseaux.net/.skynet/?lang="+lang;
+   }else{
+    tmp = "https://pierrepapierciseaux.net/.skynet/?q="+q+"&lang="+lang;
+   };
+    
+      
+       window.open(tmp,"_self");
+
+
+  });
+</script>
+<div id="lucky"></div>
+<button style="background-color: #f2f2f2;border: 1px solid #f2f2f2;border-radius: 2px;color: #757575;font-family: arial,sans-serif;font-size: 13px;font-weight: bold;margin: 11px 4px;min-width: 59px;padding: 0 16px;text-align: center;height: 35px;}" onclick="iFeelLucky()">Мне повезёт!</button>
+      <button style="float:right" onclick="addSheep();">Add Sheep</button>
+
+<button class="click2">Местоположение по MAC</button>
+<div class="div2" style="display: none;">
+</div>
+<script>
+  $(document).ready(function(){
+  $('.click2').on('click', function(){
+   $('.div2').slideToggle(0);
+   if($('#mac').length === 0){
+    $('<iframe />', {
+      scrolling : 'no',
+      id : 'mac',
+      src : 'data:text/html;base64,PGRpdiBzdHlsZT0nb3ZlcmZsb3c6aGlkZGVuO3dpZHRoOjcwMHB4O2hlaWdodDo3MDBweCcgaWQ9J21hY19mcmFtZSc+CjxpZnJhbWUgc2Nyb2xsaW5nPSdubycgc3R5bGU9J2JvcmRlcjowO3dpZHRoOjEwMCU7aGVpZ2h0OjEyMCUnIHNyYz0naHR0cHM6Ly9hbGV4ZWxsLnJ1L25ldHdvcmsvbWFjLWdlby8nPjwvaWZyYW1lPgo8L2Rpdj4KPHNjcmlwdD4KCWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdtYWNfZnJhbWUnKS5zY3JvbGxUb3AgPSAxMDAKPC9zY3JpcHQ+',
+      style:'width:710px;height:710px;border:none',
+    }).appendTo('.div2');
+   }
+  });
+});
+</script>
+
+
+</body>
+</html>
