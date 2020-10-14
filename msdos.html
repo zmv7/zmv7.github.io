@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MS-DOS 6.22</title>
+  <script src="https://js-dos.com/6.22/current/js-dos.js"></script>
+  <style>
+    html, body, canvas, .dosbox-container {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+button {
+    appearance: button;
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: -internal-light-dark(buttontext, rgb(170, 170, 170));
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    background-color: -internal-light-dark(rgb(239, 239, 239), rgb(74, 74, 74));
+    box-sizing: border-box;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    padding: 1px 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(195, 195, 195));
+    border-image: initial;
+}
+
+.dosbox-container{position:fixed;top:0;left:0;}
+
+@-webkit-keyframes blinker {
+        0% { visibility: visible; }
+        50% { visibility: hidden; }
+        100% { visibility: visible; }
+      }
+      @keyframes blinker {
+        0% { visibility: visible; }
+        50% { visibility: hidden; }
+        100% { visibility: visible; }
+      }
+ 
+      blink {
+        -webkit-animation: blinker steps(1) 1s infinite;
+            animation: blinker steps(1) 1s infinite;
+    font-size: 130%;
+     color: #aaaaaa;
+      }
+
+html{overflow:hidden}
+.dosbox-loader,.dosbox-powered{display:none}
+.dosbox-overlay{background:transparent}
+  </style>
+</head>
+
+<body>
+<blink>&#9602;</blink>
+  <canvas id="jsdos"></canvas>
+  <button style="position: absolute; right: 1em; top: 1em;opacity:.3" onclick="ci.fullscreen()">FS</button>
+  <script>
+    Dos(document.getElementById("jsdos"), { 
+      wdosboxUrl: "https://js-dos.com/6.22/current/wdosbox.js",
+      cycles: "auto",
+      autolock: true,
+    }).ready(function (fs, main) {
+      fs.extract("https://dl.dropbox.com/s/oa9avdgf0wqgu9y/MSDOS.zip").then(function () {
+
+fs.createFile("dosbox.conf", `
+[dosbox]
+memsize=64
+
+[render]
+frameskip=0
+aspect=true
+`);
+        main(["-conf", "dosbox.conf", "-c", "msdos"]).then(function (ci) {
+          window.ci = ci;
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
