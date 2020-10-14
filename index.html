@@ -25,7 +25,7 @@ rgba(253,50,254,1) 0%, rgba(115,115,255,1) 50%,  rgba(12,249,255,1) 100%);
  background-attachment: fixed;
 }
 #radio {
-    background-color: #4CAF50;
+    background-color: red;
     border: none;
     color: white;
     text-align: center;
@@ -107,7 +107,7 @@ sheep.Start("https://adrianotiger.github.io/desktopPet/Pets/neko/animations.xml"
       esheep2.Start("https://adrianotiger.github.io/desktopPet/Pets/neko/animations.xml"); 
     }
     </script>
-<div style="background-color:whitesmoke;position:fixed;top:0;right:0;border-radius: 0 0 15px 12px;">
+<div style="background-color:whitesmoke;position:fixed;top:0;right:0;border-radius: 0 0 0px 30px;">
 <a href="https://ic7.101.ru:8000/stream/air/aac/64/202">Comedy radio</a>
 
 <audio id="comedy" src="https://ic7.101.ru:8000/stream/air/aac/64/202" type="audio/aac"></audio>
@@ -125,7 +125,9 @@ document.getElementById("radio").addEventListener("click", function(){
     audio.play();
   }
 });
-</script></div>
+</script><br />
+  <button style="float:right" onclick="addSheep();">Add Neko</button>
+  </div>
 
 
 
@@ -878,7 +880,7 @@ function placeGif(){
 </script>
 <div id="lucky"></div>
 <button style="background-color: #f2f2f2;border: 1px solid #f2f2f2;border-radius: 2px;color: #757575;font-family: arial,sans-serif;font-size: 13px;font-weight: bold;margin: 11px 4px;min-width: 59px;padding: 0 16px;text-align: center;height: 35px;}" onclick="iFeelLucky()">Мне повезёт!</button><br />
-      <button style="float:right" onclick="addSheep();">Add Neko</button>
+      
 
 <button class="click2">Местоположение по MAC</button>
 <div class="div2" style="display: none;">
