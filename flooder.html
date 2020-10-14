@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+ <head>
+  <script type="text/javascript">
+   var intervalId = 0;
+   
+   function startPings() {
+    //disable buttons to prevent tampering
+    a = document.getElementsByTagName("input");
+    for(i=0;i<a.length;i++) a[i].disabled = true;
+    
+    //but enable stop button
+    b = document.getElementById("stop");
+    b.disabled = false;
+ 
+    //initiates the page pinging
+    c = document.getElementById("wait").value;
+    intervalId = setInterval("pingPage()",c);
+    d = document.getElementById("running");
+    d.innerHTML = "<b>Работает</b>";
+   }
+   
+   function stopPings() {
+    //enable buttons to allow changing
+    a = document.getElementsByTagName("input");
+    for(i=0;i<a.length;i++) a[i].disabled = false;
+    
+    //but disable stop button
+    b = document.getElementById("stop");
+    b.disabled = true;
+    
+    //cancels the page pinging
+    clearInterval(intervalId);
+    d = document.getElementById("running");
+    d.innerHTML = "<b>Остановлен.</b>";
+   }
+ 
+   function makestring(type) {
+    var text = "";
+    var maxlength;
+    var possible;
+                         if (type == "value") { 
+      possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                           maxlength = 1 + Math.floor(Math.random()*8)
+                         }
+    if (type == "param") {
+      possible = "abcdefghijklmnopqrstuvwxyz";
+                           maxlength = 1 + Math.floor(Math.random()*4)
+                         }
+    for (var i=0; i < maxlength; i++) {
+     text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+   }
+   
+   function pingPage() {
+    //create non-cached URL
+    a = document.getElementById("url").value;
+    (a.match(/\?/) == null) ? a += "?": a += "&";
+    c = makestring("param");
+    d = makestring("value");
+    a += c + "=" + d;
+ 
+    //ping url with a hidden image
+    x = document.createElement("img");
+    x.style.display = "none";
+    x.src = a;
+    document.body.appendChild(x);
+ 
+    //update status
+    e = document.getElementById("status");
+    e.innerHTML = a + "<br />";
+   }
+   function checkanchor(anchorvalue) {
+    if (anchorvalue) {
+     var re = /target=(.*)&/;
+     var reduex = /timer=(.*)/;
+                                        var target = anchorvalue.match(re)[1]; 
+                                        var timer = anchorvalue.match(reduex)[1]; 
+     document.getElementById("url").value = target;
+     document.getElementById("wait").value = timer;
+     startPings();
+    }
+   }
+  </script>
+ </head>
+ <body onload="checkanchor(window.location.hash);">
+Цель:<br>
+<input id="url" size="100" type="text" value="http://"><br><br><br>
+  Тайм-аут:<br><input id="wait" type="text" value="10"> мс<br><br>
+  <input value="Старт" id="start" onclick="startPings()" type="button"><input value="Стоп" id="stop" onclick="stopPings()" disabled="disabled" type="button"><br><br>
+  Статус: <span id="running"></span><br>
+  <div id="status"></div>
+ </body>
+</html>
