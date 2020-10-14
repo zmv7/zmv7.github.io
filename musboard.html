@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html><head>
+  <meta name="viewport" content=user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Musical Keyboard - JS Dynamic Audio Synth</title>
+<meta name="description" content="A keyboard! Play with it. ;) A synthesizer created entirely in HTML5 + JS that dynamically generates modulated Waveform Audio dataURIs.">
+<meta name="keywords" content="keith, keith horwood, keithwhor, social media, uwo, westernu, start-up, corporation, CEO, science, technology, blog, youtube, dataURI, javascript, JS, java, HTML5, piano, keyboard, HTML5 piano, HTML5 keyboard, waveform audio, .wav, .wav audio, audio">
+<meta name="author" content="Keith William Horwood">
+<meta name="robots" content="index,follow,archive">
+<meta property="og:description" content="A keyboard! Play with it. ;) A synthesizer created entirely in HTML5 + JS that dynamically generates modulated Waveform Audio dataURIs.">
+<meta property="og:image" content="http://keithwhor.com/music/opengraph.png">
+<style>
+html{overflow:hidden}
+ #mus { font-family: Helvetica; color: rgb(32,32,32); padding:0;height:100%;width:100%;
+  background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAM0lEQVQIW2P8DwQMMPDwIAODvD2YxwiXQBJESKAJQiQeHPgP0w43EsUoZFGgCQg70BwAANTgIZHym5jNAAAAAElFTkSuQmCC') repeat;z-index:2
+   }
+ 
+ b { font-weight: bold; }
+
+ .key { position: absolute; font-family: Helvetica; font-weight: 100; font-size: 12px;
+  border: 1px solid rgba(32,32,32,0.2);
+  border-radius: 0px 0px 5px 5px;
+  cursor:pointer;
+  box-shadow: 0px 5px 1px rgba(32,32,32,0.2);
+  -webkit-transition: margin 0.05s ease, background-color 0.05s ease, box-shadow 0.05s ease; }
+ .key:hover { background-color: rgb(255,192,32); }
+  
+ .key .label { position: absolute; bottom: 5px; text-align: center; left: 0px; right: 0px; }
+
+ .black { background-color: rgb(32,32,32); color: #ffffff; z-index: 1; text-shadow: 0px -1px 1px rgba(255,255,255,0.5); }
+ 
+ .white { background-color: #ffffff; color: rgb(32,32,32); z-index: 0; text-shadow: 0px 1px 1px rgba(32,32,32,0.5); }
+ 
+ .title { text-shadow: 0px 1px 1px rgba(32,32,32,0.2); font-size: 40px; font-weight: bold; font-family: Helvetica; padding: 10px; text-align: center; }
+ 
+ .sub { color: rgb(96,96,96); font-size: 30px; padding: 10px; font-weight:100; margin:10px 0px; text-shadow: 0px 1px 1px rgba(32,32,32,0.2); text-align:center; }
+ .sub a, .sub a:link, .sub a:visited, .sub a:active { font-weight:bold; color: rgb(128,160,255); text-decoration: none; }
+ .sub a:hover { color: rgb(160,192,255); }
+ 
+ .source a { color: rgb(255,96,96); }
+ .source a:link, .source a:visited, .source a:active { color: rgb(255,96,96); }
+ .source a:hover { color: rgb(255,128,128); }
+ 
+ .small { font-size: 20px; }
+ 
+ .keyboard-options { margin: 0; width: auto; text-align: center; font-size: 12px; font-weight: 200; padding:10px; }
+ 
+ .keyboard-holder { margin: 30px auto; height: 200px; position:relative; user-select:none; -webkit-user-select:none;-moz-user-select:none;-o-user-select:none; }
+ 
+ .about { position: relative; max-width: 700px; margin: 30px auto; }
+ .about .header { background-color:rgba(32,64,128,0.5); border-radius: 10px 10px 0px 0px; color:rgb(255,255,255); text-shadow:0px 1px 0px rgb(96,96,96);
+  position: relative; max-width: 600px; margin: 0 auto;
+  font-size: 30px; font-weight: bold; padding: 20px; text-align:center; }
+ .about .contents { font-size: 16px; line-height: 20px; background-color: rgb(255,255,255); font-weight: 200; padding: 20px; text-align: left; position: relative;
+  color: rgb(32,32,32); text-shadow: 0px 1px 0px rgb(224,224,224);
+  box-shadow: 0px 5px 10px rgba(32,32,32,0.5); -webkit-box-shadow: 0px 5px 10px rgba(32,32,32,0.5); border: 1px solid rgb(192,192,192); }
+ .about .footer { background-color:rgba(32,64,128,0.5); border-radius: 0px 0px 10px 10px; color:rgb(255,255,255);
+  position: relative; max-width: 600px; margin: 0 auto; font-weight: bold; padding: 20px; }
+ 
+ .about a, .about a:link, .about a:visited, .about a:active { font-weight:bold; color: rgb(224,96,32); text-decoration: none; }
+ .about a:hover { color: rgb(224,128,64); }
+ 
+ .code { border: 1px solid rgba(32,32,32,0.2); color: rgb(32,32,32); font-family: Courier New, Courier, monospace; font-size: 12px; white-space:pre; padding: 10px; margin: 10px; }
+ 
+ .image { border: 1px solid rgba(32,32,32,0.2); color: rgb(32,32,32); font-family: Courier New, Courier, monospace; font-size: 12px; white-space:pre; padding: 10px; margin: 10px; text-align: center; }
+
+</style>
+
+<script >
+
+var Synth, AudioSynth, AudioSynthInstrument;
+!function(){
+ var _encapsulated = false;
+ var AudioSynthInstance = null;
+ var pack = function(c,arg){return [String.fromCharCode(arg&255,(arg>>8)&255),String.fromCharCode(arg&255,(arg>>8)&255,(arg>>16)&255,(arg>>24)&255)][c];};
+ var setPrivateVar = function(n,v,w,e){Object.defineProperty(this,n,{value:v,writable:!!w,enumerable:!!e});};
+ var setPublicVar = function(n,v,w){setPrivateVar.call(this,n,v,w,true);};
+ AudioSynthInstrument = function AudioSynthInstrument(){this.__init__.apply(this,arguments);};
+ var setPriv = setPrivateVar.bind(AudioSynthInstrument.prototype);
+ var setPub = setPublicVar.bind(AudioSynthInstrument.prototype);
+ setPriv('__init__', function(a,b,c) {
+  if(!_encapsulated) { throw new Error('AudioSynthInstrument can only be instantiated from the createInstrument method of the AudioSynth object.'); }
+  setPrivateVar.call(this, '_parent', a);
+  setPublicVar.call(this, 'name', b);
+  setPrivateVar.call(this, '_soundID', c);
+ });
+ setPub('play', function(note, octave, duration) {
+  return this._parent.play(this._soundID, note, octave, duration);
+ });
+ setPub('generate', function(note, octave, duration) {
+  return this._parent.generate(this._soundID, note, octave, duration);
+ });
+ AudioSynth = function AudioSynth(){if(AudioSynthInstance instanceof AudioSynth){return AudioSynthInstance;}else{ this.__init__(); return this; }};
+ setPriv = setPrivateVar.bind(AudioSynth.prototype);
+ setPub = setPublicVar.bind(AudioSynth.prototype);
+ setPriv('_debug',false,true);
+ setPriv('_bitsPerSample',16);
+ setPriv('_channels',1);
+ setPriv('_sampleRate',44100,true);
+ setPub('setSampleRate', function(v) {
+  this._sampleRate = Math.max(Math.min(v|0,44100), 4000);
+  this._clearCache();
+  return this._sampleRate;
+ });
+ setPub('getSampleRate', function() { return this._sampleRate; });
+ setPriv('_volume',32768,true);
+ setPub('setVolume', function(v) {
+  v = parseFloat(v); if(isNaN(v)) { v = 0; }
+  v = Math.round(v*32768);
+  this._volume = Math.max(Math.min(v|0,32768), 0);
+  this._clearCache();
+  return this._volume;
+ });
+ setPub('getVolume', function() { return Math.round(this._volume/32768*10000)/10000; });
+ setPriv('_notes',{'C':261.63,'C#':277.18,'D':293.66,'D#':311.13,'E':329.63,'F':346.23,'F#':369.99,'G':392.00,'G#':415.30,'A':440.00,'A#':466.16,'B':493.88});
+ setPriv('_fileCache',[],true);
+ setPriv('_temp',{},true);
+ setPriv('_sounds',[],true);
+ setPriv('_mod',[function(i,s,f,x){return Math.sin((2 * Math.PI)*(i/s)*f+x);}]);
+ setPriv('_resizeCache', function() {
+  var f = this._fileCache;
+  var l = this._sounds.length;
+  while(f.length<l) {
+   var octaveList = [];
+   for(var i = 0; i < 8; i++) {
+    var noteList = {};
+    for(var k in this._notes) {
+     noteList[k] = {};
+    } 
+    octaveList.push(noteList);
+   }
+   f.push(octaveList);
+  }
+ });
+ setPriv('_clearCache', function() {
+  this._fileCache = [];
+  this._resizeCache();
+ });
+ setPub('generate', function(sound, note, octave, duration) {
+  var thisSound = this._sounds[sound];
+  if(!thisSound) {
+   for(var i=0;i<this._sounds.length;i++) {
+    if(this._sounds[i].name==sound) {
+     thisSound = this._sounds[i];
+     sound = i;
+     break;
+    }
+   }
+  }
+  if(!thisSound) { throw new Error('Invalid sound or sound ID: ' + sound); }
+  var t = (new Date).valueOf();
+  this._temp = {};
+  octave |= 0;
+  octave = Math.min(8, Math.max(1, octave));
+  var time = !duration?2:parseFloat(duration);
+  if(typeof(this._notes[note])=='undefined') { throw new Error(note + ' is not a valid note.'); }
+  if(typeof(this._fileCache[sound][octave-1][note][time])!='undefined') {
+   if(this._debug) { console.log((new Date).valueOf() - t, 'ms to retrieve (cached)'); }
+   return this._fileCache[sound][octave-1][note][time];
+  } else {
+   var frequency = this._notes[note] * Math.pow(2,octave-4);
+   var data = [];
+   var sampleRate = this._sampleRate;
+   var volume = this._volume;
+   var channels = this._channels;
+   var bitsPerSample = this._bitsPerSample;
+   var attack = thisSound.attack(sampleRate, frequency, volume);
+   var dampen = thisSound.dampen(sampleRate, frequency, volume);
+   var wave = thisSound.wave.bind({modulate: this._mod, vars: this._temp});
+   var val = 0;
+   var curVol = 0;
+
+   for (var i = 0; i < (sampleRate * time); i++) { 
+    if(i<=sampleRate*attack) {
+     curVol = volume * (i/(sampleRate*attack));
+    } else {
+     curVol = volume * Math.pow((1-((i-(sampleRate*attack))/(sampleRate*(time-attack)))),dampen);
+    }
+  
+    val = curVol * Math.min(Math.max(wave(i, sampleRate, frequency, volume), -1), 1);
+    val = String.fromCharCode(val&255, (val>>>8)&255);
+    data.push(val);
+   }
+ 
+   data = data.join('');
+
+   // Format sub-chunk
+   var chunk1 = [
+    'fmt ', // Sub-chunk identifier
+    pack(1, 16), // Chunk length
+    pack(0, 1), // Audio format (1 is linear quantization)
+    pack(0, channels),
+    pack(1, sampleRate),
+    pack(1, sampleRate * channels * bitsPerSample / 8), // Byte rate
+    pack(0, channels * bitsPerSample / 8),
+    pack(0, bitsPerSample)
+   ].join('');
+   // Data sub-chunk (contains the sound)
+   var chunk2 = [
+    'data', // Sub-chunk identifier
+    pack(1, data.length * channels * bitsPerSample / 8), // Chunk length
+    data
+   ].join('');
+   // Header
+   var header = [
+    'RIFF',
+    pack(1, 4 + (8 + chunk1.length) + (8 + chunk2.length)), // Length
+    'WAVE'
+   ].join('');
+   var out = [header, chunk1, chunk2].join('');
+   var dataURI = 'data:audio/wav;base64,' + escape(window.btoa(out)); 
+   this._fileCache[sound][octave-1][note][time] = dataURI;
+   if(this._debug) { console.log((new Date).valueOf() - t, 'ms to generate'); }
+   return dataURI;
+  }
+ });
+ setPub('play', function(note, octave, duration) {
+  var src = this.generate(note, octave, duration);
+  var audio = new Audio(src);
+  audio.addEventListener('ended', function() { audio = null; });
+  audio.autoplay = true;
+  audio.setAttribute('type', 'audio/wav');
+  return true;
+ });
+ setPub('debug', function() { this._debug = true; });
+ setPub('createInstrument', function(sound) {
+  var n = 0;
+  var found = false;
+  if(typeof(sound)=='string') {
+   for(var i=0;i<this._sounds.length;i++) {
+    if(this._sounds[i].name==sound) {
+     found = true;
+     n = i;
+     break;
+    }
+   }
+  } else {
+   if(this._sounds[sound]) {
+    n = sound;
+    sound = this._sounds[n].name;
+    found = true;
+   }
+  }
+  if(!found) { throw new Error('Invalid sound or sound ID: ' + sound); }
+  _encapsulated = true;
+  var ins = new AudioSynthInstrument(this, sound, n);
+  _encapsulated = false;
+  return ins;
+ });
+ setPub('listSounds', function() {
+  var r = [];
+  for(var i=0;i<this._sounds.length;i++) {
+   r.push(this._sounds[i].name);
+  }
+  return r;
+ });
+ setPriv('__init__', function(){
+  this._resizeCache();
+ });
+ setPub('loadSoundProfile', function() {
+  for(var i=0,len=arguments.length;i<len;i++) {
+   o = arguments[i];
+   if(!(o instanceof Object)) { throw new Error('Invalid sound profile.'); }
+   this._sounds.push(o);
+  }
+  this._resizeCache();
+  return true;
+ });
+ setPub('loadModulationFunction', function() {
+  for(var i=0,len=arguments.length;i<len;i++) {
+   f = arguments[i];
+   if(typeof(f)!='function') { throw new Error('Invalid modulation function.'); }
+   this._mod.push(f);
+  }
+  return true;
+ });
+ AudioSynthInstance = new AudioSynth();
+ Synth = AudioSynthInstance;
+}();
+
+Synth.loadModulationFunction(
+ function(i, sampleRate, frequency, x) { return 1 * Math.sin(2 * Math.PI * ((i / sampleRate) * frequency) + x); },
+ function(i, sampleRate, frequency, x) { return 1 * Math.sin(4 * Math.PI * ((i / sampleRate) * frequency) + x); },
+ function(i, sampleRate, frequency, x) { return 1 * Math.sin(8 * Math.PI * ((i / sampleRate) * frequency) + x); },
+ function(i, sampleRate, frequency, x) { return 1 * Math.sin(0.5 * Math.PI * ((i / sampleRate) * frequency) + x); },
+ function(i, sampleRate, frequency, x) { return 1 * Math.sin(0.25 * Math.PI * ((i / sampleRate) * frequency) + x); },
+ function(i, sampleRate, frequency, x) { return 0.5 * Math.sin(2 * Math.PI * ((i / sampleRate) * frequency) + x); },
+ function(i, sampleRate, frequency, x) { return 0.5 * Math.sin(4 * Math.PI * ((i / sampleRate) * frequency) + x); },
+ function(i, sampleRate, frequency, x) { return 0.5 * Math.sin(8 * Math.PI * ((i / sampleRate) * frequency) + x); },
+ function(i, sampleRate, frequency, x) { return 0.5 * Math.sin(0.5 * Math.PI * ((i / sampleRate) * frequency) + x); },
+ function(i, sampleRate, frequency, x) { return 0.5 * Math.sin(0.25 * Math.PI * ((i / sampleRate) * frequency) + x); }
+);
+
+Synth.loadSoundProfile({
+ name: 'piano',
+ attack: function() { return 0.002; },
+ dampen: function(sampleRate, frequency, volume) {
+  return Math.pow(0.5*Math.log((frequency*volume)/sampleRate),2);
+ },
+ wave: function(i, sampleRate, frequency, volume) {
+  var base = this.modulate[0];
+  return this.modulate[1](
+   i,
+   sampleRate,
+   frequency,
+   Math.pow(base(i, sampleRate, frequency, 0), 2) +
+    (0.75 * base(i, sampleRate, frequency, 0.25)) +
+    (0.1 * base(i, sampleRate, frequency, 0.5))
+  );
+ }
+},
+{
+ name: 'organ',
+ attack: function() { return 0.3 },
+ dampen: function(sampleRate, frequency) { return 1+(frequency * 0.01); },
+ wave: function(i, sampleRate, frequency) {
+  var base = this.modulate[0];
+  return this.modulate[1](
+   i,
+   sampleRate,
+   frequency,
+   base(i, sampleRate, frequency, 0) +
+    0.5*base(i, sampleRate, frequency, 0.25) +
+    0.25*base(i, sampleRate, frequency, 0.5)
+  );
+ }
+},
+{
+ name: 'acoustic',
+ attack: function() { return 0.002; },
+ dampen: function() { return 1; },
+ wave: function(i, sampleRate, frequency) {
+
+  var vars = this.vars;
+  vars.valueTable = !vars.valueTable?[]:vars.valueTable;
+  if(typeof(vars.playVal)=='undefined') { vars.playVal = 0; }
+  if(typeof(vars.periodCount)=='undefined') { vars.periodCount = 0; }
+ 
+  var valueTable = vars.valueTable;
+  var playVal = vars.playVal;
+  var periodCount = vars.periodCount;
+
+  var period = sampleRate/frequency;
+  var p_hundredth = Math.floor((period-Math.floor(period))*100);
+
+  var resetPlay = false;
+
+  if(valueTable.length<=Math.ceil(period)) {
+ 
+   valueTable.push(Math.round(Math.random())*2-1);
+ 
+   return valueTable[valueTable.length-1];
+ 
+  } else {
+ 
+   valueTable[playVal] = (valueTable[playVal>=(valueTable.length-1)?0:playVal+1] + valueTable[playVal]) * 0.5;
+ 
+   if(playVal>=Math.floor(period)) {
+    if(playVal<Math.ceil(period)) {
+     if((periodCount%100)>=p_hundredth) {
+      // Reset
+      resetPlay = true;
+      valueTable[playVal+1] = (valueTable[0] + valueTable[playVal+1]) * 0.5;
+      vars.periodCount++; 
+     }
+    } else {
+     resetPlay = true; 
+    }
+   }
+ 
+   var _return = valueTable[playVal];
+   if(resetPlay) { vars.playVal = 0; } else { vars.playVal++; }
+ 
+   return _return;
+ 
+  }
+ }
+},
+{
+ name: 'edm',
+ attack: function() { return 0.002; },
+ dampen: function() { return 1; },
+ wave: function(i, sampleRate, frequency) {
+  var base = this.modulate[0];
+  var mod = this.modulate.slice(1);
+  return mod[0](
+   i,
+   sampleRate,
+   frequency,
+   mod[9](
+    i,
+    sampleRate,
+    frequency,
+    mod[2](
+     i,
+     sampleRate,
+     frequency,
+     Math.pow(base(i, sampleRate, frequency, 0), 3) +
+      Math.pow(base(i, sampleRate, frequency, 0.5), 5) +
+      Math.pow(base(i, sampleRate, frequency, 1), 7)
+    )
+   ) +
+    mod[8](
+     i,
+     sampleRate,
+     frequency,
+     base(i, sampleRate, frequency, 1.75)
+    )
+  );
+ }
+});
+
+</script>
+<script>
+
+function AudioSynthView() {
+
+ var isMobile = !!navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i);
+ if(isMobile) { var evtListener = ['touchstart', 'touchend']; } else { var evtListener = ['mousedown', 'mouseup']; }
+
+ var __audioSynth = new AudioSynth();
+ __audioSynth.setVolume(0.5);
+ var __octave = 4;
+ 
+ // Change octave
+ var fnChangeOctave = function(x) {
+
+  x |= 0;
+ 
+  __octave += x;
+ 
+  __octave = Math.min(5, Math.max(3, __octave));
+ 
+  var octaveName = document.getElementsByName('OCTAVE_LABEL');
+  var i = octaveName.length;
+  while(i--) {
+   var val = parseInt(octaveName[i].getAttribute('value'));
+   octaveName[i].innerHTML = (val + __octave);
+  }
+ 
+  document.getElementById('OCTAVE_LOWER').innerHTML = __octave-1;
+  document.getElementById('OCTAVE_UPPER').innerHTML = __octave+1;
+ 
+ };
+
+ // Key bindings, notes to keyCodes.
+ var keyboard = {
+  
+   /* 2 */
+   50: 'C#,-1',
+   
+   /* 3 */
+   51: 'D#,-1',
+   
+   /* 5 */
+   53: 'F#,-1',
+   
+   /* 6 */
+   54: 'G#,-1',
+   
+   /* 7 */
+   55: 'A#,-1',
+   
+   /* 9 */
+   57: 'C#,0',
+   
+   /* 0 */
+   48: 'D#,0',
+   
+   /* + */
+   187: 'F#,0',
+   61: 'F#,0',
+   
+   /* Q */
+   81: 'C,-1',
+   
+   /* W */
+   87: 'D,-1',
+   
+   /* E */
+   69: 'E,-1',
+   
+   /* R */
+   82: 'F,-1',
+   
+   /* T */
+   84: 'G,-1',
+   
+   /* Y */
+   89: 'A,-1',
+   
+   /* U */
+   85: 'B,-1',
+   
+   /* I */
+   73: 'C,0',
+   
+   /* O */
+   79: 'D,0',
+   
+   /* P */
+   80: 'E,0',
+   
+   /* [ */
+   219: 'F,0',
+   
+   /* ] */
+   221: 'G,0',
+  
+   /* A */
+   65: 'G#,0',
+  
+   /* S */
+   83: 'A#,0',
+   
+   /* F */
+   70: 'C#,1',
+  
+   /* G */
+   71: 'D#,1',
+  
+   /* J */
+   74: 'F#,1',
+  
+   /* K */
+   75: 'G#,1',
+  
+   /* L */
+   76: 'A#,1',
+  
+   /* Z */
+   90: 'A,0',
+  
+   /* X */
+   88: 'B,0',
+  
+   /* C */
+   67: 'C,1',
+  
+   /* V */
+   86: 'D,1',
+  
+   /* B */
+   66: 'E,1',
+  
+   /* N */
+   78: 'F,1',
+  
+   /* M */
+   77: 'G,1',
+   
+   /* , */
+   188: 'A,1',
+   
+   /* . */
+   190: 'B,1'
+  
+  };
+ 
+ var reverseLookupText = {};
+ var reverseLookup = {};
+
+ // Create a reverse lookup table.
+ for(var i in keyboard) {
+ 
+  var val;
+
+  switch(i|0) {
+  
+   case 187:
+    val = 61;
+    break;
+   
+   case 219:
+    val = 91;
+    break;
+   
+   case 221:
+    val = 93;
+    break;
+   
+   case 188:
+    val = 44;
+    break;
+   
+   case 190:
+    val = 46;
+    break;
+   
+   default:
+    val = i;
+    break;
+   
+  }
+ 
+  reverseLookupText[keyboard[i]] = val;
+  reverseLookup[keyboard[i]] = i;
+ 
+ }
+
+ // Keys you have pressed down.
+ var keysPressed = [];
+ var visualKeyboard = null;
+ var selectSound = null;
+
+ var fnCreateKeyboard = function(keyboardElement) {
+  // Generate keyboard
+  // This is our main keyboard element! It's populated dynamically based on what you've set above.
+  visualKeyboard = document.getElementById('keyboard');
+  selectSound = document.getElementById('sound');
+
+  var iKeys = 0;
+  var iWhite = 0;
+  var notes = __audioSynth._notes;
+
+  for(var i=-1;i<=1;i++) {
+   for(var n in notes) {
+    if(n[2]!='b') {
+     var thisKey = document.createElement('div');
+     if(n.length>1) {
+      thisKey.className = 'black key';
+      thisKey.style.width = '30px';
+      thisKey.style.height = '120px';
+      thisKey.style.left = (40 * (iWhite - 1)) + 25 + 'px';
+     } else {
+      thisKey.className = 'white key';
+      thisKey.style.width = '40px';
+      thisKey.style.height = '200px';
+      thisKey.style.left = 40 * iWhite + 'px';
+      iWhite++;
+     }
+     var label = document.createElement('div');
+     label.className = 'label';
+     label.innerHTML = '<b>' + String.fromCharCode(reverseLookupText[n + ',' + i]) + '</b>' + '<br /><br />' + n.substr(0,1) +
+      '<span name="OCTAVE_LABEL" value="' + i + '">' + (__octave + parseInt(i)) + '</span>' + (n.substr(1,1)?n.substr(1,1):'');
+     thisKey.appendChild(label);
+     thisKey.setAttribute('ID', 'KEY_' + n + ',' + i);
+     thisKey.addEventListener(evtListener[0], (function(_temp) { return function() { fnPlayKeyboard({keyCode:_temp}); } })(reverseLookup[n + ',' + i]));
+     visualKeyboard[n + ',' + i] = thisKey;
+     visualKeyboard.appendChild(thisKey);
+     iKeys++;
+    }
+   }
+  }
+
+  visualKeyboard.style.width = iWhite * 40 + 'px';
+
+  window.addEventListener(evtListener[1], function() { n = keysPressed.length; while(n--) { fnRemoveKeyBinding({keyCode:keysPressed[n]}); } });
+ 
+ };
+
+ // Creates our audio player
+ var fnPlayNote = function(note, octave) {
+
+  src = __audioSynth.generate(selectSound.value, note, octave, 2);
+  container = new Audio(src);
+  container.addEventListener('ended', function() { container = null; });
+  container.addEventListener('loadeddata', function(e) { e.target.play(); });
+  container.autoplay = false;
+  container.setAttribute('type', 'audio/wav');
+  /*document.body.appendChild(container);*/
+  container.load();
+  return container;
+ 
+ };
+
+ // Detect keypresses, play notes.
+
+ var fnPlayKeyboard = function(e) {
+ 
+  var i = keysPressed.length;
+  while(i--) {
+   if(keysPressed[i]==e.keyCode) {
+    return false; 
+   }
+  }
+  keysPressed.push(e.keyCode);
+ 
+  switch(e.keyCode) {
+  
+   // left
+   case 37:
+    fnChangeOctave(-1);
+    break;
+  
+   // right
+   case 39:
+    fnChangeOctave(1);
+    break;
+  
+   // space
+   case 16:
+    break;
+    fnPlaySong([
+     ['E,0', 8],
+     ['D,0', 8],
+     ['C,0', 2],
+     ['C,0', 8],
+     ['D,0', 8],
+     ['C,0', 8],
+     ['E,0', 8],
+     ['D,0', 1],
+     ['C,0', 8],
+     ['D,0', 8],
+     ['E,0', 2],
+     ['A,0', 8],
+     ['G,0', 8],
+     ['E,0', 8],
+     ['C,0', 8],
+     ['D,0', 1],
+     ['A,0', 8],
+     ['B,0', 8],
+     ['C,1', 2],
+     ['B,0', 8],
+     ['C,1', 8],
+     ['D,1', 8],
+     ['C,1', 8],
+     ['A,0', 1],
+     ['G,0', 8],
+     ['A,0', 8],
+     ['B,0', 2],
+     ['C,1', 8],
+     ['B,0', 8],
+     ['A,0', 8],
+     ['G,0', 8],
+     ['A,0', 1]
+    ]);
+    break;
+  
+  }
+ 
+  if(keyboard[e.keyCode]) {
+   if(visualKeyboard[keyboard[e.keyCode]]) {
+    visualKeyboard[keyboard[e.keyCode]].style.backgroundColor = '#ff0000';
+    visualKeyboard[keyboard[e.keyCode]].style.marginTop = '5px';
+    visualKeyboard[keyboard[e.keyCode]].style.boxShadow = 'none';
+   }
+   var arrPlayNote = keyboard[e.keyCode].split(',');
+   var note = arrPlayNote[0];
+   var octaveModifier = arrPlayNote[1]|0;
+   fnPlayNote(note, __octave + octaveModifier);
+  } else {
+   return false; 
+  }
+ 
+ }
+
+ // Remove key bindings once note is done.
+
+ var fnRemoveKeyBinding = function(e) {
+ 
+  var i = keysPressed.length;
+  while(i--) {
+   if(keysPressed[i]==e.keyCode) {
+    if(visualKeyboard[keyboard[e.keyCode]]) {
+     visualKeyboard[keyboard[e.keyCode]].style.backgroundColor = '';
+     visualKeyboard[keyboard[e.keyCode]].style.marginTop = '';
+     visualKeyboard[keyboard[e.keyCode]].style.boxShadow = '';
+    }
+    keysPressed.splice(i, 1);
+   }
+  }
+ 
+ }
+
+ var fnPlaySong = function(arr) {
+ 
+  if(arr.length>0) {
+  
+   var noteLen = 1000*(1/parseInt(arr[0][1]));
+   if(!(arr[0][0] instanceof Array)) {
+    arr[0][0] = [arr[0][0]]; 
+   }
+   var i = arr[0][0].length;
+   var keys = [];
+   while(i--) {
+    keys.unshift(reverseLookup[arr[0][0][i]]);
+    fnPlayKeyboard({keyCode:keys[0]});
+   }
+   arr.shift();
+   setTimeout(function(array, val){ return function() { var i = val.length; while(i--) { fnRemoveKeyBinding({keyCode:val[i]}); } fnPlaySong(array); } }(arr, keys), noteLen);
+  
+  }
+ 
+ };
+
+ // Set up global event listeners
+
+ window.addEventListener('keydown', fnPlayKeyboard);
+ window.addEventListener('keyup', fnRemoveKeyBinding);
+ document.getElementById('-_OCTAVE').addEventListener('click', function() { fnChangeOctave(-1); });
+ document.getElementById('+_OCTAVE').addEventListener('click', function() { fnChangeOctave(1); });
+ 
+ Object.defineProperty(this, 'draw', {
+  value: fnCreateKeyboard
+ });
+
+}
+
+</script>
+</head>
+
+<div id="mus">
+<div class="keyboard-options">
+Sound
+<select id="sound">
+ <option value="0" selected="selected">Keyboard</option>
+ <option value="1">Organ</option>
+    <option value="2">Acoustic Guitar</option>
+    <option value="3">EDM, bro!</option>
+</select>
+<div style="width: 840px;" id="keyboard" class="keyboard-holder"><div id="KEY_C,-1" style="width: 40px; height: 200px; left: 0px;" class="white key"><div class="label"><b>Q</b><br><br>C<span name="OCTAVE_LABEL" value="-1">3</span></div></div><div id="KEY_C#,-1" style="width: 30px; height: 120px; left: 25px;" class="black key"><div class="label"><b>2</b><br><br>C<span name="OCTAVE_LABEL" value="-1">3</span>#</div></div><div id="KEY_D,-1" style="width: 40px; height: 200px; left: 40px;" class="white key"><div class="label"><b>W</b><br><br>D<span name="OCTAVE_LABEL" value="-1">3</span></div></div><div id="KEY_D#,-1" style="width: 30px; height: 120px; left: 65px;" class="black key"><div class="label"><b>3</b><br><br>D<span name="OCTAVE_LABEL" value="-1">3</span>#</div></div><div id="KEY_E,-1" style="width: 40px; height: 200px; left: 80px;" class="white key"><div class="label"><b>E</b><br><br>E<span name="OCTAVE_LABEL" value="-1">3</span></div></div><div id="KEY_F,-1" style="width: 40px; height: 200px; left: 120px;" class="white key"><div class="label"><b>R</b><br><br>F<span name="OCTAVE_LABEL" value="-1">3</span></div></div><div id="KEY_F#,-1" style="width: 30px; height: 120px; left: 145px;" class="black key"><div class="label"><b>5</b><br><br>F<span name="OCTAVE_LABEL" value="-1">3</span>#</div></div><div id="KEY_G,-1" style="width: 40px; height: 200px; left: 160px;" class="white key"><div class="label"><b>T</b><br><br>G<span name="OCTAVE_LABEL" value="-1">3</span></div></div><div id="KEY_G#,-1" style="width: 30px; height: 120px; left: 185px;" class="black key"><div class="label"><b>6</b><br><br>G<span name="OCTAVE_LABEL" value="-1">3</span>#</div></div><div id="KEY_A,-1" style="width: 40px; height: 200px; left: 200px;" class="white key"><div class="label"><b>Y</b><br><br>A<span name="OCTAVE_LABEL" value="-1">3</span></div></div><div id="KEY_A#,-1" style="width: 30px; height: 120px; left: 225px;" class="black key"><div class="label"><b>7</b><br><br>A<span name="OCTAVE_LABEL" value="-1">3</span>#</div></div><div id="KEY_B,-1" style="width: 40px; height: 200px; left: 240px;" class="white key"><div class="label"><b>U</b><br><br>B<span name="OCTAVE_LABEL" value="-1">3</span></div></div><div id="KEY_C,0" style="width: 40px; height: 200px; left: 280px;" class="white key"><div class="label"><b>I</b><br><br>C<span name="OCTAVE_LABEL" value="0">4</span></div></div><div id="KEY_C#,0" style="width: 30px; height: 120px; left: 305px;" class="black key"><div class="label"><b>9</b><br><br>C<span name="OCTAVE_LABEL" value="0">4</span>#</div></div><div id="KEY_D,0" style="width: 40px; height: 200px; left: 320px;" class="white key"><div class="label"><b>O</b><br><br>D<span name="OCTAVE_LABEL" value="0">4</span></div></div><div id="KEY_D#,0" style="width: 30px; height: 120px; left: 345px;" class="black key"><div class="label"><b>0</b><br><br>D<span name="OCTAVE_LABEL" value="0">4</span>#</div></div><div id="KEY_E,0" style="width: 40px; height: 200px; left: 360px;" class="white key"><div class="label"><b>P</b><br><br>E<span name="OCTAVE_LABEL" value="0">4</span></div></div><div id="KEY_F,0" style="width: 40px; height: 200px; left: 400px;" class="white key"><div class="label"><b>[</b><br><br>F<span name="OCTAVE_LABEL" value="0">4</span></div></div><div id="KEY_F#,0" style="width: 30px; height: 120px; left: 425px;" class="black key"><div class="label"><b>=</b><br><br>F<span name="OCTAVE_LABEL" value="0">4</span>#</div></div><div id="KEY_G,0" style="width: 40px; height: 200px; left: 440px;" class="white key"><div class="label"><b>]</b><br><br>G<span name="OCTAVE_LABEL" value="0">4</span></div></div><div id="KEY_G#,0" style="width: 30px; height: 120px; left: 465px;" class="black key"><div class="label"><b>A</b><br><br>G<span name="OCTAVE_LABEL" value="0">4</span>#</div></div><div id="KEY_A,0" style="width: 40px; height: 200px; left: 480px;" class="white key"><div class="label"><b>Z</b><br><br>A<span name="OCTAVE_LABEL" value="0">4</span></div></div><div id="KEY_A#,0" style="width: 30px; height: 120px; left: 505px;" class="black key"><div class="label"><b>S</b><br><br>A<span name="OCTAVE_LABEL" value="0">4</span>#</div></div><div id="KEY_B,0" style="width: 40px; height: 200px; left: 520px;" class="white key"><div class="label"><b>X</b><br><br>B<span name="OCTAVE_LABEL" value="0">4</span></div></div><div id="KEY_C,1" style="width: 40px; height: 200px; left: 560px;" class="white key"><div class="label"><b>C</b><br><br>C<span name="OCTAVE_LABEL" value="1">5</span></div></div><div id="KEY_C#,1" style="width: 30px; height: 120px; left: 585px;" class="black key"><div class="label"><b>F</b><br><br>C<span name="OCTAVE_LABEL" value="1">5</span>#</div></div><div id="KEY_D,1" style="width: 40px; height: 200px; left: 600px;" class="white key"><div class="label"><b>V</b><br><br>D<span name="OCTAVE_LABEL" value="1">5</span></div></div><div id="KEY_D#,1" style="width: 30px; height: 120px; left: 625px;" class="black key"><div class="label"><b>G</b><br><br>D<span name="OCTAVE_LABEL" value="1">5</span>#</div></div><div id="KEY_E,1" style="width: 40px; height: 200px; left: 640px;" class="white key"><div class="label"><b>B</b><br><br>E<span name="OCTAVE_LABEL" value="1">5</span></div></div><div id="KEY_F,1" style="width: 40px; height: 200px; left: 680px;" class="white key"><div class="label"><b>N</b><br><br>F<span name="OCTAVE_LABEL" value="1">5</span></div></div><div id="KEY_F#,1" style="width: 30px; height: 120px; left: 705px;" class="black key"><div class="label"><b>J</b><br><br>F<span name="OCTAVE_LABEL" value="1">5</span>#</div></div><div id="KEY_G,1" style="width: 40px; height: 200px; left: 720px;" class="white key"><div class="label"><b>M</b><br><br>G<span name="OCTAVE_LABEL" value="1">5</span></div></div><div id="KEY_G#,1" style="width: 30px; height: 120px; left: 745px;" class="black key"><div class="label"><b>K</b><br><br>G<span name="OCTAVE_LABEL" value="1">5</span>#</div></div><div id="KEY_A,1" style="width: 40px; height: 200px; left: 760px;" class="white key"><div class="label"><b>,</b><br><br>A<span name="OCTAVE_LABEL" value="1">5</span></div></div><div id="KEY_A#,1" style="width: 30px; height: 120px; left: 785px;" class="black key"><div class="label"><b>L</b><br><br>A<span name="OCTAVE_LABEL" value="1">5</span>#</div></div><div id="KEY_B,1" style="width: 40px; height: 200px; left: 800px;" class="white key"><div class="label"><b>.</b><br><br>B<span name="OCTAVE_LABEL" value="1">5</span></div></div></div>
+<div class="keyboard-options">
+Range [C<span id="OCTAVE_LOWER">3</span>-B<span id="OCTAVE_UPPER">5</span>]
+<input id="-_OCTAVE" value="-" type="button">
+<input id="+_OCTAVE" value="+" type="button"><br>
+<i>(Use left/right arrows to adjust with keyboard)</i>
+</div>
+
+    <div class="footer"></div>
+</div>
+
+<script type="text/javascript">
+
+var a = new AudioSynthView();
+a.draw();
+
+</script>
+
+</div></html>
