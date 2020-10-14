@@ -1,0 +1,1616 @@
+<!doctype html>
+<html><head>
+    <script>
+function CanvasEngine(id){
+ if(!id){var id = "CanvasEngine";}
+ var canvas = document.getElementById(id);
+ var ctx = this.ctx = canvas.getContext("2d");
+ var deltaTime = 0,prevTimeStamp=null;
+ var screenList = [], currentScreen;
+ var engineRunning = false;
+ var keyPressList = [],keyUpList = [],keyDownList = [];
+ var thisEngine = this;
+ var objectTransforms = [];
+ var drawList = [];
+
+ this.startEngine = function(){
+  canvas.setAttribute("style","display: block; position: absolute; top: 0px; left: 0px;");
+  setCanvasToWindow();
+  window.addEventListener('resize', setCanvasToWindow, false);
+  window.requestAnimationFrame(redraw);
+  canvas.addEventListener("click",function(e){
+   console.log(e);
+   mouseX = e.offsetX;
+   mouseY = e.offsetY;
+  });
+  if(canvas.addEventListener){
+   canvas.addEventListener("mousewheel",onMouseWheelFunctions,false);
+   canvas.addEventListener("DOMMouseScroll",onMouseWheelFunctions,false);
+  }else{
+   canvas.addEventListener("onmousewheel",onMouseWheelFunctions);
+  }
+  engineRunning = true;
+ }
+
+ this.stopEngine = function(){
+  engineRunning = false;
+ }
+
+ function setCanvasToWindow(){
+  if(currentScreen){
+   screenList[currentScreen].onResize(canvas.width,canvas.height);
+  }
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  thisEngine.width = canvas.width;
+  thisEngine.height = canvas.height;
+ }
+
+ function redraw(timeStamp){
+  if(!prevTimeStamp){
+   prevTimeStamp = timeStamp;
+  }else{
+   deltaTime = timeStamp - prevTimeStamp;
+   prevTimeStamp = timeStamp;
+  }
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  if(currentScreen){
+   var backgroundColor = screenList[currentScreen].backgroundColor;
+   if(backgroundColor){
+    ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = backgroundColor;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+   }
+
+   var objArray = screenList[currentScreen]["objects"];
+   drawList = [];
+   for(key in objArray){
+    var object = objArray[key];
+    addToDrawList(object);
+   }
+   drawList.sort(function(a,b){
+    return a.zIndex - b.zIndex;
+   });
+   for(var i=0; i<drawList.length; i++){
+    drawObject(drawList[i]);
+   }
+
+
+   if(screenList[currentScreen].debug){
+    ctx.fillStyle = "white";
+    ctx.font = "12px sans-serif";
+    ctx.textBaseline = "top";
+    ctx.fillText(1000/deltaTime, 10, 20);
+   }
+
+   screenList[currentScreen].afterDraw(ctx,ctx.getImageData(0,0,canvas.width,canvas.height),deltaTime);
+  }
+
+  if(engineRunning){
+   window.requestAnimationFrame(redraw);
+  }
+ }
+
+ this.addScreen = function(name,set){
+  if(!(name in screenList)){
+   screenList[name] = {
+    name: name,
+    objects: [],
+    backgroundColor: null,
+    onResize: function(w,h){
+
+    },
+    keyPressList: [],
+    keyDownList: [],
+    keyUpList: [],
+    onMouseWheel: function(){},
+    beforeDraw: function(){},
+    afterDraw: function(){},
+    setProperties: function(properties){
+     for(key in properties){
+      this[key] = properties[key];  
+     }
+     return this;
+    }
+   };
+   if(set){
+    this.setScreen(name);
+   }
+   return screenList[name];
+  }else{
+   return false;
+  }
+ }
+
+ this.setScreen = function(name){
+  if(name in screenList){
+   currentScreen = name;
+   return screenList[name];
+  }else{
+   return false;
+  }
+ }
+
+ this.getScreenList = function(){
+  var screens = [];
+  for (key in screenList) {
+   if (screenList.hasOwnProperty(key)) {
+    screens.push(key);
+   }
+  }
+  return screens;
+ }
+
+ this.getScreen = function(screen){
+  if(!screen){if(currentScreen){screen=currentScreen;}else{return false;}}
+  if(screen in screenList){
+   return screenList[screen];
+  }else{
+   return false;
+  }
+ }
+
+ var addObject = this.addObject = function(name,screen,parentObject){
+  if(!screen){if(currentScreen){screen=currentScreen;}else{return false;}}
+  if(!name){return false;}
+  if(parentObject){
+   if(name in parentObject.subObjects){
+    return false;
+   }
+  }else{
+   if(name in screenList[screen]['objects']){
+    return false;
+   }
+  }
+  var objectToAdd = {
+   name: name,
+   pos: [0, 0],
+   anchor: null,
+   rot: 0,
+   scale: [1, 1],
+   zIndex: 0,
+   visible: true,
+   drawHitbox: false,
+   hitbox: null,
+   hitboxColor: "#FF0000",
+   type: 'null',
+   src: null,
+   antialiased: true,
+   compositMode: "source-over",
+   shadowBlur: 0,
+   shadowColor: "rgba(0,0,0,0)",
+   shadowX: 0,
+   shadowY: 0,
+   subObjects: {},
+   transforms: [],
+   fill: true,
+   fillColor: "black",
+   strokeColor: "black",
+   strokeSize: 0,
+   setProperties: function(properties){
+    for(key in properties){
+     this[key] = properties[key];  
+    }
+    return this;
+   },
+   imageLoaded: false,
+   loadImage: function(){
+    if(this.src && !this.imageLoaded){
+     this.img = new Image();
+     this.img.addEventListener("load", function(){
+      getObject(name,screen).imageLoaded = true;
+      if(getObject(name,screen).hitbox == null){
+       getObject(name,screen).calcHitbox();
+      }
+      if(getObject(name,screen).anchor == null){
+       getObject(name,screen).calcAnchor();
+      }
+     }, false);
+     this.img.src = this.src;
+     return this;
+    }else{
+     return this;
+    }
+   },
+   calcHitbox: function(callback){
+    if(this.type=='img'){
+     var maxX = this.img.naturalWidth;
+     var maxY = this.img.naturalHeight;
+     var minX = minY = 0;
+     var doSet = true;
+    }else if(this.type=='text'){
+     this.calcNewLines();
+     var minX = minY = 0;
+     var maxX = this.textCalculatedWidth;
+     var maxY = this.newLineAmount*this.scale[1]*this.fontSize*this.textLeading;
+     var doSet = true;
+    }else if(this.type=='rect'){
+     var minX = minY = 0;
+     var maxX = this.rectWidth;
+     var maxY = this.rectHeight;
+     var doSet = true;
+    }else if(this.type=='null'){
+     var doSet = false;
+    }else{
+     var doSet = false;
+    }
+    if(doSet){
+     this.hitbox = [ [minX,minY], [maxX,minY], [maxX,maxY], [minX,maxY] ];
+     this.height = Math.abs(minY - maxY);
+     this.width = Math.abs(minX - maxX);
+    }
+    if(callback){
+     callback(this.hitbox,minX,maxX,minY,maxY);
+    }
+    return this;
+   },
+   calcNewLines: function() {
+    ctx.fillStyle = this.textColor;
+    ctx.font = this.fontSize+this.fontSizeUnits+" "+this.font;
+    ctx.textBaseline = "top";
+    ctx.textAlign = this.textAlign;
+
+    if(this.textMaxLineWidth && this.textMaxLineWidth>0){
+     this.textCalculatedNewLines = '';
+     var paragraphs = this.text.split("\n");
+     var maxCalculatedWidth = 0;
+     for(p in paragraphs){
+      var words = paragraphs[p].split(" ");
+      var newParagrah = '';
+      var thisLine = '';
+      for(w in words){
+       if(w==0){
+        thisLine = words[w];
+       }else{
+        thisLine = thisLine+' '+words[w];
+       }
+       var width = ctx.measureText(thisLine).width;
+       maxCalculatedWidth = Math.max(maxCalculatedWidth,width);
+       var separator = ' ';
+       var newWord = words[w];
+       if(width>this.textMaxLineWidth){
+        separator='\n';
+        thisLine = words[w];
+        width = ctx.measureText(thisLine).width;
+        maxCalculatedWidth = Math.max(maxCalculatedWidth,width);
+        if(width>this.textMaxLineWidth){
+         var characters = newWord.split('');
+         newWord = '';
+         thisLine = '';
+         for(c in characters){
+          thisLine = thisLine+characters[c];
+          width = ctx.measureText(thisLine).width;
+          maxCalculatedWidth = Math.max(maxCalculatedWidth,width);
+          if(width>this.textMaxLineWidth){
+           newWord = newWord+'\n'+characters[c];
+           thisLine = characters[c];
+          }else{
+           newWord = newWord+characters[c];
+          }
+         }
+        }
+       }
+       if(w==0){
+        newParagrah = newWord;
+       }else{
+        newParagrah = newParagrah+separator+newWord;
+       }
+      }
+      if(p==0){
+       this.textCalculatedNewLines = newParagrah;
+      }else{
+       this.textCalculatedNewLines = this.textCalculatedNewLines+'\n'+newParagrah;
+      }
+     }
+     this.textCalculatedWidth = maxCalculatedWidth;
+    }else{
+     this.textCalculatedNewLines = this.text;
+    }
+    var textArray = this.textCalculatedNewLines.split('\n');
+    this.newLineAmount = textArray.length;
+    return this;
+   },
+   textCalculatedNewLines: '',
+   calcAnchor: function(){
+    if(this.type=='img' || this.type=='text' || this.type=='rect'){
+     // var w = this.img.naturalWidth;
+     // var h = this.img.naturalHeight;
+     this.anchor = [this.width/2, this.height/2];
+    }
+    return this;
+   },
+   font: 'sans-serif',
+   fontSize: 10,
+   fontSizeUnits: 'px',
+   textAlign: "start",
+   textLeading: 1,
+   textMaxLineWidth: 0,
+   newLineAmount: null,
+   textCalculatedWidth: null,
+   text: '',
+   textColors: {},
+   rectWidth: 100,
+   rectHeight: 100,
+   linVectorPoints: [],
+   vectorClosePath: false,
+   vectorStrokeJoin: "miter",
+   vectorStrokeCap: "butt",
+   addObject: function(name,screen){
+    return addObject(name,screen,this);
+   },
+   getObject: function(name,screen){
+    return getObject(name,screen,this);
+   },
+   remove: function(){
+    delete screenList[screen]["objects"][name];
+   }
+  };
+  if(parentObject){
+   parentObject.subObjects[name] = objectToAdd;
+  }else{
+   screenList[screen]['objects'][name] = objectToAdd;
+  }
+  return objectToAdd;
+ }
+
+ var getObject = this.getObject = function(name,screen,parentObject){
+  if(!screen){if(currentScreen){screen=currentScreen;}else{return false;}}
+  if(!name){return false;}
+  if(parentObject){
+   if(name in parentObject.subObjects){
+    return parentObject.subObjects[name];
+   }else{
+    return false;
+   }
+  }else{
+   if(name in screenList[screen]["objects"]){
+    return screenList[screen]["objects"][name];
+   }else{
+    return false;
+   }
+  }
+ }
+
+ var getObjectList = this.getObjectList = function(screen){
+  var objects = [];
+  if(!screen){if(currentScreen){screen=currentScreen;}else{return false;}}
+  for (var key in screenList[screen]["objects"]) {
+   if (screenList[screen]["objects"].hasOwnProperty(key)) {
+    objects.push(key);
+   }
+  }
+  return objects;
+ }
+
+ function addToDrawList(object){
+  if(object.visible){
+   var xPos = object.pos[0];
+   var yPos = object.pos[1];
+   var xScale = object.scale[0];
+   var yScale = object.scale[1];
+   if(object.anchor){
+    var xAnchor = object.anchor[0];
+    var yAnchor = object.anchor[1];
+   }else{
+    var xAnchor = 0;
+    var yAnchor = 0;
+   }
+   var rot = object.rot;
+   objectTransforms.push({
+    translate: [xPos,yPos],
+    rotate: (Math.PI/180)*rot,
+    scale: [xScale,yScale],
+    translate2: [-xAnchor,-yAnchor]
+   });
+   for(var i=0;i<objectTransforms.length; i++){
+    object.transforms[i] = {};
+    object.transforms[i].translate = objectTransforms[i].translate;
+    object.transforms[i].rotate = objectTransforms[i].rotate;
+    object.transforms[i].scale = objectTransforms[i].scale;
+    object.transforms[i].translate2 = objectTransforms[i].translate2;
+   }
+   for(s in object.subObjects){
+    addToDrawList(object.subObjects[s])
+   }
+   objectTransforms.pop();
+
+   drawList.push(object);   
+  }
+ }
+
+ function drawObject(object){
+  ctx.save();
+  var transforms = object.transforms;
+  for(var i=0; i<transforms.length; i++){
+   ctx.translate(transforms[i].translate[0],transforms[i].translate[1]);
+   ctx.rotate(transforms[i].rotate);
+   ctx.scale(transforms[i].scale[0],transforms[i].scale[1]);
+   ctx.translate(transforms[i].translate2[0],transforms[i].translate2[1]);
+  }
+  ctx.globalCompositeOperation = object.compositMode;
+  ctx.shadowBlur = object.shadowBlur;
+  ctx.shadowColor = object.shadowColor;
+  ctx.shadowOffsetX = object.shadowX;
+  ctx.shadowOffsetY = object.shadowY;
+  ctx.fillStyle = object.fillColor;
+  ctx.strokeStyle = object.strokeColor;
+  ctx.lineWidth = object.strokeSize;
+  if(object.type == 'img' && object.imageLoaded){
+   ctx.imageSmoothingEnabled = object.antialiased;
+   ctx.drawImage(objArray[key].img,0,0);
+  }
+  if(object.type == 'text'){
+   if(object.textMaxLineWidth && object.textMaxLineWidth>0){
+    object.calcNewLines();
+    var newText = object.textCalculatedNewLines;
+   }else{
+    var newText = object.text;
+    ctx.font = object.fontSize+object.fontSizeUnits+" "+object.font;
+    ctx.textBaseline = "top";
+    ctx.textAlign = object.textAlign;
+   }
+   newText = newText+"";
+   var textArray = newText.split('\n');
+   var newLineDist = object.fontSize*object.scale[1]*object.textLeading;
+   var charCount = 0;
+   var colorCount = 0;
+   var colorKeys = Object.keys(object.textColors);
+   for (var i=0; i<textArray.length; i++){
+    var textToDraw = textArray[i];
+    charCount += textToDraw.length;
+    var textWidth = 0,oldSplitPos=0,splitPos=0;
+    while(true){
+     if(charCount>colorKeys[colorCount]){
+      oldSplitPos = splitPos;
+      splitPos = colorKeys[colorCount] - charCount;
+      textToDraw = textArray[i].slice(oldSplitPos,splitPos);
+      if(object.strokeSize>0){
+       ctx.strokeText(textToDraw, textWidth, i*newLineDist);
+      }
+      if(object.fill){
+       ctx.fillText(textToDraw, textWidth, i*newLineDist);
+      }
+      textWidth += ctx.measureText(textToDraw).width;
+      ctx.fillStyle = object.textColors[colorKeys[colorCount]];
+      colorCount++;
+     }else{
+      textToDraw = textArray[i].slice(splitPos);
+      if(object.strokeSize>0){
+       ctx.strokeText(textToDraw, textWidth, i*newLineDist);
+      }
+      if(object.fill){
+       ctx.fillText(textToDraw, textWidth, i*newLineDist);
+      }
+      break;
+     }
+    }
+    // if(object.textStrokeSize>0){
+    //  ctx.strokeText(textToDraw, 0, i*newLineDist);
+    // }
+   }
+  }
+  if(object.type == 'rect'){
+   if(object.fill){
+    ctx.fillRect(0,0,object.rectWidth,object.rectHeight);
+   }
+   if(object.strokeSize>0){
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.lineTo(object.rectWidth,0);
+    ctx.lineTo(object.rectWidth,object.rectHeight);
+    ctx.lineTo(0,object.rectHeight);
+    ctx.closePath();
+    ctx.stroke();
+   }
+  }
+  if(object.type == 'linVector'){
+   var points = object.linVectorPoints;
+   ctx.beginPath();
+   ctx.moveTo(points[0][0],points[0][1])
+   for(var i=1; i<points.length; i++){
+    ctx.lineTo(points[i][0],points[i][1]);
+   }
+   if(object.vectorClosePath){
+    ctx.closePath();
+   }
+   ctx.lineJoin = object.vectorStrokeJoin;
+   ctx.lineCap = object.vectorStrokeCap;
+   if(object.strokeSize>0){
+    ctx.stroke();
+   }
+   if(object.fill){
+    ctx.fill();
+   }
+  }
+  if(object.drawHitbox && object.hitbox){
+   ctx.beginPath();
+   ctx.moveTo(object.hitbox[0][0],object.hitbox[0][1]);
+   for(var i = 1; i < object.hitbox.length; i++){
+    ctx.lineTo(object.hitbox[i][0],object.hitbox[i][1]);
+   }
+   ctx.closePath();
+   ctx.strokeStyle = object.hitboxColor;
+   ctx.stroke();
+  }
+  ctx.restore();
+ }
+
+ this.onKey = function(name,key,fn,type,screen){
+  window.onkeypress = function(evt){
+   onKeyFunctions(evt,0);
+  }
+  window.onkeyup = function(evt){
+   onKeyFunctions(evt,1);
+  }
+  window.onkeydown = function(evt){
+   onKeyFunctions(evt,2);
+  }
+  if(typeof key === "string"){
+   var keyType = 0;
+  }else if(typeof key === "number" && Math.floor(key) === key){
+   var keyType = 1;
+  }else if(key == true){
+   var keyType = 2;
+  }
+  var forTheList = [key, fn, keyType];
+  if(screen){
+   if(screen == true){
+    screen = currentScreen;
+   }
+   if(!type || type=="press"){
+    screenList[screen]["keyPressList"][name] = forTheList;
+   }
+   if(type=="up"){
+    screenList[screen]["keyUpList"][name] = forTheList;
+   }
+   if(type=="down"){
+    screenList[screen]["keyDownList"][name] = forTheList;
+   }
+  }else{
+   if(!type || type=="press"){
+    keyPressList[name] = forTheList;
+   }
+   if(type=="up"){
+    keyUpList[name] = forTheList;
+   }
+   if(type=="down"){
+    keyDownList[name] = forTheList;
+   }
+  }
+ }
+
+ this.removeOnKey = function(name){
+  if(keyPressList[name]){
+   delete keyPressList[name];
+  }
+  if(keyUpList[name]){
+   delete keyUpList[name];
+  }
+  if(keyDownList[name]){
+   delete keyDownList[name];
+  }
+ }
+
+ function onMouseWheelFunctions(evt){
+  evt = evt || window.event;
+  evt.preventDefault();
+  var delta = evt.wheelDelta/4 || -20*evt.detail;
+  screenList[currentScreen].onMouseWheel(delta);
+ }
+
+ function onKeyFunctions(evt,type){
+  evt = evt || window.event;
+  var charCode = evt.keyCode || evt.which;
+  var charStr = String.fromCharCode(charCode);
+  var listToCheck = type == 0 ? keyPressList : type == 1 ? keyUpList : keyDownList;
+  for(k in listToCheck){
+   if((charStr == listToCheck[k][0] && listToCheck[k][2] == 0) || (charCode == listToCheck[k][0] && listToCheck[k][2] == 1) || listToCheck[k][2] == 2){
+    listToCheck[k][1](evt);
+   }
+  }
+  var listToCheck = type == 0 ? screenList[currentScreen]["keyPressList"] : type == 1 ? screenList[currentScreen]["keyUpList"] : screenList[currentScreen]["keyDownList"];
+  for(k in listToCheck){
+   if((charStr == listToCheck[k][0] && listToCheck[k][2] == 0) || (charCode == listToCheck[k][0] && listToCheck[k][2] == 1) || listToCheck[k][2] == 2){
+    listToCheck[k][1](evt);
+   }
+  }
+ }
+
+ this.fullScreen = function(){
+  if(canvas.requestFullscreen){
+   canvas.requestFullscreen();
+  }else if(canvas.msRequestFullscreen){
+   canvas.msRequestFullscreen();
+  }else if(canvas.mozRequestFullScreen){
+   canvas.mozRequestFullScreen();
+  }else if(canvas.webkitRequestFullscreen){
+   canvas.webkitRequestFullscreen();
+  }
+ }
+
+ this.exitFullScreen = function(){
+  if(document.exitFullscreen){
+   document.exitFullscreen();
+  }else if(document.mozCancelFullScreen){
+   document.mozCancelFullScreen();
+  }else if(document.webkitExitFullscreen){
+   document.webkitExitFullscreen();
+  }else if(document.msExitFullscreen){
+   document.msExitFullscreen();
+  }
+  document.exitFullscreen();
+  document.webkitExitFullscreen();
+ }
+}
+</script>
+    <script>
+var outputText = "\n\
+--------Welcome to Github system shell!--------\n\
+\n\
+----------Type 'help'  to list of commands---------\n";
+var enteredText = "";
+var latestCommands = [],latestCommandsOffset = 0, latestCommandsOldEnteredText = "";
+var consoleScrollPos = 0;
+var previousConsoleHeight = 0;
+var randomWordList = ["system","args","X-Y","position","display","NAK","protocol","cell","server","namespace","safemode","SAN","disk","scan","CARDVM","script","SD","SD_Card","reader","SI","Seamless Integration","Security","certificate","SSL","SSH","open","protocols","Threading","threads","SN","serial number","com","communication","commercial","key","mouse","z-depth","server side","service","session","cookie","cookies","SHA","shared_drive","cable","box","ignore","call","XSS","help","time","time.deltatime","deltatime","admin","Administrator","password","salt","Adobe","flash","flash_drive","exe","AEL","hack","crach","keygen","alignment","Alphanumeric","characters","keys","ALT+F4","Alt+tab","ambient","online","terminated","abort","plan","antivirus","iOS","windows_8","bit","64","128","256","2048","ASCII","Unicode","Asymmetrical","AT","Backdoor program","Bandwidth","QR","Base64Encode","Base64Decode","ikwid","idekOS","OS","Curve","Binary","010010110","bitmap","bmp","jpg","png","mov","avi","wmv","doc","docx","gif","mp4","mp3","indent","blur","blueray","bluetooth","Bold","text","space_left","memory","bool","bot","attack","ddos","bounce","rate","bounce_rate","brightness","broadband","service provider"];
+var rgbSplitEnabled=false,rgbSplitRandomChance=0.0005,rgbSplitScale=[-2,2],rgbSplitDuration=20,rgbSplitDurationCount=-1,rgbSplitPreviousScale=0,rgbSplitScale2=[-0.5,0.5];
+var localStorageEnabled=false;
+var blockingConsoleInput=false,waitingForInput=false,waitingForInputAcceptedKeys=null,waitingForInputCallback=function(){},waitingForInputIgnoreCase=false;
+var matrixSpawnChance=1,matrixIdList=[],matrixLength=20,matrixAmountMin=1,matrixAmountMax=5,matrixSpeedMin=40,matrixSpeedMax=100,matrixSize=14,matrixPossibleChars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+var passwordEnterMessage = "Access Granted", passwordEnterMessageColor = "rgb(0,255,0)";
+
+window.onload = function(){
+  canvas = new CanvasEngine();
+  canvas.startEngine();
+  canvas.addScreen("test");
+  canvas.addScreen("console",true).setProperties({
+    //debug: true,
+    backgroundColor: "black",
+    onResize: function(w,h){
+      canvas.getObject("consoleText").textMaxLineWidth = w;
+      setConsoleText();
+    },
+    afterDraw: function(ctx,imgdata){
+      if(rgbSplitEnabled){
+        if(Math.random() < rgbSplitRandomChance || rgbSplitDurationCount >= 0 ){
+          if(rgbSplitDurationCount==-1){
+            var randomAmount = randomFloat(rgbSplitScale[0],rgbSplitScale[1]);
+            rgbSplitPreviousScale = randomAmount;
+          }else{
+            var randomAmount = rgbSplitPreviousScale+randomFloat(rgbSplitScale2[0],rgbSplitScale2[1]);
+          }
+          rgbSplitDurationCount++;
+          if(rgbSplitDurationCount>=rgbSplitDuration-1){
+            rgbSplitDurationCount = -1;
+          }
+          var ctx2 = document.createElement('canvas').getContext('2d');
+          ctx2.canvas.width = canvas.width;
+          ctx2.canvas.height = canvas.height;
+          var red = ctx2.createImageData(imgdata);
+          red.data.set(imgdata.data);
+          var green = ctx.createImageData(imgdata);
+          green.data.set(imgdata.data);
+          var blue = ctx.createImageData(imgdata);
+          blue.data.set(imgdata.data);
+          var data = red.data;
+          for(var i = 0; i < data.length; i+=4){
+            data[i+1] = data[i+2] = 0;
+          }
+          for(var i = 0; i < green.data.length; i+=4){
+            green.data[i] = green.data[i+2] = 0;
+          }
+          for(var i = 0; i < blue.data.length; i+=4){
+            blue.data[i] = blue.data[i+1] = 0;
+          }
+          ctx.clearRect(0,0,canvas.width,canvas.height);
+          ctx.globalCompositeOperation = "lighter";
+          ctx2.putImageData(red,-randomAmount,0);
+          ctx.drawImage(ctx2.canvas,0,0);
+          ctx2.putImageData(green,randomAmount,0);
+          ctx.drawImage(ctx2.canvas,0,0);
+          ctx2.putImageData(blue,0,0);
+          ctx.drawImage(ctx2.canvas,0,0);
+        }
+      }
+    }
+  });
+  canvas.addObject("consoleText").setProperties({
+    //drawHitbox: true,
+    anchor: [0, 0],
+    type: 'text',
+    text: '',
+    font: 'Inconsolata',
+    fontSize: 17,
+    textLeading: 1.05,
+    fillColor: 'white',
+    textMaxLineWidth: canvas.width
+  });
+  setConsoleText();
+  canvas.addScreen("matrix").setProperties({
+    backgroundColor: "black",
+    afterDraw: function(ctx,imgdata,deltatime){
+      if(Math.random() < matrixSpawnChance){
+        var matrixAmount = randomInt(matrixAmountMin,matrixAmountMax);
+        for(var a=0; a<matrixAmount; a++){
+          var matrixAddId;
+          if(matrixIdList.length == 0){
+            matrixIdList=[0];
+            matrixAddId=0;
+          }else{
+            var matrixIdListLength = matrixIdList.length;
+            for(var i=0; i<matrixIdListLength+1; i++){
+              if(matrixIdList[i] != i){
+                matrixIdList.splice(i,0,i);
+                matrixAddId=i;
+                break;
+              }
+            }
+          }
+          var rndXPos = randomFloat(0,canvas.width);
+          var matrixYStart = -matrixSize*matrixLength;
+          var matrixSpeed = randomInt(matrixSpeedMin,matrixSpeedMax);
+          var textColors = {};
+          for(var i=0; i<matrixLength; i++){
+            var alpha = 1/matrixLength*i;
+            textColors[i] = "rgba(0,255,0,"+alpha+")"
+          }
+          canvas.addObject("matrix-"+matrixAddId,"matrix").setProperties({
+            pos: [rndXPos, matrixYStart],
+            type: 'text',
+            text: '',
+            font: 'Inconsolata',
+            fontSize: 14,
+            fillColor: 'rgb(0,255,0)',
+            matrixMoveDownCooldown: 0,
+            matrixMoveDownSpeed: matrixSpeed,
+            textColors: textColors,
+            shadowBlur: 10,
+            shadowColor: "white"
+          });
+        }
+      }
+      for(var i=0; i<matrixIdList.length; i++){
+        var thisMatrixId = matrixIdList[i];
+        var thisMatrix = canvas.getObject("matrix-"+thisMatrixId);
+        thisMatrix.matrixMoveDownCooldown += deltatime;
+        if(thisMatrix.matrixMoveDownCooldown > thisMatrix.matrixMoveDownSpeed){
+          thisMatrix.matrixMoveDownCooldown -= thisMatrix.matrixMoveDownSpeed;
+          thisMatrix.pos[1] += thisMatrix.fontSize;
+          if(thisMatrix.pos[1]>canvas.height){
+            thisMatrix.remove();
+            var idIndex = matrixIdList.indexOf(thisMatrixId);
+            matrixIdList.splice(idIndex,1);
+          }
+          thisMatrix.text = "";
+          for(var l=0; l<matrixLength; l++){
+            var randomChar = matrixPossibleChars.charAt(randomInt(0,matrixPossibleChars.length-1));
+            thisMatrix.text = thisMatrix.text + randomChar + "\n";
+          }
+        }
+      }
+    }
+  });
+
+
+
+  canvas.addScreen("ui1").setProperties({
+    backgroundColor: "black"
+  });
+
+
+  var graph1 = canvas.addObject("graph1","ui1").setProperties({
+    pos: [200,200]
+  });
+  graph1.addObject("axis").setProperties({
+    type: 'linVector',
+    fill: false,
+    linVectorPoints: [[0,0], [0,200], [200,200]],
+    strokeColor: "#70A7FF",
+    strokeSize: 2,
+  });
+  graph1.addObject("graph").setProperties({
+    type: 'linVector',
+    fill: false,
+    linVectorPoints: [[0,200], [20,130], [40,150], [60,100], [80,110], [100,50], [120,80]],
+    strokeColor: "#99C0FF",
+    strokeSize: 2
+  });
+
+
+  var buttonList1 = canvas.addObject("buttonList1","ui1").setProperties({
+    pos: [500,300]
+  });
+  buttonList1.addObject("box").setProperties({
+    type: 'rect',
+    rectWidth: 200,
+    rectHeight: 300,
+    fillColor: "rgba(112, 167, 255, 0.3)",
+    strokeSize: 2,
+    strokeColor: "rgb(112, 167, 255)"
+  });
+  buttonList1.addObject("button1").setProperties({
+    pos: [25,25],
+    type: 'rect',
+    rectWidth: 150,
+    rectHeight: 50,
+    fillColor: "rgba(112, 167, 255, 0.5)",
+    strokeSize: 2,
+    strokeColor: "rgb(112, 167, 255)"
+  })
+
+  canvas.onKey("addToConsole",true,function(evt){
+    var charCode = evt.keyCode || evt.which;
+    var charStr = String.fromCharCode(charCode);
+    if(!blockingConsoleInput){
+      if(waitingForInput){
+        if(waitingForInputIgnoreCase){
+          charStr = charStr.toLowerCase();
+        }
+        if(waitingForInputAcceptedKeys){
+          for(var i=0; i<waitingForInputAcceptedKeys.length; i++){
+            if(waitingForInputAcceptedKeys[i] == charCode || waitingForInputAcceptedKeys[i] == charStr){
+              waitingForInput = false;
+              setConsoleText();
+              if(waitingForInputCallback){
+                waitingForInputCallback(charStr);
+              }
+            }
+          }
+        }
+      }else{
+        if(charCode == 13){
+          submitCommand();
+        }else{
+          enteredText = enteredText + charStr;
+        }
+        consoleScrollPos = 0;
+        setConsoleText();
+      }
+    }
+  },"press","console");
+  canvas.onKey("escapeToConsole",27,function(evt){
+    evt.preventDefault();
+    canvas.setScreen("console");
+  },"down");
+  canvas.onKey("nonStringKeys",true,function(evt){
+    var charCode = evt.keyCode || evt.which;
+    switch(charCode){
+      case 8:
+        evt.preventDefault();
+        enteredText = enteredText.substring(0,enteredText.length -1);
+        break;
+      case 9:
+        evt.preventDefault();
+        if(!waitingForInput && !blockingConsoleInput){
+          var possibleCompletions = [];
+          var currentWord = "";
+          if(enteredText.indexOf(" ") > -1){
+            var commandAndArguments = stringToArguments(enteredText);
+            var command = commandAndArguments[0];
+            var args = commandAndArguments[1];
+            if((enteredText.slice(-1) == " " && enteredText.split(" ").length==2) || enteredText.slice(-2) == " -"){
+              if(enteredText.slice(-1) == " "){
+                currentWord = "";
+                for(arg in commandList[command]["args"]){
+                  var argAndHyphen = "-"+arg;
+                  possibleCompletions.push(argAndHyphen);
+                }
+              }else{
+                currentWord = "-";
+                for(arg in commandList[command]["args"]){
+                  possibleCompletions.push(arg);
+                }
+              }
+            }else{
+              var lastItem = Object.keys(args)[Object.keys(args).length-1];
+              if(commandList[command] && commandList[command]["args"] && commandList[command]["args"][lastItem] && commandList[command]["args"][lastItem]["values"]){
+                var values = commandList[command]["args"][lastItem]["values"];
+                if(typeof values === "object"){
+                  var valuesArray = Object.keys(values);
+                }else if(typeof values === "function"){
+                  var valuesArray = values();
+                }
+              }else{
+                var valuesArray = [];
+              }
+              if(args[lastItem] == true){
+                if(enteredText.slice(-1) == " "){
+                  for(var v=0; v<valuesArray.length; v++){
+                    possibleCompletions.push(valuesArray[v]);
+                  }
+                }else{
+                  currentWord = lastItem;
+                  for(arg in commandList[command]["args"]){
+                    if(arg.indexOf(currentWord)==0){
+                      possibleCompletions.push(arg.slice(currentWord.length));
+                    }
+                  }
+                  currentWord = "-"+currentWord;
+                }
+              }else{
+                currentWord = args[lastItem];
+                for(var v=0; v<valuesArray.length; v++){
+                  if(valuesArray[v].indexOf(currentWord)==0){
+                    possibleCompletions.push(valuesArray[v].slice(currentWord.length));
+                  }
+                }
+              }
+            }
+          }else{
+            for (command in commandList){
+              if(command.indexOf(enteredText)==0){
+                possibleCompletions.push(command.slice(enteredText.length));
+              }
+            }
+            currentWord = enteredText;
+          }
+          if(possibleCompletions.length==1){
+            enteredText = enteredText+possibleCompletions[0];
+          }else if(possibleCompletions.length>1){
+            var textToOutput = "";
+            var autoCompletePart = "";
+            var shortestCompletion = possibleCompletions.sort(function(a,b){return a.length - b.length})[0].length;
+            for(var l=0; l<shortestCompletion; l++){
+              var thisLetter = null;
+              var addThisLetter = true;
+              for(var c=0; c<possibleCompletions.length; c++){
+                if(!thisLetter){
+                  thisLetter = possibleCompletions[c].split('')[l];
+                }else{
+                  if(thisLetter != possibleCompletions[c].split('')[l]){
+                    addThisLetter = false;
+                    l=shortestCompletion;
+                  }
+                }
+              }
+              if(addThisLetter){
+                autoCompletePart = autoCompletePart + thisLetter;
+              }
+            }
+            enteredText=enteredText+autoCompletePart;
+            for(var i=0; i<possibleCompletions.length; i++){
+              var textToOutput = textToOutput+currentWord+possibleCompletions[i]+" ";
+            }
+            addOutPutText(textToOutput);
+          }
+        }
+        break;
+      case 38:
+        if(latestCommandsOffset==0){
+          latestCommandsOldEnteredText = enteredText;
+        }
+        latestCommandsOffset++;
+        latestCommandsOffset = Math.min(latestCommands.length,latestCommandsOffset);
+        if(latestCommandsOffset!=0){
+          enteredText=latestCommands[latestCommands.length-latestCommandsOffset];
+        }
+        break;
+      case 40:
+        latestCommandsOffset--;
+        latestCommandsOffset = Math.max(0,latestCommandsOffset);
+        if(latestCommandsOffset==0){
+          enteredText = latestCommandsOldEnteredText;
+        }else{
+          enteredText=latestCommands[latestCommands.length-latestCommandsOffset];
+        }
+        break;
+    }
+    consoleScrollPos = 0;
+    setConsoleText();
+  },"down","console");
+  canvas.getScreen("console").onMouseWheel = function(delta){
+    consoleScrollPos += delta;
+    consoleScrollPos = Math.max(consoleScrollPos,0);
+    setConsoleText();
+  }
+  if(localStorage.getItem("localStorageEnabled")=="true"){
+    localStorageEnabled = true;
+  }
+  if(localStorage.getItem("rgbSplitOnStartup")=="true"){
+    rgbSplitEnabled = true;
+  }
+  rgbSplitRandomChance = parseFloat(localStorage.getItem("rgbSplitRandomChance")) || rgbSplitRandomChance;
+  rgbSplitDuration = parseFloat(localStorage.getItem("rgbSplitDuration")) || rgbSplitDuration;
+  rgbSplitScale[0] = parseFloat(localStorage.getItem("rgbSplitMinScale")) || rgbSplitScale[0];
+  rgbSplitScale[1] = parseFloat(localStorage.getItem("rgbSplitMaxScale")) || rgbSplitScale[1];
+  rgbSplitScale2[0] = parseFloat(localStorage.getItem("rgbSplitMinScale2")) || rgbSplitScale2[0];
+  rgbSplitScale2[1] = parseFloat(localStorage.getItem("rgbSplitMaxScale2")) || rgbSplitScale2[1];
+  latestCommands = JSON.parse(localStorage.getItem("latestCommands")) || [];
+}
+
+function setConsoleText(){
+  if(canvas.getScreen().name=="console"){
+    var lineLimit = 500;
+    var outputLines = outputText.split("\n");
+    var lineCount = outputLines.length;
+    outputLines.splice(0, lineCount-lineLimit);
+    outputText = outputLines.join("\n");
+    if(waitingForInput){
+      canvas.getObject("consoleText").text = outputText;
+    }else{
+      canvas.getObject("consoleText").text = outputText+"\n > "+enteredText;
+    }
+    canvas.getObject("consoleText").calcHitbox(function(hitbox,minX,maxX,minY,maxY){
+      var height = maxY - minY;
+      var deltaHeight = height - previousConsoleHeight;
+      previousConsoleHeight = height;
+      if(height>canvas.height){
+        if(consoleScrollPos!=0){
+          consoleScrollPos += deltaHeight;
+        }
+        canvas.getObject("consoleText").pos[1] = canvas.height-height;
+        consoleScrollPos = Math.min(height-canvas.height,consoleScrollPos);
+        canvas.getObject("consoleText").pos[1] += consoleScrollPos;
+      }else{
+        canvas.getObject("consoleText").pos[1] = 0;
+        consoleScrollPos = 0;
+      }
+    });
+  }
+}
+
+function addOutPutText(added,noNewLine){
+  if(noNewLine==true){
+    outputText = outputText+added;
+  }else{
+    outputText = outputText+"\n"+added;
+  }
+  setConsoleText();
+}
+
+var commandList = {
+  "help": {
+    "action": function(args){
+      if(args["c"]){
+        if(commandList[args["c"]]){
+          if(commandList[args["c"]]["moreHelpText"]){
+            addOutPutText(commandList[args["c"]]["moreHelpText"]);
+          }else{
+            addOutPutText("this command does not have any further information.");
+          }
+        }else{
+          addOutPutText("command not found");
+        }
+      }else{
+        for(cmd in commandList){
+          addOutPutText(cmd+" - "+commandList[cmd].helpText);
+        }
+      }
+    },
+    "helpText": "shows this list of commands",
+    "args": {
+      "c": {
+        "values": function(){
+          return Object.keys(commandList);
+        }
+      }
+    }
+  },
+  "argshelp":{
+    "action": "when you see an arrow (>) at the bottom of this page that means you get to enter a command. All available commands can be found by typing 'help'. After a command you can add arguments. They start with a hyphen (-) followed by an argument name, this is usually just one letter. Next follows a space and the value for the argument. Some arguments may not need a value. You can use as many arguments as you like. Here's an example for the rndlst command:\n\n      rndlst -a 30 -s /_- -pt prepend text\n\nThis command has the following arguments:\n  a   with the value of   '30'\n  s   with the value of   '/_-'\n  pt  with the value of   'prepend text'\n\nTo get more info about a command and the possible arguments for it enter 'help -c <name of the command>'",
+    "helpText": "get some info about how arguments work",
+    "moreHelpText": "print an explanation in the console about how arguments work, if you managed to enter that command you probably already read it."
+  },
+  "rndlst": {
+    "action": function(args){
+      if(args["l"]){
+        addOutPutText("To print a list with random stuff using a preset use: rndlst -p <preset id>\nPreset ids:\n  1: Lots of stuff in a very short time.\n  2: 5 lines starting with 'data > '\n  3: 1100000110011011110\n  4: || | |   |||\n  5: _/-\\|-|/| | slow and only a few lines.");
+      }else{
+        var amount = 100;
+        var minTimeDelay = 1;
+        var maxTimeDelay = 400;
+        var minWords = 5;
+        var maxWords = 16;
+        var glueSymbols = "/";
+        var wordsToUse = randomWordList;
+        var prependText = args["pt"] || "";
+        if(args["p"]){
+          var preset = parseInt(args["p"],10);
+          switch(preset){
+            case 1:
+              amount = 1000;
+              minTimeDelay = maxTimeDelay = 1;
+              glueSymbols = "/";
+              break;
+            case 2:
+              amount = 5;
+              prependText = "data > ";
+              minTimeDelay = 1;
+              maxTimeDelay = 1;
+              glueSymbols = "-";
+              break;
+            case 3:
+              wordsToUse = ["0","1"];
+              glueSymbols = "";
+              minWords = 60;
+              maxWords = 60;
+              minTimeDelay = 3;
+              maxTimeDelay = 3;
+              break;
+            case 4:
+              amount = 50;
+              wordsToUse = ["|"," "];
+              minTimeDelay = 1;
+              maxTimeDelay = 1;
+              minWords = 30;
+              maxWords = 30;
+              glueSymbols = "";
+              break;
+            case 5:
+              amount = 10;
+              wordsToUse = ["|"," ","\\","/","-","_"];
+              minTimeDelay = 1;
+              maxTimeDelay = 2000;
+              minWords = 30;
+              maxWords = 30;
+              glueSymbols = "";
+              break;
+          }
+        }
+        amount = parseInt(args["a"]) || amount;
+        if(args["t"] && args["t"] != true){
+          var timeDelay = args["t"].split(",");
+          if(timeDelay.length == 2 && !isNaN(parseFloat(timeDelay[0])) && !isNaN(parseFloat(timeDelay[1]))){
+            minTimeDelay = parseFloat(timeDelay[0]);
+            maxTimeDelay = parseFloat(timeDelay[1]);
+          }else if(timeDelay.length == 1 && !isNaN(parseFloat(timeDelay[0]))){
+            minTimeDelay = maxTimeDelay = timeDelay[0];
+          }
+        }
+        if(args["w"] && args["w"] != true){
+          var words = args["w"].split(",");
+          if(words.length == 2 && !isNaN(parseFloat(words[0])) && !isNaN(parseFloat(words[1]))){
+            minWords = parseFloat(words[0]);
+            maxWords = parseFloat(words[1]);
+          }else if(words.length == 1 && !isNaN(parseFloat(words[0]))){
+            minWords = maxWords = parseFloat(words[0]);
+          }
+        }
+        glueSymbols = args["s"] || glueSymbols;
+        if(glueSymbols==""){
+          glueSymbols = [""];
+        }else{
+          glueSymbols = glueSymbols.split('');
+        }
+        var timesPrinted = 0;
+        var rndlstFunction = function(){
+          amountOfWords = randomInt(minWords,maxWords);
+          textToAdd = prependText;
+          for(var i=0; i<amountOfWords; i++){
+            var randomWord = wordsToUse[randomInt(0,wordsToUse.length)]; 
+            textToAdd=textToAdd+randomWord;
+            if(i!=amountOfWords-1){
+              var randomGlueSymbol = glueSymbols[randomInt(0,glueSymbols.length)];
+              textToAdd=textToAdd+randomGlueSymbol;
+            }
+          }
+          addOutPutText(textToAdd);
+          timesPrinted++;
+          if(timesPrinted<amount){
+            window.setTimeout(rndlstFunction, randomInt(minTimeDelay,maxTimeDelay));
+          }
+        }
+        rndlstFunction();
+      }
+    },
+    "helpText": "outputs a list of some random stuff",
+    "moreHelpText": "outputs some random stuff. Really looks like you know what your doing when used right. What is displayed is very customizable, but it's easier to use presets (-p)\narguments:\n -p  <number> to use one of the preset arguments.\n -l  List all presets and their description. No value needed for the arguemnt.\n -a  <number> amount of lines printed\n -t  <min>[,<max>] min and max time delay in milliseconds (example: -t 1,100) if max is not provided min and max will be the same (example: -t 100)\n -pt <string> prepend text in front of every line\n -w  <min>[,<max>] min and max amount of words per line. A random number in between these two values will be chosen per line.\n -s  <string> symbols to use in between the words. Will choose a random symbol if multiple symbols are provided (example: -s -/_)",
+    "args": {
+      "p": {},
+      "l": {},
+      "a": {},
+      "t": {},
+      "pt": {},
+      "w": {},
+      "s": {}
+    }
+  },
+  "localstorage": {
+    "action": function(args){
+      if(args["e"]){
+        if(localStorageEnabled){
+          addOutPutText("local storage is already enabled");
+        }else{
+          addOutPutText("You are about to enable local storage, this makes sure all your settings will be stored\nand will be used next time you open the page.\nBecause of shitty EU laws I have to notify you that I'm storing stuff on your computer.\nAre you sure you want to enable local storage? (y/n)");
+          waitForYnInput(function(result){
+            if(result){
+              localStorageEnabled=true;
+              localStorage.setItem("localStorageEnabled","true");
+              addOutPutText("local storage enabled");
+            }
+          });
+        }
+      }
+      if(args["d"]){
+        if(localStorageEnabled){
+          localStorageEnabled=false;
+          localStorage.setItem("localStorageEnabled","false");
+          addOutPutText("local storage disabled");
+        }else{
+          addOutPutText("local storage is already disabled");
+        }
+      }
+      if(args["c"]){
+        addOutPutText("are you sure you want to clear all items from local storage? (y/n)");
+        waitForYnInput(function(result){
+          if(result){
+            localStorage.clear();
+            localStorageEnabled=false;
+            addOutPutText("all items cleared from local storage, refresh the page to start as if you visit the site for the first time.");
+          }
+        });
+      }
+    },
+    "helpText": "enable/disable/clear local storage",
+    "moreHelpText": "arguments:\n -e to enable local storage\n -d to disable local storage\n -c to clear all items from local storage",
+    "args":{
+      "e":{},
+      "d":{},
+      "c":{}
+    }
+  },
+  "clearconsole":{
+    "action": function(){
+      outputText = "";
+    },
+    "helpText": "clears the console",
+    "moreHelpText": "clears all text on screen, if you're having a low framerate this might fix it."
+  },
+  "rgbsplit":{
+    "action": function(args){
+      if(args["e"]){
+        rgbSplitEnabled = true;
+      }
+      if(args["d"]){
+        rgbSplitEnabled = false;
+      }
+      if(args["es"]){
+        if(localStorageEnabled){
+          localStorage.setItem("rgbSplitOnStartup","true");
+        }else{
+          addOutPutText("you do not have local storage enabled. Use the 'localstorage' command to enable local storage");
+        }
+      }
+      if(args["ds"]){
+        localStorage.removeItem("rgbSplitOnStartup");
+      }
+      if(args["c"]){
+        var argC = parseFloat(args["c"]);
+        if(isNaN(argC)){
+          addOutPutText(" -c argument did not contain a number");
+        }else{
+          if(argC>1 || argC<0){
+            addOutPutText(" -c argument must be a float number between 0 and 1")
+          }else{
+            rgbSplitRandomChance = argC;
+            if(localStorageEnabled){
+              localStorage.setItem("rgbSplitRandomChance",argC)
+            }
+          }
+        }
+      }
+      var argSResult = minMaxArgCheck(args["s"],rgbSplitScale,true,true);
+      if(argSResult == true){
+        addOutPutText("rgbSplit scale updated to "+rgbSplitScale[0]+","+rgbSplitScale[1]);
+        localStorage.setItem("rgbSplitMinScale",rgbSplitScale[0]);
+        localStorage.setItem("rgbSplitMaxScale",rgbSplitScale[1]);
+      }else if(argSResult == false){
+        addOutPutText("could not update the rgbSplit scale");
+      }
+
+      var argS2Result = minMaxArgCheck(args["s2"],rgbSplitScale2,true,true);
+      if(argS2Result == true){
+        addOutPutText("rgbSplit scale2 updated to "+rgbSplitScale2[0]+","+rgbSplitScale2[1]);
+        localStorage.setItem("rgbSplitMinScale2",rgbSplitScale2[0]);
+        localStorage.setItem("rgbSplitMaxScale2",rgbSplitScale2[1]);
+      }else if(argS2Result == false){
+        addOutPutText("could not update the rgbSplit scale");
+      }
+      if(args["t"]){
+        var argT = parseInt(args["t"],10);
+        if(isNaN(argT)){
+          addOutPutText(" -t argument did not contain a number");
+        }else{
+          if(argT<1){
+            addOutPutText(" -t argument must be an int number above 0");
+          }else{
+            rgbSplitDuration = argT;
+            if(localStorageEnabled){
+              localStorage.setItem("rgbSplitDuration",rgbSplitDuration);
+            }
+          }
+        }
+      }
+      if(args["cl"]){
+        addOutPutText("Are you sure you want to clear all rgbSplit settings? (y/n)");
+        waitForYnInput(function(result){
+          if(result){
+            rgbSplitEnabled=false;
+            rgbSplitRandomChance=0.0005;
+            rgbSplitScale=[-2,2];
+            rgbSplitDuration=20;
+            rgbSplitScale2=[-0.5,0.5];
+            localStorage.removeItem("rgbSplitDuration");
+            localStorage.removeItem("rgbSplitMinScale");
+            localStorage.removeItem("rgbSplitMaxScale");
+            localStorage.removeItem("rgbSplitMinScale2");
+            localStorage.removeItem("rgbSplitMaxScale2");
+            localStorage.removeItem("rgbSplitOnStartup");
+            localStorage.removeItem("rgbSplitRandomChance");            
+          }
+        });
+      }
+    },
+    "helpText": "adds a cheezy rgb split effect to the consle. Use help -c rgbsplit for more info.",
+    "moreHelpText": "adds a cheezy rgb split effect to the consle.\nArguments:\n -e   enable rgbsplit\n -d   disable rgbsplit\n -es  enable rgbsplit on startup\n -ds  disable rgbsplit on startup\n -c   sets the random chance to get a rgb split per frame. (default 0.0005)\n -t   Sets the duration of an rgb split\n -s   <min>[,<max>] sets the random scale (the amount of rgbsplit)\n -s2  <min>[,<max>] sets the second amount of rgbsplit. Everytime an rgb split happens, the amount gets set to -s once, and then it gets set relatively to -s2 every frame.\n -cl  clears all rgbSplit settings",
+    "args":{
+      "e":{},
+      "d":{},
+      "es":{},
+      "ds":{},
+      "s":{},
+      "s2":{},
+      "t":{},
+      "c":{},
+      "cl":{}
+    }
+  },
+  "matrix":{
+    "action": function(){
+      canvas.setScreen("matrix");
+    },
+    "helpText": "don't act like you don't know what this means"
+  },
+  "fs":{
+    "action": function(){
+      canvas.fullScreen();
+    },
+    "helpText": "enter full screen mode"
+  },
+  "psswd":{
+    "action": function(args){
+      if(args["c"]){
+        passwordEnterMessageColor = args["c"];
+      }
+      if(args["m"]){
+        passwordEnterMessage = args["m"];
+      }
+      if(args["p"]){
+        var preset = parseInt(args["p"],10);
+        switch(preset){
+          case 1:
+            passwordEnterMessage = "Access Granted";
+            passwordEnterMessageColor = "rgb(0,255,0)"
+            break;
+          case 2:
+            passwordEnterMessage = "Access Denied";
+            passwordEnterMessageColor = "red"
+        }
+      }
+
+      var pswdBox = canvas.addObject("password","console").setProperties({
+        type: 'rect',
+        pos: [canvas.width/2,canvas.height/2],
+        fillColor: "gray",
+        rectWidth: 600,
+        rectHeight: 150,
+        zIndex: 100
+      }).calcHitbox().calcAnchor();
+      pswdBox.addObject("textField").setProperties({
+        type: 'rect',
+        fillColor: 'white',
+        pos: [30,60],
+        rectWidth: 540,
+        rectHeight: 60,
+        zIndex: 150
+      });
+      pswdBox.addObject("text").setProperties({
+        type: 'text',
+        pos: [30,30],
+        fillColor: 'black',
+        text: 'Enter your password',
+        font: 'Inconsolata',
+        fontSize: 20,
+        zIndex: 150
+      });
+      pswdBox.addObject("passwordText").setProperties({
+        type: 'text',
+        pos: [30,60],
+        text: '',
+        fontSize: 60,
+        fillColor: 'black',
+        zIndex: 160
+      });
+      blockingConsoleInput=true;
+      canvas.onKey("passwordBox",true,function(evt){
+        var charCode = evt.keyCode || evt.which;
+        if(pswdBox.getObject("passwordText").text.length<15 && charCode != 27 && charCode !=13 && charCode != 8){
+          pswdBox.getObject("passwordText").text = pswdBox.getObject("passwordText").text + '?';
+        }
+      });
+      canvas.onKey("passwordBoxBackspace",8,function(evt){
+        pswdBox.getObject("passwordText").text = pswdBox.getObject("passwordText").text.slice(1);
+      },"down");
+      canvas.onKey("passwordBoxEnter",13,function(){
+        pswdBox.getObject("text").text = passwordEnterMessage;
+        pswdBox.getObject("text").fillColor = passwordEnterMessageColor;
+        canvas.removeOnKey("passwordBoxEnter");
+        canvas.removeOnKey("passwordBox");
+        canvas.removeOnKey("passwordBoxBackspace");
+      });
+      canvas.onKey("passwordBoxEsc",27,function(evt){
+        evt.preventDefault();
+        blockingConsoleInput=false;
+        pswdBox.remove();
+        canvas.removeOnKey("passwordBox");
+        canvas.removeOnKey("passwordBoxEnter");
+        canvas.removeOnKey("passwordBoxEnter2");
+        canvas.removeOnKey("passwordBoxExc");
+        canvas.removeOnKey("passwordBoxBackspace");
+      },"down");
+    },
+    "helpText": "shows a password box",
+    "moreHelpText": "A password box is shown in the middle of your screen, press enter to submit, press esc to hide the password box. Possible arguments:\n -c  The text color after pressing Enter\n -m  the Message shown when pressing Enter\n -p  <id> use one of the presets.\n -l  list all presets.",
+    "args":{
+      "c":{},
+      "m":{},
+      "p":{},
+      "l":{}
+    }
+  },
+  "ui":{
+    "action": function(args){
+      var id = args["i"] || 1;
+      switch(id){
+        case 1:
+          canvas.setScreen("ui1");
+      }
+    }
+  }
+}
+
+function submitCommand(){
+  addToLatestCommands();
+  outputText = outputText+"\n > "+enteredText;
+  var commandAndArguments = stringToArguments(enteredText);
+  var command = commandAndArguments[0];
+  var args = commandAndArguments[1];
+  enteredText = "";
+  if (command in commandList){
+    action = commandList[command]["action"];
+    if(typeof action === "string"){
+      addOutPutText(action);
+    }else{
+      action(args);
+    }
+  }
+}
+
+function stringToArguments(string){
+  var command = string.split(" ")[0];
+  var args = " "+string.slice(command.length+1);
+  var re = /(?:\s|^)-([a-zA-Z0-9]+)(?:\s|$)/g;
+  var regexResult = [];
+  var i = 0;
+  while((regexResult[i] = re.exec(args)) != null){
+    re.lastIndex -= 1;
+    i++;
+  }
+  regexResult.pop();
+  var newArgs = {}
+  for (var i=0; i<regexResult.length; i++){
+    var argName = regexResult[i][1];
+    var argValStart = regexResult[i]["index"]+regexResult[i][1].length+3;
+    if(i+1 >= regexResult.length){
+      var argValue = args.slice(argValStart);
+    }else{
+      var argValEnd = regexResult[i+1]["index"];
+      var argValue = args.slice(argValStart,argValEnd);
+    }
+    argValue = argValue == "" ? true : argValue;
+    if(typeof argValue === "string"){
+      argValue = argValue.substr(0,1) == '"' ? argValue.substr(1) : argValue;
+      argValue = argValue.substr(-1,1) == '"' ? argValue.slice(0,-1) : argValue;
+    }
+    delete newArgs[argName];
+    newArgs[argName] = argValue;
+  }
+  return [command,newArgs];
+}
+
+function addToLatestCommands(command){
+  latestCommandsOffset = 0;
+  command = enteredText || command;
+  if(command){
+    if(command != latestCommands[latestCommands.length-1]){
+      latestCommands.push(command);
+      latestCommands = latestCommands.slice(-20);
+      if(localStorageEnabled){
+        localStorage.setItem("latestCommands",JSON.stringify(latestCommands));
+      }
+    }
+  }
+}
+
+function waitForYnInput(trueCallback){
+  waitForInput("yn",function(input){
+    if(trueCallback && input=="y"){
+      trueCallback(true);
+    }else if(trueCallback && input=="n"){
+      trueCallback(false);
+    }
+  },true);
+}
+
+function waitForInput(inputs,callback,ignoreCase){
+  waitingForInput = true;
+  setConsoleText();
+  waitingForInputCallback = callback;
+  if(typeof inputs === "string"){
+    waitingForInputAcceptedKeys = inputs.split('');
+  }else if(typeof inputs === "number"){
+    waitingForInputAcceptedKeys = [inputs];
+  }else if(Object.prototype.toString.call( inputs ) === '[object Array]'){
+    waitingForInputAcceptedKeys = inputs;
+  }
+  if(ignoreCase){
+    waitingForInputIgnoreCase = true;
+    for(var i=0; i<waitingForInputAcceptedKeys.length; i++){
+      if(typeof waitingForInputAcceptedKeys[i] === "string"){
+        waitingForInputAcceptedKeys[i] = waitingForInputAcceptedKeys[i].toLowerCase();
+      }
+    }
+  }else{
+    waitingForInputIgnoreCase = false;
+  }
+}
+
+function minMaxArgCheck(arg,varToChange,isFloat,invertMin){
+  if(arg && typeof arg === "string"){
+    var argsplit = arg.split(",");
+    var parsedargs = [];
+    for(v in argsplit){
+      if(isFloat){
+        parsedargs[v] = parseFloat(argsplit[v]);
+      }else{
+        parsedargs[v] = parseInt(argsplit[v]);
+      }
+      if(isNaN(parsedargs[v])){
+        return false;
+      }
+    }
+    if(parsedargs.length>=2){
+      varToChange[0] = parsedargs[0];
+      varToChange[1] = parsedargs[1];
+    }else if(parsedargs.length == 1){
+      varToChange[0] = varToChange[1] = parsedargs[0];
+      if(invertMin){
+        varToChange[0] *= -1;
+      }
+    }
+    return true;
+  }else{
+    return undefined;
+  }
+}
+
+var randomInt = function(min,max){
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+var randomFloat = function(min,max){
+  return Math.random() * (max - min) + min;
+}
+</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+      html, body{ margin: 0px; padding: 0px; /*overflow: hidden;*/}
+    </style>
+  </head>
+  <body>
+    <canvas id="CanvasEngine" width="1119" style="display: block; position: absolute; top: 0px; left: 0px;" height="979">
+    </canvas>
+  
+</body></html>
