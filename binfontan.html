@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id='ae'>
+</canvas>
+<script>
+var spaceWorking=!0,canvas1=document.querySelector("canvas");canvas1.style.position="absolute",canvas1.style.zIndex="-100",canvas1.style.top="0",canvas1.style.left="0",canvas1.style.pointerEvents="none",canvas1.width=window.innerWidth,canvas1.height=window.innerHeight,document.body.appendChild(canvas1);var ctx1=canvas1.getContext("2d");ctx1.fillStyle="#000",ctx1.fillRect(0,0,canvas1.width,canvas1.height);var stars=[],color=()=>`#0${"abcdef"[Math.floor(5*Math.random())]}${"01234567890abcdef"[Math.floor(15*Math.random())]}`;function createStar(){stars.push({y:-60,x:-60,xspeed:Math.floor(60*Math.random())+1,yspeed:Math.floor(60*Math.random())+1,color:color(),txt:.5<Math.random()?"0":"1"})}for(var i=0;600>i;i++)createStar();setInterval(()=>{for(var a in ctx1.fillStyle="#000",ctx1.fillRect(0,0,canvas1.width,canvas1.height),stars){var b=stars[a];if(b.x+=b.xspeed,b.y+=b.yspeed,b.x>canvas1.width+20||b.y>canvas1.height+20){var a=0;0===a?(b.x=-20,b.y=-20):1==a?(b.x=-(Math.floor(50*Math.random())+20),b.y=-(Math.floor(50*Math.random())+20)):2==a&&(b.x=Math.floor(Math.random()*canvas1.width),b.y=-(Math.floor(50*Math.random())+20)),b.xspeed=Math.floor(20*Math.random())+1,b.yspeed=Math.floor(20*Math.random())+1,b.color=color(),b.txt=.5<Math.random()?"0":"1"}ctx1.font="24px Menlo Regular",ctx1.fillStyle=b.color,ctx1.fillText(b.txt,b.x,b.y)}},30);
+</script>
+</body>
+</html>
