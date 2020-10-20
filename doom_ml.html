@@ -25,7 +25,7 @@
       autolock: true,
     }).ready(function (fs, main) {
       fs.extract("https://dl.dropbox.com/s/gx2le4fz8xzrr5a/DOOM_ML.zip").then(function () {
-        main(["-c", "cd doom2\ml", "-c", "doomit"]).then(function (ci) {
+        main(["-c", "cd doom2", "-c", "cd ml", "-c", "doomit"]).then(function (ci) {
           window.ci = ci;
         });
       });
