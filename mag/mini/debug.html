@@ -51,7 +51,7 @@
 		function openUrl ( url, width, height ) {
 			window.open(
 				url + (url.indexOf('?') === -1 ? '?' : '&') + 'width=' + width + '&height=' + height,
-				'_blank',
+				'_self',
 				'menubar=0,location=0,resizable=0,scrollbars=0,status=0,titlebar=0,left=0,top=0,width=' + width + ',height=' + height
 			);
 		}
