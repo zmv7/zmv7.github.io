@@ -24,7 +24,7 @@
       cycles: "max",
       autolock: true,
     }).ready(function (fs, main) {
-      fs.extract("https://dl.dropbox.com/s/59r0q4j32aiimpc/ScorchedEarth.zip").then(function () {
+      fs.extract("https://dl.dropbox.com/s/qmm7tj7z39v1v3z/SCORCH.zip").then(function () {
         main(["-c", "scorch"]).then(function (ci) {
           window.ci = ci;
         });
