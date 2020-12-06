@@ -25,7 +25,7 @@
       autolock: false,
     }).ready(function (fs, main) {
       fs.extract("https://dl.dropbox.com/s/0feoslr5kdynetm/TW.zip").then(function () {
-        main(["-c", "scorch"]).then(function (ci) {
+        main(["-c", "tank"]).then(function (ci) {
           window.ci = ci;
         });
       });
