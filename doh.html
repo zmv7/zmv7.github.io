@@ -22,10 +22,10 @@
 <script>
     Dos(document.getElementById("jsdos"), { 
       wdosboxUrl: "https://js-dos.com/6.22/current/wdosbox.js",
-      cycles: "max",
+      cycles: "auto",
       autolock: true,
     }).ready(function (fs, main) {
-      fs.extract("https://dl.dropbox.com/s/a9co45yb5dgvbto/DOH.zip").then(function () {
+      fs.extract("https://dl.dropbox.com/s/yccn052yhh9ch0h/DOH.zip").then(function () {
         main(["-c", "doh"]).then(function (ci) {
           window.ci = ci;
         });
