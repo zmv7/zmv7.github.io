@@ -25,8 +25,8 @@
       cycles: "max",
       autolock: true,
     }).ready(function (fs, main) {
-      fs.extract("https://dl.dropbox.com/s/od48t5le4jegz05/FULLTILT_HD.zip").then(function () {
-        main(["-c", "win"]).then(function (ci) {
+      fs.extract("https://dl.dropbox.com/s/awfemxwzqc61xtn/FULLTILT_HD.zip").then(function () {
+        main(["-c", "cd FULLTILT", "-c", "win"]).then(function (ci) {
           window.ci = ci;
         });
       });
