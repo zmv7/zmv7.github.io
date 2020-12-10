@@ -25,7 +25,7 @@
       autolock: true,
     }).ready(function (fs, main) {
       fs.extract("https://dl.dropbox.com/s/pm8fe815z4rlr7s/95.zip").then(function () {
-        main(["-c", "95"]).then(function (ci) {
+        main(["-c", "cls", "-c", "95"]).then(function (ci) {
           window.ci = ci;
         });
       });
