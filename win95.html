@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Win95</title>
+  <title>Windows 95</title>
   <script src="https://js-dos.com/6.22/current/js-dos.js"></script>
   <style>
     html, body, canvas, .dosbox-container {
@@ -24,22 +24,8 @@
       cycles: "max",
       autolock: true,
     }).ready(function (fs, main) {
-      fs.extract("https://dl.dropbox.com/s/x65v4rzszwxvmll/WIN95.zip").then(function () {
-
-fs.createFile("dosbox.conf", `
-
-[dosbox]
-memsize=8
-
-[render]
-frameskip=0
-aspect=true
-
-[cpu]
-cputype=pentium_slow
-
-`);
-        main(["-conf", "dosbox.conf", "-c", "imgmount a WIN95.IMG -size 512,63,16,142", "-c", "boot win95.img"]).then(function (ci) {
+      fs.extract("https://dl.dropbox.com/s/pm8fe815z4rlr7s/95.zip").then(function () {
+        main(["-c", "95"]).then(function (ci) {
           window.ci = ci;
         });
       });
