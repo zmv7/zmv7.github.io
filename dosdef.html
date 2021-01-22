@@ -30,7 +30,7 @@
 [joystick]
 joysticktype=none
 `);
-        main(["-c", "dosdef"]).then(function (ci) {
+        main(["-conf", "dosbox.conf", "-c", "dosdef"]).then(function (ci) {
           window.ci = ci;
         });
       });
