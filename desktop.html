@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html><head><title>Z7's Desktop</title>
+<link rel="shortcut icon" type="image/png" href="/favicon.ico"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="css/desktop.css">
+<script src="js/desktop.js"></script>
+</head>
+<div class="startbar">
+  <div id="startbutton" class="startbutton-off">
+    <b>Menu</b>
+  </div>
+<audio id="comedy" src="https://ic7.101.ru:8000/stream/air/aac/64/202" type="audio/aac"></audio>
+<button title="Comedy Radio" id="radio">&#9654;</button>
+<script type="text/javascript">
+document.getElementById("radio").addEventListener("click", function(){
+    var audio = document.getElementById('comedy');
+  if(this.className == 'is-playing'){
+    this.className = "";
+    this.innerHTML = "&#9654;"
+    audio.pause();
+  }else{
+    this.className = "is-playing";
+    this.innerHTML = "&#9632;";
+    audio.play();
+  }
+});
+</script>
+  <div class="time">
+  </div>
+</div>
+
+<div id="menu">
+  <div class="sidebar"></div>
+  <div class="headline"><b>Zemtzov7</b>
+  </div>
+  <ul class="menu-content">
+    <li class="item more">My Pages
+<ul class="dropdown-content">
+<li class="dropdown-item launch" data-launch="backdoor" data-url="backdoor/index.html"data-title="Backdoor">BACKDOOR</li>
+<li class="dropdown-item launch" data-launch="flooder" data-url="flooder.html" data-title="Flooder">Flooder</li>
+<li class="dropdown-item launch" data-launch="msdos" data-url="msdos.html" data-title="MS-DOS">MS-DOS</li>
+<li class="dropdown-item launch" data-launch="fdos" data-url="fdos.html" data-title="FreeDOS">FreeDOS</li>
+<li class="dropdown-item launch" data-launch="qbasic" data-url="qbasic.html" data-title="QBasic">QBasic</li>
+<li class="dropdown-item launch" data-launch="turbopas" data-url="turbopas.html" data-title="TurboPascal">TurboPascal</li>
+<li class="dropdown-item launch" data-launch="seal" data-url="seal.html" data-title="SEAL 2">SEAL 2 DOS GUI</li>
+<li class="dropdown-item launch" data-launch="win101" data-url="win101.html" data-title="Win1.01">Windows 1.01</li>
+<li class="dropdown-item launch" data-launch="win2" data-url="win2.html" data-title="Win286">Windows 286</li>
+<li class="dropdown-item launch" data-launch="win30" data-url="win30.html" data-title="Win3.0">Windows 3.0</li>
+<li class="dropdown-item launch" data-launch="msw31" data-url="msw31.html" data-title="W3.1R+W+E">Win3.1 rus +Word&Excel</li>
+<li class="dropdown-item launch" data-launch="win31" data-url="win31.html" data-title="Win3.1 rus">Win3.1 rus + SkiFree</li>
+<li class="dropdown-item launch" data-launch="skifree" data-url="skifree.html" data-title="SkiFree">SkiFree</li>
+<li class="dropdown-item launch" data-launch="solitaire" data-url="solitaire.html" data-title="Solitaire">Solitaire</li>
+<li class="dropdown-item launch" data-launch="fulltilt" data-url="fulltilt.html" data-title="FULLTILT">FULLTILT</li>
+<li class="dropdown-item launch" data-launch="fulltilt_hd" data-url="fulltilt_hd.html" data-title="FULLTILT HD">FULLTILT HD</li>
+<li class="dropdown-item launch" data-launch="win31_games" data-url="win31_games.html" data-title="Win3.1 games">FULLTILT HD + SkiFree</li>
+<li class="dropdown-item launch" data-launch="chicago73" data-url="chicago73.html" data-title="Chicago73">Win Chicago73</li>
+<li class="dropdown-item launch" data-launch="win95" data-url="win95.html" data-title="Win95">Windows 95</li>
+<li class="dropdown-item launch" data-launch="nashville" data-url="nashville.html" data-title="Nashville">Win Nashville</li>
+<li class="dropdown-item launch" data-launch="office95" data-url="office95.html" data-title="MS Office95">MS Office 95</li>
+<li class="dropdown-item launch" data-launch="1stpaint" data-url="1stpaint.html" data-title="1st paint">First MS Paint</li>
+<li class="dropdown-item launch" data-launch="pbrush" data-url="pbrush.html" data-title="PaintBrush">PaintBrush</li>
+<li class="dropdown-item launch" data-launch="dosdef" data-url="dosdef.html" data-title="DOS Defender">DOS Defender</li>
+<li class="dropdown-item launch" data-launch="tw" data-url="tw.html" data-title="Tank Wars 1986">Tank Wars 1986</li>
+<li class="dropdown-item launch" data-launch="scorch" data-url="scorch.html" data-title="Scorched Earth">Scorched Earth</li>
+<li class="dropdown-item launch" data-launch="wipeout" data-url="wipeout.html" data-title="WipeOut">Wipeout</li>
+<li class="dropdown-item launch" data-launch="megaball" data-url="megaball.html" data-title="MegaBall">Megaball Amiga</li>
+<li class="dropdown-item launch" data-launch="gta" data-url="gta.html" data-title="GTA">GTA</li>
+<li class="dropdown-item launch" data-launch="prince" data-url="prince.html" data-title="Prince of Persia">Prince of Persia</li>
+<li class="dropdown-item launch" data-launch="doom04" data-url="doom04.html" data-title="Doom 0.4">Doom 0.4</li>
+<li class="dropdown-item launch" data-launch="doom05" data-url="doom05.html" data-title="Doom 0.5">Doom 0.5</li>
+<li class="dropdown-item launch" data-launch="doombeta" data-url="doombeta.html" data-title="Doom Beta">Doom Beta</li>
+<li class="dropdown-item launch" data-launch="heretic" data-url="heretic.html" data-title="Heretic">Heretic</li>
+<li class="dropdown-item launch" data-launch="doom_ml" data-url="doom_ml.html" data-title="Doom ML">Doom Master Levels</li>
+<li class="dropdown-item launch" data-launch="skymaybe" data-url="skymaybe.html" data-title="SkyMayBe">Doom SkyMayBe</li>
+<li class="dropdown-item launch" data-launch="keens" data-url="keens.html" data-title="Keens">Commander keen collection</li>
+<li class="dropdown-item launch" data-launch="arkanoid" data-url="arkanoid.html" data-title="Arkanoid">Arkanoid</li>
+<li class="dropdown-item launch" data-launch="doh" data-url="doh.html" data-title="Revenge of DOH">Revenge of DOH</li>
+<li class="dropdown-item launch" data-launch="arkanoid_ega" data-url="arkanoid_ega.html" data-title="Arkanoid EGA">Arkanoid EGA</li>
+<li class="dropdown-item launch" data-launch="arkanoid_hard" data-url="arkanoid_hard.html" data-title="Arkanoid EGA">Arkanoid Hardcore</li>
+<li class="dropdown-item launch" data-launch="rick" data-url="rick.html" data-title="Rick Dangerous">Rick Dangerous</li>
+<li class="dropdown-item launch" data-launch="f1" data-url="f1" data-title="F1">F1</li>
+<li class="dropdown-item launch" data-launch="fs84" data-url="fs84.html" data-title="MSFS 84">MS Flight sim 84</li>
+<li class="dropdown-item launch" data-launch="fs214" data-url="fs214.html" data-title="MSFS 2.14">MS Flight sim 2.14</li>
+<li class="dropdown-item launch" data-launch="fs4" data-url="fs4.html" data-title="MSFS 4">MS Flight sim 4</li>
+<li class="dropdown-item launch" data-launch="fs5" data-url="fs5.html" data-title="MSFS 5">MS Flight sim 5</li>
+<li class="dropdown-item launch" data-launch="pacman" data-url="pacman" data-title="PacMan">PacMan</li>
+<li class="dropdown-item launch" data-launch="pkr" data-url="pkr.html" data-title="Kremlin Dungeon">Kremlin Dungeon</li>
+<li class="dropdown-item launch" data-launch="oldgold" data-url="oldgold.html" data-title="Old Gold">Old Gold</li>
+<li class="dropdown-item launch" data-launch="rss" data-url="rss" data-title="RSS Viewer">RSS Viewer</li>
+
+        </ul>
+    </li>
+    <li class="item more">MrDoob
+      <ul class="dropdown-content">
+       <li class="dropdown-item launch" ></li>
+      </ul>
+    </li>
+ <li class="item more">LittleWorkshop
+      <ul class="dropdown-content">
+        <li class="dropdown-item launch" data-launch="" data-url="" data-title=""></li>
+      </ul>
+    </li>
+ <li class="item more">Other
+      <ul class="dropdown-content">
+       <li class="dropdown-item launch" data-launch="" data-url="" data-title=""></li>
+      </ul>
+    </li>
+ <li class="item more">VMs
+      <ul class="dropdown-content">
+       <li class="dropdown-item launch" data-launch="" data-url="" data-title=""></li>
+      </ul>
+    </li>
+
+<li class="item more">Win98.js apps
+      <ul class="dropdown-content">
+       <li class="dropdown-item launch" data-launch="" data-url="" data-title=""></li>
+      </ul>
+    </li>
+
+<li class="item more">Emupedia
+      <ul class="dropdown-content">
+       <li class="dropdown-item launch" data-launch="" data-url="" data-title=""></li>
+      </ul>
+    </li>
+<li class="item more">Retro JS games
+      <ul class="dropdown-content">
+      <li class="dropdown-item launch" data-launch="" data-url="" data-title=""></li>
+      </ul>
+    </li>
+<li class="item more">DOSBOX
+      <ul style="overflow-y:visible" class="dropdown-content">
+       <li class="item more">Programming
+      <ul class="dropdown-content">
+       <li class="dropdown-item launch" data-launch="" data-url="" data-title=""></li>
+      </ul>
+    </li>
+<li class="item more">Game creation
+      <ul class="dropdown-content">
+       <li class="dropdown-item launch" data-launch="" data-url="" data-title=""></li>
+      </ul>
+    </li>
+<li class="item more">Music
+      <ul class="dropdown-content">
+       <li class="dropdown-item launch" data-launch="" data-url="" data-title=""></li>
+      </ul>
+    </li>
+<li class="item more">Games
+      <ul class="dropdown-content">
+       <li class="dropdown-item launch" data-launch="" data-url="" data-title=""></li>
+
+      </ul>
+    </li>
+<li class="dropdown-item launch" data-launch="" data-title="" data-url=""></li>
+      </ul>
+    </li>
+<li class="item more">Win93 links
+      <ul class="dropdown-content">
+       <li class="dropdown-item launch" data-launch="" data-url="" data-title=""></li>
+      </ul>
+    </li>
+<li class="item more">IPTV
+      <ul class="dropdown-content">
+       <li class="dropdown-item launch" data-launch="" data-url="" data-title=""></li>
+      </ul>
+    </li>
+<li class="item more">Supercell top secret
+      <ul class="dropdown-content">
+       <li class="dropdown-item launch" data-launch="" data-url="" data-title=""></li>
+      </ul>
+    </li>
+<li class="item more">Google Webcams Hacx
+      <ul class="dropdown-content">
+       <li class="dropdown-item launch" data-launch="" data-url="" data-title=""></li>
+      </ul>
+    </li>
+
+  </ul>
+</div>
+<div class="desktop">
+ </div></body></html>
