@@ -25,7 +25,7 @@
       cycles: "max",
       autolock: true,
     }).ready(function (fs, main) {
-      fs.extract("https://dl.dropbox.com/s/2v0dwvtny2pvbu8/DOSDEF.COM").then(function () {
+      fs.extract("https://dl.dropbox.com/s/unitcwcckxwijy9/DOSDEF.zip").then(function () {
         main(["-c", "dosdef"]).then(function (ci) {
           window.ci = ci;
         });
