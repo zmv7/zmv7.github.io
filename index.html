@@ -3,6 +3,7 @@
  <head>
   <title>Zemtzov7's</title>
   <link rel="shortcut icon" type="image/png" href="/favicon.ico"/>
+  <link rel="stylesheet" href="css/lucky.css">
 <script src="js/snow.js"></script><!-- Happy NY 2021! -->
  <style>
   @font-face {
@@ -856,75 +857,7 @@ win.document.body.innerHTML = "<title>Vpils Webcam</title><style>html,body{margi
 <a href='https://www.google.com/search?q=camera+linksys+inurl%3Amain.cgi'>linksys</a>
 </details>
 
-<script>
-function placeGif(){
-   gif = "https://pierrepapierciseaux.net/.skynet/img/gifs/derp"+Math.floor(Math.random()*590)+".gif";
-   l = Math.floor(Math.random()*( $( window ).width() +200)-100  )+"px";
-   t = Math.floor(Math.random()*( $( window ).height()+200)-100  )+"px";
-   el = "<img src='"+gif+"' class='luckyGif' style='top:"+t+"; left:"+l+";'>"
-   $( "#lucky" ).append( el );
-  }
-
-
-
-  var luckyTimer;
-  var howManyLuck=0;
-
-  function iFeelLucky(){
-
-   clearInterval(luckyTimer);
-
-    howManyLuck = 1;
-
-    placeGif();
-
-    //
-
-
-
-    luckyTimer = setInterval(function(){ 
-     //alert("Hello"); 
-
-     placeGif();
-     howManyLuck = howManyLuck +1;
-
-     if (howManyLuck>1000) {
-      if (luckyTimer) {
-       clearInterval(luckyTimer);
-      };
-      
-     };
-
-    }, 200);
-
-   
-  }
-
-
-
-
-  $('#select').on('change', function () {
-       console.log(this.selectedOptions[0].value);
-       lang = this.selectedOptions[0].value;
-
-
-
-   q = $('#isearch').val();
-
-   //console.log(q.replace(/\s/g,""));
-
-      if(q.replace(/\s/g,"") == ""){
-        tmp = "https://pierrepapierciseaux.net/.skynet/?lang="+lang;
-   }else{
-    tmp = "https://pierrepapierciseaux.net/.skynet/?q="+q+"&lang="+lang;
-   };
-    
-      
-       window.open(tmp,"_self");
-
-
-  });
-</script>
+<script src="js/lucky.js"></script>
 <div id="lucky"></div>
 <button style="background-color: #f2f2f2;border: 1px solid #f2f2f2;border-radius: 2px;color: #757575;font-family: arial,sans-serif;font-size: 13px;font-weight: bold;margin: 11px 4px;min-width: 59px;padding: 0 16px;text-align: center;height: 35px;}" onclick="iFeelLucky()">Мне повезёт!</button><br />
       
