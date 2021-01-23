@@ -122,7 +122,7 @@ var maximiseWindow = function(id) {
     top: 0,
     left: 0,
     width: $(window).width(),
-    height: $(window).height() - 38
+    height: $(window).height()
   });
 
 };
