@@ -7,6 +7,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 <script src="js/desktop.js"></script>
 <script src="js/lucky.js"></script>
+<script src="https://adrianotiger.github.io/web-esheep/dist/esheep.min.js"></script>
+  <script>
+var sheep = new eSheep({allowPets:"all", allowPopup:"yes"}); 
+sheep.Start("https://adrianotiger.github.io/desktopPet/Pets/neko/animations.xml"); 
+</script>
+ <script>
+      // Add sheep
+    function addSheep()
+    {
+      var esheep2 = new eSheep({allowPets:"all", allowPopup:"yes"});
+      esheep2.Start("https://adrianotiger.github.io/desktopPet/Pets/neko/animations.xml"); 
+    }
+    </script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="css/desktop.css">
 <link rel="stylesheet" href="css/lucky.css">
@@ -401,6 +414,7 @@ document.getElementById("radio").addEventListener("click", function(){
       </ul>
     </li>
 <li class="dropdown-item launch" data-launch="mac-geo" data-url="data:text/html;base64,PGRpdiBzdHlsZT0nb3ZlcmZsb3c6aGlkZGVuO3dpZHRoOjcwMHB4O2hlaWdodDo3MDBweCcgaWQ9J21hY19mcmFtZSc+CjxpZnJhbWUgc2Nyb2xsaW5nPSdubycgc3R5bGU9J2JvcmRlcjowO3dpZHRoOjEwMCU7aGVpZ2h0OjEyMCUnIHNyYz0naHR0cHM6Ly9hbGV4ZWxsLnJ1L25ldHdvcmsvbWFjLWdlby8nPjwvaWZyYW1lPgo8L2Rpdj4KPHNjcmlwdD4KCWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdtYWNfZnJhbWUnKS5zY3JvbGxUb3AgPSAxMDAKPC9zY3JpcHQ+" data-title="MAC-GEO")">Location of MAC</li>
+<li onclick="onclick="addSheep();" class="item">Add Neko!</li>
 <li onclick="iFeelLucky()" class="item"><b>Z7DE Update</b></li>
   </ul>
 </div>
