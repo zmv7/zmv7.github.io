@@ -25,7 +25,7 @@
       cycles: "max",
       autolock: true,
     }).ready(function (fs, main) {
-      fs.extract("https://dl.dropbox.com/s/p3597m0e09usho8/WIN1VESA.ZIP").then(function () {
+      fs.extract("https://dl.dropbox.com/s/8sbh55u26nhqf1c/WIN1VESA.ZIP").then(function () {
         main(["-c", "boot w1vesa.img"]).then(function (ci) {
           window.ci = ci;
         });
