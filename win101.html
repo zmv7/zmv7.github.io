@@ -24,7 +24,7 @@
       cycles: "auto",
       autolock: true,
     }).ready(function (fs, main) {
-      fs.extract("https://dl.dropbox.com/s/ssh2mjky5c7j48y/win1.zip").then(function () {
+      fs.extract("https://dl.dropbox.com/s/vggos5jq22xla0s/w101.zip").then(function () {
         main(["-c", "boot w1.img"]).then(function (ci) {
           window.ci = ci;
         });
