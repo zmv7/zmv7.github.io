@@ -67,8 +67,8 @@
 
 #menu {
   position: absolute;
-  top:35px;
-  left: 3px;
+  top:38px;
+  left: 0;
   background-color: #bdbebd;
   z-index: 10;
   border-left: 2px solid white;
