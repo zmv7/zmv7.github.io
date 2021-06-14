@@ -1,0 +1,431 @@
+<!DOCTYPE HTML>
+<html><head><title>Z7DE</title>
+<link rel="shortcut icon" type="image/png" href="/favicon.ico"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+<script src="js/desktop.js"></script>
+<script src="js/lucky.js"></script>
+<script src="js/cams.js"></script>
+<script src="https://adrianotiger.github.io/web-esheep/dist/esheep.min.js"></script>
+  <script>
+var sheep = new eSheep({allowPets:"all", allowPopup:"yes"}); 
+sheep.Start("https://adrianotiger.github.io/desktopPet/Pets/neko/animations.xml"); 
+</script>
+ <script>
+      // Add sheep
+    function addSheep()
+    {
+      var esheep2 = new eSheep({allowPets:"all", allowPopup:"yes"});
+      esheep2.Start("https://adrianotiger.github.io/desktopPet/Pets/neko/animations.xml"); 
+    }
+    </script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="css/desktop.css">
+<link rel="stylesheet" href="css/lucky.css">
+</head>
+<div class="startbar">
+  <div id="startbutton" class="startbutton-off">
+    <b>Menu</b>
+  </div>
+<audio id="comedy" src="https://ic7.101.ru:8000/stream/air/aac/64/202" type="audio/aac"></audio>
+<button title="Comedy Radio" id="radio">&#9654;</button>
+<script type="text/javascript">
+document.getElementById("radio").addEventListener("click", function(){
+    var audio = document.getElementById('comedy');
+  if(this.className == 'is-playing'){
+    this.className = "";
+    this.innerHTML = "&#9654;"
+    audio.pause();
+  }else{
+    this.className = "is-playing";
+    this.innerHTML = "&#9632;";
+    audio.play();
+  }
+});
+</script>
+  <div class="time">
+  </div>
+</div>
+
+<div id="menu">
+  <div class="sidebar"></div>
+	<div class="headline"><b>Z7's <i>LITE</i> Desktop Environment</b>
+  </div>
+  <ul class="menu-content">
+    <li class="item more">My Pages
+<ul class="dropdown-content">
+<li onclick='window.open("backdoor/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">BACKDOOR</li>
+<li onclick='window.open("flooder.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Flooder</li>
+<li onclick='window.open("msdos.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">MS-DOS</li>
+<li onclick='window.open("fdos.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">FreeDOS</li>
+<li onclick='window.open("qbasic.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">QBasic</li>
+<li onclick='window.open("turbopas.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">TurboPascal</li>
+<li onclick='window.open("seal.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">SEAL 2 DOS GUI</li>
+<li onclick='window.open("bss.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">BlackStrip shell</li>
+<li onclick='window.open("win101.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Windows 1.01</li>
+<li onclick='window.open("win1vesa.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Windows 1.04 VESA</li>
+<li onclick='window.open("win2.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Windows 286</li>
+<li onclick='window.open("win30.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Windows 3.0</li>
+<li onclick='window.open("msw31.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Win3.1 rus +Word&Excel</li>
+<li onclick='window.open("win31.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Win3.1 rus + SkiFree</li>
+<li onclick='window.open("skifree.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">SkiFree</li>
+<li onclick='window.open("solitaire.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Solitaire</li>
+<li onclick='window.open("fulltilt.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">FULLTILT</li>
+<li onclick='window.open("fulltilt_hd.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">FULLTILT HD</li>
+<li onclick='window.open("win31_games.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">FULLTILT HD + SkiFree</li>
+<li onclick='window.open("chicago73.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Win Chicago73</li>
+<li onclick='window.open("win95.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Windows 95 Z7's distro</li>
+<li onclick='window.open("nashville.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Win Nashville</li>
+<li onclick='window.open("office95.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">MS Office 95</li>
+<li onclick='window.open("1stpaint.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">First MS Paint</li>
+<li onclick='window.open("pbrush.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">PaintBrush</li>
+<li onclick='window.open("dosdef.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">DOS Defender</li>
+<li onclick='window.open("tw.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Tank Wars 1986</li>
+<li onclick='window.open("scorch.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Scorched Earth</li>
+<li onclick='window.open("wipeout.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Wipeout</li>
+<li onclick='window.open("megaball.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Megaball Amiga</li>
+<li onclick='window.open("gta.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">GTA</li>
+<li onclick='window.open("pop13.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Prince of Persia</li>
+<li onclick='window.open("wolf3drus","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Wolfenstein 3D RUS</li>
+<li onclick='window.open("doom04.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Doom 0.4</li>
+<li onclick='window.open("doom05.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Doom 0.5</li>
+<li onclick='window.open("doombeta.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Doom Beta</li>
+<li onclick='window.open("heretic.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Heretic</li>
+<li onclick='window.open("doom_ml.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Doom Master Levels</li>
+<li onclick='window.open("skymaybe.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Doom SkyMayBe</li>
+<li onclick='window.open("striferu.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Strife RUS</li>
+<li onclick='window.open("keens.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Commander keen collection</li>
+<li onclick='window.open("arkanoid.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Arkanoid</li>
+<li onclick='window.open("doh.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Revenge of DOH</li>
+<li onclick='window.open("arkanoid_ega.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Arkanoid EGA</li>
+<li onclick='window.open("arkanoid_hard.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Arkanoid Hardcore</li>
+<li onclick='window.open("rick.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Rick Dangerous</li>
+<li onclick='window.open("spyhunt.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">SpyHunter</li>
+<li onclick='window.open("f1.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">F1</li>
+<li onclick='window.open("fs84.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">MS Flight sim 84</li>
+<li onclick='window.open("fs214.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">MS Flight sim 2.14</li>
+<li onclick='window.open("fs4.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">MS Flight sim 4</li>
+<li onclick='window.open("fs5.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">MS Flight sim 5</li>
+<li onclick='window.open("pacman.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">PacMan</li>
+<li onclick='window.open("supaplex.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Supaplex</li>
+<li onclick='window.open("pkr.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Kremlin Dungeon</li>
+<li onclick='window.open("oldgold.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Old Gold</li>
+<li onclick='window.open("rss.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">RSS Viewer</li>
+<li onclick='window.open("musboard.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Musical keyboard</li>
+
+        </ul>
+    </li>
+    <li class="item more">Three.js
+      <ul class="dropdown-content">
+<li onclick='window.open("https://mrdoob.com/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Mr.Doob</li>
+<li onclick='window.open("https://threejs.org/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Three.js</li>
+<li onclick='window.open("https://mrdoob.neocities.org/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Three.js Sketches</li>
+<li onclick='window.open("https://www.littleworkshop.fr/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">LittleWorkshop</li>
+<li onclick='window.open("https://demos.littleworkshop.fr/infinitown","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">InfiniTown</li>
+<li onclick='window.open("https://demos.littleworkshop.fr/track","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Track</li>
+      </ul>
+    </li>
+ <li class="item more">Other
+      <ul class="dropdown-content">
+<li onclick='window.open("https://telehack.com/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">TeleHack</li>
+<li onclick='window.open("https://lionel.me/experiments/roadtrip/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">RoadTrip</li>
+<li onclick='window.open("https://sandspiel.club/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Sandspiel</li>
+<li onclick='window.open("https://chandlerprall.github.io/Physijs/examples/jenga.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Jenga</li>
+<li onclick='window.open("https://hexgl.bkcore.com/play/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">HexGL</li>
+<li onclick='window.open("https://phoboslab.org/wipeout/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">WipeOut demo</li>
+<li onclick='window.open("https://cityofdrones.io/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">City of drones</li>
+<li onclick='window.open("https://libcanvas.github.com/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">LibCanvas</li>
+<li onclick='window.open("https://www.windows93.net/c/files/images/png/pizza_58000-342000.png"","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Glitched PNG</li>
+<li onclick='window.open("https://copy.sh/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Copy.sh</li>
+
+      </ul>
+    </li>
+ <li class="item more">VMs
+      <ul class="dropdown-content">
+<li onclick='window.open("https://copy.sh/v86","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">V86</li>
+<li onclick='window.open("https://www.pcjs.org/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">PC.JS</li>
+<li onclick='window.open("https://jamesfriend.com.au/pce-js/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">PCE.JS MacOS</li>
+<li onclick='window.open("https://bellard.org/jslinux/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">JS Linux</li>
+<li onclick='window.open("https://therestartpage.com/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">TheRestartPage</li>
+<li onclick='window.open("https://scriptedamigaemulator.net/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">SAE</li>
+<li onclick='window.open("https://www.taws.ch/WB.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Amiga Workbenches</li>
+<li onclick='window.open("http://www.chiptune.com","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Chiptune Workbench</li>
+<li onclick='window.open("https://jamesfriend.com.au/pce-js/atari-st/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Atari ST PCE.JS</li>
+<li onclick='window.open("https://estyjs.azurewebsites.net/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Atari ST esty.js</li>
+<li onclick='window.open("https://virtualdesktop.org/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">VIrtual Desktops</li>
+<li onclick='window.open("https://demo.os-js.org/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">OS.JS</li>
+<li onclick='window.open("https://altaica.altervista.org/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">CloudDesk</li>
+<li onclick='window.open("https://aaronos.dev/AaronOS/aosBeta.php","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">AaronOS</li>
+<li onclick='window.open("https://whimsy.space/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">ZineOS</li>
+<li onclick='window.open("https://charlie.bz/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Windows 95</li>
+<li onclick='window.open("https://windows96.net/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Windows 96</li>
+<li onclick='window.open("https://franx1024.github.io/Windows97/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Windows 97</li>
+<li onclick='window.open("https://98.js.org/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Win98-98.js.org</li>
+<li onclick='window.open("https://rahul.io/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Win98-rahul.io</li>
+<li onclick='window.open("https://packard-belle.netlify.com/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Win98-packard belle</li>
+<li onclick='window.open("https://emupedia.net/beta/emuos/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">EmuOS</li>
+<li onclick='window.open("https://winxp.now.sh/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Windows XP</li>
+<li onclick='window.open("https://webdesktop.net/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Win10 WebDesktop</li>
+<li onclick='window.open("https://www.jurassicsystems.com/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Jurassic Systems</li>
+<li onclick='window.open("https://axmasoft.com/ispeccy/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">ISpeccy</li>
+
+      </ul>
+    </li>
+
+<li class="item more">Win98.js apps
+      <ul class="dropdown-content">
+<li onclick='window.open("https://jspaint.app/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">JS-Paint</li>
+<li onclick='window.open("https://98.js.org/programs/notepad/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">JS-Notepad</li>
+<li onclick='window.open("https://98.js.org/programs/explorer/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">JS-Explorer</li>
+<li onclick='window.open("https://webamp.org/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">WebAMP</li>
+<li onclick='window.open("https://98.js.org/programs/sound-recorder/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Sound recorder</li>
+
+      </ul>
+    </li>
+<li class="item more">Retro JS games
+      <ul class="dropdown-content">
+<li onclick='window.open("https://emupedia.net/beta/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">EmuPedia's cool stuff</li>
+<li onclick='window.open("https://98.js.org/programs/minesweeper/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Minesweeper</li>
+<li onclick='window.open("http://copy.sh/iw/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">I Wanna Be: The Copy</li>
+<li onclick='window.open("https://doom.pdox.net/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Doom Native client</li>
+<li onclick='window.open("https://www.google.com/logos/2010/pacman10-i.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Google's PACMAN</li>
+<li onclick='window.open("http://web.archive.org/web/20130724181002/https://www.cubeslam.com/lmautc","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">CubeSlam</li>
+<li onclick='window.open("https://gba.ninja/?autorun=https://dl.dropbox.com/s/yg5f9gki2polcof/GTA_ADVANCE.gba&exclusive","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">GTA Advance</li>
+<li onclick='window.open("https://www.retrogames.cc/embed/38656-grand-theft-auto-chinatown-wars-usa-en-fr-de-es-it.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">GTA CTW</li>
+<li onclick='window.open("https://dx-ball.ru/iframe.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">DX-Ball</li>
+
+      </ul>
+    </li>
+<li class="item more">Win93's DOSBOX
+      <ul style="overflow-y:visible" class="dropdown-content">
+       <li class="item more">Programming
+      <ul class="dropdown-content">
+<li onclick='window.open("http://www.windows93.net/d/programs/dosbox/?soft=GWBASIC","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">GWBasic</li>
+<li onclick='window.open("http://www.windows93.net/d/programs/dosbox/?soft=LoveDOS","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">LoveDOS</li>
+<li onclick='window.open("http://www.windows93.net/d/programs/dosbox/?soft=QBasic","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">QBasic</li>
+<li onclick='window.open("http://www.windows93.net/d/programs/dosbox/?soft=Turbo_C","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Turbo C</li>
+<li onclick='window.open("http://www.windows93.net/d/programs/dosbox/?soft=Turbo_C_PP","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Turbo C++</li>
+
+
+      </ul>
+    </li>
+<li class="item more">Game creation
+      <ul class="dropdown-content">
+<li onclick='window.open("http://www.windows93.net/d/programs/dosbox/?soft=Adventure_Game_Studio","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Adventure game studio</li>
+<li onclick='window.open("http://www.windows93.net/d/programs/dosbox/?soft=Asciiquest","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">ASCII quest</li>
+<li onclick='window.open("http://www.windows93.net/d/programs/dosbox/?soft=MegaZeux"","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">MegaZeux</li>
+
+      </ul>
+    </li>
+<li class="item more">Music
+      <ul class="dropdown-content">
+<li onclick='window.open("http://www.windows93.net/d/programs/dosbox/?soft=Adlib_Tracker_II","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Adlib Tracker 2</li>
+<li onclick='window.open("http://www.windows93.net/d/programs/dosbox/?soft=Impulse_Tracker","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Impulse Tracker</li>
+<li onclick='window.open("http://www.windows93.net/d/programs/dosbox/?soft=Fast_Tracker_2","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Fast Tracker 2</li>
+<li onclick='window.open("http://www.windows93.net/d/programs/dosbox/?soft=Scream_Tracker_3","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Scream tracker 3</li>
+<li onclick='window.open("http://www.windows93.net/d/programs/dosbox/?soft=Master_Player","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Master player</li>
+
+      </ul>
+    </li>
+<li class="item more">Games
+      <ul class="dropdown-content">
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Alone_in_the_dark","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Alone in ther dark</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Alone_in_the_dark_2","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Alone in ther dark 2</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Alone_in_the_dark_3","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Alone in ther dark 3</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Jack_in_the_dark","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Jack in the dark</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Alley_Cat","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Alley Cat</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Abuse","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Abuse</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Alien_Rampage","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Alien Rampage</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Adventures_in_Math","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Adventures in Math</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=BAT","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">BAT</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Battle_Chess","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Battle Chess</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=BloodNet","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">BloodNet</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Keen1","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Commander Keen</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Civilization","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Civilization</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Colossal_Cave_Adventure","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Colossal Cave Adventure</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Dave","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Dave 2</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Destruction_Derby","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Destruction Derby</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Disc","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Disc</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Digger","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Digger</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Doom","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Doom</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Duke3d","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Duke Nukem 3D</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Dune","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Dune</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Dune2","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Dune 2</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Dreamweb","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Dreamweb</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Dungeon_Master","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Dungeon Master</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Karateka","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Karateka</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=KGB","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">KGB</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Lands_of_lore","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Lands of lore</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Neuromancer","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Neuromancer</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Prince_of_persia","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Prince of persia</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Rogue","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Rogue</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Sapiens","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Sapiens</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Shuffle_Puck_Cafe","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Shuffle Puck Cafe</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Theme_Hospital","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Theme Hospital</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Tower_Assault","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Tower Assault</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Winter_Challenge","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Winter Challenge</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Worms","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Worms</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=Xonix","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Xonix</li>
+<li onclick='window.open("https://www.windows93.net/d/programs/dosbox/?soft=ZZT","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">ZZT</li>
+
+      </ul>
+    </li>
+<li onclick='window.open("https://js-dos.com/games","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">JS-DOS games</li>
+<li onclick='window.open("https://js-dos.com/index_v3.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">JS-DOS games 2</li>
+      
+      </ul>
+    </li>
+<li class="item more">Win93's stuff
+      <ul class="dropdown-content">
+<li onclick='window.open("https://windows93.net","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Windows 93</li>
+<li onclick='window.open("https://v0.windows93.net","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Win93 v0</li>
+<li onclick='window.open("https://v1.windows93.net","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Win93 v1</li>
+
+<li onclick='window.open("https://electron93.darkok.xyz","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Electron93</li>
+
+<li onclick='window.open("https://windows93.net/d/programs/flash","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Pizza Flash</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/calculate/index.php","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Calculator</li>
+
+<li onclick='window.open("https://myspace.windows93.net","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">MySpace93</li>
+
+<li onclick='window.open("https://windows93.net/miner","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Necronomicoin</li>
+
+<li onclick='window.open("https://windows93.net:8083","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">93 Realms</li>
+
+<li onclick='window.open("https://windows93.net/trollbox","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">TrollBox</li>
+
+<li onclick='window.open("https://darkok.xyz:8084","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">TrollBox++</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/maze/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">ASCII Maze</li>
+
+<li onclick='window.open("https://windows93.net:8084","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Arena93</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/castleGafa/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">GAFA 3D</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/defrag/index.php","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Defrag</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/SkiFree/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">SkiFree.js</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/kof93/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">kof93</li>
+
+<li onclick='window.open("https://zombect.ro/cheapbeat8","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">CheapBeat8</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/solitude/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Solitude</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/robby/index.php","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Robby</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/progressQuest/index.php","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">ProgressQuest</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/hampsterDance/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Hampsters!</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/screensaver/pipes/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Pipes</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/starwars/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">StarWars</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/hl3/stillalive/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Still Alive</li>
+
+<li onclick='window.open("https://windows93.net/c/files/images/ascii/ascii.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">ASCII Gallery</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/bytebeat/index.php","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">ByteBeat</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/pukeData/index.php","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">PukeData</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/modbox/index.php","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Modded BeepBox</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/midi/index.php","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">MIDI JukeBox</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/piskel/index.php","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Piskel</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/visualNovel/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Euro drunk simulator</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/acidBox93/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">AcidBox93</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/tunnel/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Tunnel</li>
+
+<li onclick='window.open("https://windows93.net/c/programs/gameOfLife/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">GameOfLife</li>
+
+<li onclick='window.open("https://windows93.net/c/sys/boot/screenSaver.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">ScreenSaver93</li>
+
+<li onclick='window.open("https://windows93.net/c/sys/boot/splash.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Splash</li>
+
+<li onclick='window.open("https://windows93.net/backdoor.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Backdoor93</li>
+
+<li onclick='window.open("https://pierrepapierciseaux.net/.skynet","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">SkyNet</li>
+
+      </ul>
+    </li>
+<li class="item more">IPTV
+      <ul class="dropdown-content">
+<li onclick='window.open("http://85.12.197.234:8080/video/hs738silsk8.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=656,height=378")' class="dropdown-item">Botanika webcam</li>
+<li onclick='window.open("http://85.12.197.234:8080/video/d7j3s8dj2.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=656,height=378")' class="dropdown-item">Svetliy webcam</li>
+<li onclick='window.open("webcam_halturina.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Halturina webcam</li>
+<li onclick='window.open("https://sirius-online.ru/embedded/khim11","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">N.Himmash webcam</li>
+<li onclick='window.open("https://sirius-online.ru/embedded/plos1905","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Square 1905 webcam</li>
+<li onclick='window.open("https://sirius-online.ru/embedded/plot","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Plotinka webcam</li>
+<li onclick='window.open("https://cam1.yuccastream.com/hls.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Somewhere in EKB webcam</li>
+
+<li onclick='javascript:wccam()' class="dropdown-item">Wilson commons webcam</li>
+
+<li onclick='javascript:vpilscam()' class="dropdown-item">Vpils webcam</li>
+
+      </ul>
+    </li>
+<li class="item more">Supercell top secret
+      <ul class="dropdown-content">
+
+<li onclick='window.open("https://inbox.haydaygame.com","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">HayDay inbox news</li>
+<li onclick='window.open("https://inbox.boombeach.com","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Boombeach inbox news</li>
+<li onclick='window.open("https://inbox.boombeach.com/community/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Boombeach inbox videos</li>
+<li onclick='window.open("https://inbox.clashofclans.com","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Clash of Clans inbox news</li>
+<li onclick='window.open("https://inbox.clashofclans.com/community/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Clash of Clans inbox videos</li>
+<li onclick='window.open("https://inbox.clashroyale.com","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Clash Royale inbox news</li>
+<li onclick='window.open("https://inbox.clashroyale.com/community/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Clash Royale inbox videos</li>
+<li onclick='window.open("https://inbox.brawlstars.com","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Brawl Stars inbox news</li>
+<li onclick='window.open("https://inbox.brawlstars.com/community/index.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Brawl Stars inbox videos</li>
+<li onclick='window.open("https://securemail.supercell.com","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Supercell's secure mail</li>
+<li onclick='window.open("8bit.html","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450")' class="dropdown-item">Project laser PC version by Z7</li>
+
+      </ul>
+    </li>
+<li class="item more">Google Webcams Hacx
+      <ul class="dropdown-content">
+<li onclick=window.open('https://www.google.com/search?q=inurl:/view/view.shtml+AXIS',"","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450") class="dropdown-item">AXIS</li>
+
+<li onclick=window.open('https://www.google.com/search?q=inurl:/view/index.shtml+AXIS',"","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450") class="dropdown-item">AXIS 2</li>
+
+<li onclick=window.open('https://www.google.com/search?q=inurl:/view/viewer_index.shtml',"","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450") class="dropdown-item">AXIS 3</li>
+
+<li onclick=window.open('https://www.google.com/search?q=inurl%3A%2FViewerFrame%3F+intitle%3A"Network+Camera+NetworkCamera"',"","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450") class="dropdown-item">ViewerFrame</li>
+
+<li onclick=window.open('https://www.google.com/search?q=intitle%3A"webcamXP+5"+inurl%3A8080+%27Live%27',"","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450") class="dropdown-item">webcamXP5</li>
+
+<li onclick=window.open('https://www.google.com/search?q=inurl%3A%2Flive.htm+intext%3A"M-JPEG"%7C"System+Log"%7C"Camera-1"%7C"View+Control"',"","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450") class="dropdown-item">BOSCH</li>
+
+<li onclick=window.open('https://www.google.com/search?q=intitle%3A"IP+CAMERA+Viewer"+intext%3A"setting+%7C+Client+setting"',"","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450") class="dropdown-item">IP cam viewer</li>
+
+<li onclick=window.open('https://www.google.com/search?q=inurl%3Acontrol%2Fcamerainfo',"","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450") class="dropdown-item">contol/camerainfo</li>
+
+<li onclick=window.open('https://www.google.com/search?q=inurl%3Acontrol%2Fuserimage',"","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450") class="dropdown-item">control/userimage</li>
+
+<li onclick=window.open('https://www.google.com/search?q=inurl%3Acgi-bin%2Fguestimage',"","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450") class="dropdown-item">cgi-bin/guestimage</li>
+
+<li onclick=window.open('https://www.google.com/search?q=%28intitle%3AMOBOTIX+intitle%3APDAS%29+%7C+%28intitle%3AMOBOTIX+intitle%3ASeiten%29+%7C+%28inurl%3A%2Fpda%2Findex.html+%2Bcamera%29',"","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450") class="dropdown-item">MOBOTIX</li>
+
+<li onclick=window.open('https://www.google.com/search?q=Display+Cameras+intitle%3A"Express6+Live+Image"',"","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450") class="dropdown-item">Express6</li>
+
+<li onclick=window.open('https://www.google.com/search?q=camera+linksys+inurl%3Amain.cgi',"","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=800,height=450") class="dropdown-item">linksys</li>
+
+      </ul>
+    </li>
+<li onclick='window.open("https://tools.alexell.ru/mac-geo/","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,width=710,height=800")'class="dropdown-item">Location of MAC</li>
+<script>function macgeo(){
+var win = window.open("","","toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,width=700,height=840");
+win.document.body.innerHTML = "<title>Vpils Webcam</title><style>html,body{margin:0;overflow:hidden}</style><iframe frameborder=no style='width:700px;height:840px;top:0;left:0' src='data:text/html;base64,PGJvZHkgc3R5bGU9J21hcmdpbjowJz48ZGl2IHN0eWxlPSdvdmVyZmxvdzpoaWRkZW47d2lkdGg6NzAwcHg7aGVpZ2h0OjcwMHB4JyBpZD0nbWYnPjxpZnJhbWUgc2Nyb2xsaW5nPSdubycgc3R5bGU9J2JvcmRlcjowO3dpZHRoOjEwMCU7aGVpZ2h0OjEyMCUnIHNyYz0naHR0cHM6Ly9hbGV4ZWxsLnJ1L25ldHdvcmsvbWFjLWdlby8nPjwvaWZyYW1lPjwvZGl2PjwvYm9keT48c2NyaXB0PmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdtZicpLnNjcm9sbFRvcD0xMDA8L3NjcmlwdD4='/>";}
+	  </script>
+	  <li onclick="addSheep();" class="item">Add Neko!</li>
+<li onclick="iFeelLucky()" class="item"><b>Z7DE Update</b></li>
+  </ul>
+</div>
+<div class="desktop"><div id="lucky"></div>
+ </div></body></html>
