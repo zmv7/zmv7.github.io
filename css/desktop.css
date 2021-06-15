@@ -49,6 +49,7 @@
   background-size: auto 70%;
   background-position: 5% 50%;
   background-repeat: no-repeat;
+  transform: skew(-15deg);
 }
 
 .startbutton-off {
@@ -205,6 +206,7 @@ max-height: 400px;
   border-left: 2px solid grey;
   border-bottom: 2px solid white;
   border-right: 2px solid white;
+  transform: skew(-15deg);
 }
 
 .window {
@@ -264,6 +266,7 @@ max-height: 400px;
   margin-top: 3px;
   margin-right: 3px;
   margin-bottom: 3px;
+  transform: skew(-15deg);
 }
 
 .close {
@@ -313,11 +316,10 @@ max-height: 400px;
   box-sizing: border-box; 
   overflow: hidden;
   white-space: nowrap;
-  
   background-size: auto 70%;
   background-position: 3px 50%;
   background-repeat: no-repeat;
-  
+  transform: skew(-15deg);
   
 }
 
