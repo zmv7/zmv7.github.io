@@ -229,6 +229,7 @@ max-height: 400px;
 
 .window-header {
   background-color: #222335;
+    border-bottom: 1px solid #0FF;
   /*font-size: 15px;*/
   overflow: auto; 
 
@@ -237,7 +238,6 @@ max-height: 400px;
 
 .window-header p {
   color: #0FF;
-  border-bottom: 2px solid #0FF;
   display: inline;
   position: absolute;
   vertical-align: middle;
@@ -272,21 +272,21 @@ max-height: 400px;
 }
 
 .close {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWAgMAAAC52oSoAAAACVBMVEX///8AAAAAAAB+UaldAAAAAnRSTlMA/bWfQ5kAAABBSURBVAgdBcExAcBACASwMJwElqpBAgPv30oTAEAQMjS1HE4tWgaZhtoDb8E34BvwFmoPMg0tg1NLLUeGJggA4AdsjggN63p4pwAAAABJRU5ErkJggg==");
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAWklEQVQ4jdWUwQ4AMARD/f9Pd6fdxlBdsh5JX4So2b8CYADm/bvRgV+9HXjaU4GXB8kY2quLjMw9XAANPYHGoB58TE+mHd9vVKOhNFzyIJKXloSQLDZlQf+LFn3iKuQ/tsRtAAAAAElFTkSuQmCC");
   background-size: auto 100%;
   background-position: 50% 50%;
   background-repeat: no-repeat;
   }
 
 .maximise {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAQAAABuvaSwAAAARElEQVQoz2P8z0A8YCJBLQMLAwMDAyMRxv9nJNHkQaKYBc5ixOc7ikxmwB1+MEsHSWgMe8WISPnPSFAxSSYTk0nIMxkA25sHMe5snEMAAAAASUVORK5CYII=");
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAJ0lEQVQ4jWNgGLrg////VMGjBg+gweSCUYNHDR41eFAaPHQKoaECAEE4/BId7nyMAAAAAElFTkSuQmCC");
   background-size: auto 100%;
   background-position: 50% 50%;
   background-repeat: no-repeat;
   }
 
 .minimise {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWAQAAAADsz1GWAAAAAnRSTlMAAQGU/a4AAAAVSURBVAjXY/j//w8DNfADBhkwhvIBFEE9gVXLpVYAAAAASUVORK5CYII=");
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAH0lEQVQ4jWNgGAWjYBSMglEwCigH////pwjT3+ChAACZg1+hYv0ztQAAAABJRU5ErkJggg==");
   background-size: auto 100%;
   background-position: 50% 50%;
   background-repeat: no-repeat;
