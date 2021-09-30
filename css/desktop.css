@@ -6,7 +6,7 @@
   -moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;
 }
 
-
+html{overflow:hidden}
 
 /* JQuery ui icom removal */ 
 .ui-icon { background-image: url("") !important; }
