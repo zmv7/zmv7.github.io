@@ -14,7 +14,7 @@ html{overflow:hidden}
 .desktop {
   height: 100vh;
   width: 100vw;
-  background-color: #007d7b;
+  background-color: #222335;
   background-image: url('/img/nightbliss.jpg');
   background-size: cover;
   background-repeat: no-repeat;
