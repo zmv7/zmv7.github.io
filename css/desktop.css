@@ -68,7 +68,7 @@ html{overflow:hidden}
 
 #menu {
   position: absolute;
-  top:38px;
+  top:35px;
   left: 0;
   background-color: #222335;
   z-index: 10;
