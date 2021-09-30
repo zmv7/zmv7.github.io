@@ -53,17 +53,17 @@
 }
 
 .startbutton-off {
-  border-top: 2px solid #00FFFF;
-  border-left: 2px solid #00FFFF;
-  border-right: 2px solid #00FFFF;
-  border-bottom: 2px solid #00FFFF;
+  border-top: 2px solid #0FF;
+  border-left: 2px solid #0FF;
+  border-right: 2px solid #0FF;
+  border-bottom: 2px solid #0FF;
 }
 
 .startbutton-on {
-  border-top: 2px solid #00FFFF;
-  border-left: 2px solid #00FFFF;
-  border-right: 2px solid #00FFFF;
-  border-bottom: 2px solid #00FFFF;
+  border-top: 2px solid #0FF;
+  border-left: 2px solid #0FF;
+  border-right: 2px solid #0FF;
+  border-bottom: 2px solid #0FF;
 }
 
 #menu {
@@ -72,10 +72,10 @@
   left: 0;
   background-color: #222335;
   z-index: 10;
-  border-left: 2px solid #00FFFF;
-  border-top: 2px solid #00FFFF;
-  border-right: 2px solid #00FFFF;
-  border-bottom: 2px solid #00FFFF;
+  border-left: 2px solid #0FF;
+  border-top: 2px solid #0FF;
+  border-right: 2px solid #0FF;
+  border-bottom: 2px solid #0FF;
   display: none;
 }
 
@@ -153,10 +153,10 @@ max-height: 400px;
   background-color: ##222335;
   color: #00FFFF;
   list-style: none;
-  border-left: 2px solid #00FFFF;
-  border-top: 2px solid #00FFFF;
-  border-right: 2px solid #00FFFF;
-  border-bottom: 2px solid #00FFFF;
+  border-left: 2px solid #0FF;
+  border-top: 2px solid #0FF;
+  border-right: 2px solid #0FF;
+  border-bottom: 2px solid #0FF;
   box-sizing: border-box;
   min-width: 100%;
   
@@ -205,20 +205,20 @@ max-height: 400px;
   float: right;
   text-align: center;
   padding: 4px;
-  border-top: 2px solid #00FFFF;
-  border-left: 2px solid #00FFFF;
-  border-bottom: 2px solid #00FFFF;
-  border-right: 2px solid #00FFFF;
+  border-top: 2px solid #0FF;
+  border-left: 2px solid #0FF;
+  border-bottom: 2px solid #0FF;
+  border-right: 2px solid #0FF;
   transform: skew(-15deg);
 }
 
 .window {
   top: 38px;
-  background-color: #BDBEBD;
-  border-left: 1px solid white;
-  border-bottom: 1px solid black;
-  border-top: 1px solid white;
-  border-right: 1px solid black;
+  background-color: #0FF;
+  border-left: 1px solid #0FF;
+  border-bottom: 1px solid #0FF;
+  border-top: 1px solid #0FF;
+  border-right: 1px solid #0FF;
   box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.75);
   display: none;
   height:488px;
@@ -226,7 +226,7 @@ max-height: 400px;
 }
 
 .window-inner {
-  border: 2px solid #BDBEBD;
+  border: 2px solid #0FF;
   height: 100%;
 }
 
@@ -239,7 +239,7 @@ max-height: 400px;
 }
 
 .window-header p {
-  color: #00FFFF;
+  color: #0FF;
   display: inline;
   position: absolute;
   vertical-align: middle;
@@ -249,6 +249,7 @@ max-height: 400px;
   width: calc(100% - 105px);
   padding-top: 3px; 
   padding-left: 3px; 
+  transform: skew(-15deg);
 }
 
 
@@ -257,13 +258,13 @@ max-height: 400px;
 .window-icon {
   width: 20px;
   height: 20px;
-  background-color: #00FFFF;
+  background-color: #0FF;
   display: inline-block;
   float: right;
-  border-top: 1px solid #00FFFF;
-  border-left: 1px solid #00FFFF;
-  border-bottom: 1px solid #00FFFF;
-  border-right: 1px solid #00FFFF;
+  border-top: 1px solid #0FF;
+  border-left: 1px solid #0FF;
+  border-bottom: 1px solid #0FF;
+  border-right: 1px solid #0FF;
  
   text-align: center;
   margin-top: 3px;
@@ -297,8 +298,8 @@ max-height: 400px;
 .window-content {
   margin-top: 2px;
   border: 2px solid #808080;
-  border-bottom: 2px solid #00FFFF;
-  border-right: 2px solid #00FFFF;
+  border-bottom: 2px solid #0FF;
+  border-right: 2px solid #0FF;
   height: calc( 100% - 28px);
 
 }
@@ -311,10 +312,10 @@ max-height: 400px;
   text-align: left;
   padding: 4px;
   padding-left: 4px;
-  border-top: 2px solid #00FFFF;
-  border-left: 2px solid #00FFFF;
-  border-bottom: 2px solid #00FFFF;
-  border-right: 2px solid #00FFFF;
+  border-top: 2px solid #0FF;
+  border-left: 2px solid #0FF;
+  border-bottom: 2px solid #0FF;
+  border-right: 2px solid #0FF;
   background-color: #222335;
   box-sizing: border-box; 
   overflow: hidden;
@@ -334,10 +335,10 @@ max-height: 400px;
 }
 
 .focused {
-  border-top: 2px solid #00FFFF;
-  border-left: 2px solid #00FFFF;
-  border-bottom: 2px solid #00FFFF;
-  border-right: 2px solid #00FFFF;
+  border-top: 2px solid #0FF;
+  border-left: 2px solid #0FF;
+  border-bottom: 2px solid #0FF;
+  border-right: 2px solid #0FF;
 }
 #radio {
     background-color: red;
