@@ -299,6 +299,7 @@ max-height: 400px;
 }
 
 .program {
+  color: #0FF;
   float: left;
   display: block; 
   margin-left: 5px; 
