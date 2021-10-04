@@ -163,7 +163,7 @@ max-height: 400px;
   
 }
 
-  .dropdown-item {
+  .di {
   color: #00FFFF;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -177,7 +177,7 @@ max-height: 400px;
    
 }
 
-.dropdown-item:hover {
+.di:hover {
   color: white;
   background-color: darkblue;
 }
