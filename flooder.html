@@ -18,7 +18,7 @@
     c = document.getElementById("wait").value;
     intervalId = setInterval("pingPage()",c);
     d = document.getElementById("running");
-    d.innerHTML = "<b style="color:#090">Работает</b>";
+    d.innerHTML = "<b style='color:#090'>Работает</b>";
    }
    
    function stopPings() {
@@ -33,7 +33,7 @@
     //cancels the page pinging
     clearInterval(intervalId);
     d = document.getElementById("running");
-    d.innerHTML = "<b style="color:#D00">Остановлен</b>";
+    d.innerHTML = "<b style='color:#D00'>Остановлен</b>";
    }
  
    function makestring(type) {
