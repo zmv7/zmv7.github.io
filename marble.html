@@ -25,6 +25,13 @@
       autolock: true,
     }).ready(function (fs, main) {
       fs.extract("/zips/Marble.zip").then(function () {
+        fs.createFile("dosbox.conf", `
+[dosbox]
+machine=cga
+[render]
+frameskip=0
+aspect=true
+`);
         main(["-c", "marble"]).then(function (ci) {
           window.ci = ci;
         });
