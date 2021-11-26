@@ -32,7 +32,7 @@ machine=cga
 frameskip=0
 aspect=true
 `);
-        main(["-c", "marble"]).then(function (ci) {
+        main(["-conf", "dosbox.conf", "-c", "marble"]).then(function (ci) {
           window.ci = ci;
         });
       });
