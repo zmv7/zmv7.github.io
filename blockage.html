@@ -25,7 +25,7 @@
       autolock: true,
     }).ready(function (fs, main) {
       fs.extract("/zips/blockage.zip").then(function () {
-        main(["-c", "boot paint.img"]).then(function (ci) {
+        main(["-c", "blockage"]).then(function (ci) {
           window.ci = ci;
         });
       });
