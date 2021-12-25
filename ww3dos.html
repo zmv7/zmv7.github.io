@@ -24,7 +24,7 @@
       cycles: "max",
       autolock: true,
     }).ready(function (fs, main) {
-      fs.extract("/zips/ww3dos.html.zip").then(function () {
+      fs.extract("/zips/ww3dos.zip").then(function () {
         main(["-c", "ww3dos"]).then(function (ci) {
           window.ci = ci;
         });
