@@ -24,7 +24,7 @@
       cycles: "max",
       autolock: true,
     }).ready(function (fs, main) {
-      fs.extract("/zips/dzze.zip").then(function () {
+      fs.extract("/zips/DZZE.zip").then(function () {
         main(["-c", "dzzesftw"]).then(function (ci) {
           window.ci = ci;
         });
