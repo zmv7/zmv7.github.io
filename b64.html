@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang=en>
+	<head>
+		<meta charset=utf-8>
+  <meta name="viewport" content="width=device-width">
+		<title>Encode/Decode Base64</title>
+		<script>
+			var string, result;
+			window.onload = function (){
+				string = document.getElementById('string');
+				result = document.getElementById('result');
+				string.value     = "";
+				result.innerHTML = "";};
+			function Encode (){
+				result.innerHTML += 'Text: ' + string.value + '<br><br>' + 'base64: ' + window.btoa(string.value) + '<hr>';
+				string.value = "";
+				string.focus();}
+			function Decode (){
+				result.innerHTML += 'base64: ' + string.value + '<br><br>' + 'Text: ' + window.atob(string.value) + '<hr>';
+				string.value = "";
+				string.focus();}
+			function Clear (){
+				result.innerHTML = '';
+				string.value = "";
+				string.focus();}
+		</script>
+	</head>
+	<body>
+		<div id="header">
+			<h3>Base64</h3>
+		</div>
+		<div id="content">
+			<div class="inner">
+				<button onclick="Encode();">Encode</button> <button onclick="Decode();">Decode</button> <button onclick="Clear()">Clear</button><br><br>
+				<input type="text" name="string" id="string" style="width:calc(100% - 8px)"><br><br>
+				<div id="result"></div>
+			</div>
+		</div>
+	</body>
+</html>
