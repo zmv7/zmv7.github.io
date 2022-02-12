@@ -12,11 +12,11 @@
 				string.value     = "";
 				result.innerHTML = "";};
 			function Encode (){
-				result.innerHTML += 'Text: ' + string.value + '<br><br>' + 'base64: ' + window.btoa(string.value) + '<hr>';
+				result.innerHTML += 'Text:<br><code>' + string.value + '</code><br><br>' + 'Base64:<br><code>' + window.btoa(string.value) + '</code><hr>';
 				string.value = "";
 				string.focus();}
 			function Decode (){
-				result.innerHTML += 'base64: ' + string.value + '<br><br>' + 'Text: ' + window.atob(string.value) + '<hr>';
+				result.innerHTML += 'Base64:<br><code>' + string.value + '</code><br><br>' + 'Text:<br><code>' + window.atob(string.value) + '</code><hr>';
 				string.value = "";
 				string.focus();}
 			function Clear (){
@@ -32,7 +32,7 @@
 		<div id="content">
 			<div class="inner">
 				<button onclick="Encode();">Encode</button> <button onclick="Decode();">Decode</button> <button onclick="Clear()">Clear</button><br><br>
-				<input type="text" name="string" id="string" style="width:calc(100% - 8px)"><br><br>
+				<input type="text" name="string" id="string" style="width:calc(100% - 8px)"><br><br><hr>
 				<div id="result"></div>
 			</div>
 		</div>
