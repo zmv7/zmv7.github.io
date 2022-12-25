@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Test Page</title>
+    <style>
+      table {
+        border-collapse:collapse;
+      }
+      td, th {
+        border: 1px solid;
+      }
+      .hat {
+        background: #AAA;
+      }
+      #result {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <input id="nick"></input>
+    <button id="searchbtn" onclick="Search()">Search</button>
+    <div id="result"></div>
+  </body>
+  <script>
+
+var list
+
+function Loadlist(url) {
+	$.ajax({
+		type: "GET",
+		url: url,
+		dataType: "json",
+		success: function(data) {
+			list = data.list
+		}
+	})
+}
+var nick, result;
+var json = "http://servers.minetest.net/list"
+
+window.onload = function (){
+	nick = document.getElementById("nick");
+	result = document.getElementById("result");
+	nick.value     = "";
+	result.innerHTML = "";
+	Loadlist("https://servers.minetest.net/list");
+	var input = document.getElementById("nick");
+	input.addEventListener("keypress", function(event) {
+		if (event.key === "Enter") {
+			event.preventDefault();
+			document.getElementById("searchbtn").click();
+		}
+	});
+};
+function Search (){
+	var out = "<table><tr class='hat'><th>Player</th><th>Server</th></tr>";
+	for(let i = 0; i < list.length; i++)
+	{
+		for(let j = 0; j < list[i].clients_list.length; j++)
+		{
+			if(list[i].clients_list[j].match(nick.value))
+			{
+				out += "<tr><th>"+list[i].clients_list[j]+"</th><th>"+list[i].name+"</th></tr>";
+			}
+		}
+	}
+	result.innerHTML = out+"</table>";
+	//nick.value = "";
+	//nick.focus();
+}
+
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</html>
