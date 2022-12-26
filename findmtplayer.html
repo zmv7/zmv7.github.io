@@ -59,7 +59,7 @@ function Search (){
 	{
 		for(let j = 0; j < list[i].clients_list.length; j++)
 		{
-			if(list[i].clients_list[j].match(nick.value))
+			if(list[i].clients_list[j].toLowerCase().match(nick.value.toLowerCase()))
 			{
 				out += "<tr><th>"+list[i].clients_list[j]+"</th><th>"+list[i].name+"</th></tr>";
 			}
