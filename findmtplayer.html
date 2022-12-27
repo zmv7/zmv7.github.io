@@ -20,6 +20,10 @@
     </style>
   </head>
   <body>
+    <select id="mode">
+      <option value="players">Players</option>
+      <option value="mods">Mods</option>
+    </select>
     <input id="nick"></input>
     <button id="searchbtn" onclick="Search()">Search</button>
     <div id="result"></div>
@@ -27,6 +31,7 @@
   <script>
 
 var list
+var mode
 
 function Loadlist(url) {
 	$.ajax({
@@ -46,6 +51,12 @@ window.onload = function (){
 	nick.value     = "";
 	result.innerHTML = "";
 	Loadlist("https://servers.minetest.net/list");
+	var sel =document.getElementById("mode")
+	mode = sel.value
+	sel.addEventListener("change", function(event) {
+		mode = sel.value
+	})
+
 	var input = document.getElementById("nick");
 	input.addEventListener("keypress", function(event) {
 		if (event.key === "Enter") {
@@ -56,17 +67,25 @@ window.onload = function (){
 };
 function Search (){
 	var out = "<table><tr class='hat'><th>Player</th><th>Server</th><th>Address</th></tr>";
-	for(let i = 0; i < list.length; i++)
-	{
-		for(let j = 0; j < list[i].clients_list.length; j++)
-		{
-			if(list[i].clients_list[j].toLowerCase().match(nick.value.toLowerCase()))
-			{
-				out += "<tr><th>"+list[i].clients_list[j]+"</th><th>"+list[i].name+"</th><th>"+list[i].address+(list[i].port != "30000" && ":"+list[i].port || "")+"</th></tr>";
+	var count = 0;
+	for (var i = 0; i < list.length; i++) {
+		if (mode == "players") {
+			for (let j = 0; j < list[i].clients_list.length; j++) {
+				if(list[i].clients_list[j].toLowerCase().match(nick.value.toLowerCase())) {
+					out += "<tr><th>"+list[i].clients_list[j]+"</th><th>"+list[i].name+"</th><th>"+list[i].address+(list[i].port != "30000" && ":"+list[i].port || "")+"</th></tr>";
+					count += 1;
+				}
+			}
+		} else if (list[i].mods) {
+			for (let j = 0; j < list[i].mods.length; j++) {
+				if(list[i].mods[j].toLowerCase().match(nick.value.toLowerCase())) {
+					out += "<tr><th>"+list[i].mods[j]+"</th><th>"+list[i].name+"</th><th>"+list[i].address+(list[i].port != "30000" && ":"+list[i].port || "")+"</th></tr>";
+					count += 1;
+				}
 			}
 		}
 	}
-	result.innerHTML = out+"</table>";
+	result.innerHTML = out+"<tr><th>Total: "+count+"</th></tr></table>";
 	//nick.value = "";
 	//nick.focus();
 }
