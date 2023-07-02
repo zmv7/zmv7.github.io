@@ -12,7 +12,8 @@ function placeGif(){
   var howManyLuck=0;
 
   function iFeelLucky(){
-
+   var rick = new Audio('/other/rickroll.ogg');
+   rick.play();
    clearInterval(luckyTimer);
 
     howManyLuck = 1;
