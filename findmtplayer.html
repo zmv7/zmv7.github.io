@@ -69,7 +69,7 @@ function Search (){
 	var out = "<table><tr class='hat'><th>"+mode+"</th><th>Server</th><th>Address</th></tr>";
 	var count = 0;
 	for (var i = 0; i < list.length; i++) {
-		if (mode == "Players") {
+		if (mode == "Players" && list[i].clients_list) {
 			for (let j = 0; j < list[i].clients_list.length; j++) {
 				if(list[i].clients_list[j].toLowerCase().match(nick.value.toLowerCase())) {
 					out += "<tr><th>"+list[i].clients_list[j]+"</th><th>"+list[i].name+"</th><th>"+list[i].address+(list[i].port != "30000" && ":"+list[i].port || "")+"</th></tr>";
